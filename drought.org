@@ -2436,7 +2436,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 
 #+tblname: tab:mae
 #+CAPTION: Tabla de errores MAE promedio.\\
-#+ATTR_LATEX: :align |l|r|
+#+ATTR_LATEX: :align |l|l|l|
 | Ventana Temporal | RF MAE | XG MAE |
 |------------------+--------+--------|
 | 3 meses          |  0.736 |  0.785 |
@@ -2447,7 +2447,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	
 #+tblname: tab:mse
 #+CAPTION: Tabla de errores MSE promedio\\
-#+ATTR_LATEX: :align |l|r|
+#+ATTR_LATEX: :align |l|l|l|
 | Ventana Temporal | RF MSE | XG MSE |
 |------------------+--------+--------|
 | 3 meses          |  0.856 |  0.883 |
@@ -2790,42 +2790,110 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 # Perspectivas de estudios adicionales
 
 
-	El presente trabajo fue la cristalización de un esfuerzo para adentrarse en el mundo de los
-	modelos espacio-temporales para la caracterización de fenómenos biofı́sicos, en este caso el
-	de Sequı́a, un fenómeno por demás desafiante de caracterı́sticas únicas respecto a otras va-
-	riables de estudio por parte de la teledetección espacial.\\
+En el presente trabajo se propueso e implemento una metodología para el 
+modelamiento de una función de interpolación no lineal, para la espacialización
+del indicador *SPI* en la zona de estudio del departamento de La Guajira, Colombia
+entre el año 2000 y el año 2014.
+Como un estudio de caso en el modelamiento de sequías.
+
+Para lo anterior, se sustento los pasos metodológicos en revisión de literatura,
+de diferentes diciplinas, que desde su perspectiva apoyaron a diferentes partes
+del presente trabajo.
+
+El proceso metodológico comprendio la identificación, evaluación y selección de una
+serie de estaciones metereológicas entre 1982 y 2012 aptas para el cálculo del *SPI* mediante  la agregación
+de la precipitación a acumulados mensuales y su relleno en aquellas
+ventanas temporales donde existian datos faltantes mediante un método de imputación de datos;
+además de la descarga, proyección, recorte, aplicación de mascara y homogenización temporal
+con el acumulado o promedio de datos a nivel mensual.
+
+Donde se seleccionó las variables explicativas
+
+y se opto por tres modelos de aprendizaje de maquina para realizar la interpolación,
+las redes neuronales, el clasico y robusto Random Forest, y la promesa XGBoosts.
+
+De estos el que mejor resultados obtuvo fue el de XGBoosts con una correlación de R² 0.768 y de MSE de 0.914 y un MAE de 0.841
+frente al Random Forest que obtuvo un R² 0.777 de y un MSE de 0.879 y un MAE de 0.777.
+
+Al ser datos con autocorrelación espacial y temporal se opto por realizar el entrenamiento y
+evaluación de modelos usando la metodología de LLTO (Leave Location and Time Out) con el fin
+de obtener una evalación mas fidedigna.
+
+
+Esta metodología presenta fortalezas como la posibilidad de aplicarse sobre vastos territorios sin cambios
+significativos, su escalabilidad para realizar un monitoreo a nivel nacional, funciona con una precisión alta
+a pesar de poca disponibilidad de información.
+Pero tiene debilidades como la necesidad de investigar mas alrededor de los modelos espacio-temporales y como
+evaluarlos.
+
+# el resultado global del trabajo de grado
+# y su lugar en la literatura
+
+# perspectiva de estudios adicionales
+El presente trabajo como caso de uso, puede ser un insumo para la reformulación del monitoreo de sequías
+por parte de las autoridades del país, las metodologías aquí expuestas aunque en un area limitada,
+demuestran que es posible escalarlas.
+
+Algunos temas dejados por fuera pueden llegar a ser interesante en el animo de mejorar los resultados
+aquí expuestos, por ejemplo la incorporación de experimentos en metodos sofisticados de selección de características
+la evaluación de los modelos con un conjunto de datos independiente, entre otros.
+
+
+
+
+
+
+
+
+# El presente trabajo fue la cristalización de un esfuerzo para adentrarse en el mundo de los
+# 	modelos espacio-temporales para la caracterización de fenómenos biofı́sicos, en este caso el
+# 	de Sequı́a, un fenómeno por demás desafiante de caracterı́sticas únicas respecto a otras va-
+# 	riables de estudio por parte de la teledetección espacial.\\
 	
-	Partiendo de supuestos como la idoneidad del uso de productos globales para el modelamiento
-	de fenómenos locales, como la Sequı́a nos llevó en un viaje en el que a través del
-	ensayo y error se construyó una metodologı́a compleja que permitiera llevar a buen puerto
-	los objetivos trazados.\\
+# 	Partiendo de supuestos como la idoneidad del uso de productos globales para el modelamiento
+# 	de fenómenos locales, como la Sequı́a nos llevó en un viaje en el que a través del
+# 	ensayo y error se construyó una metodologı́a compleja que permitiera llevar a buen puerto
+# 	los objetivos trazados.\\
 	
-	Se incluyeron aquí varias modificaciones propuestas por diversos autores que tratan de 
-	empujar la innovación en el estudio de sequı́as entre ellas destacamos el uso de una versión
-	modificada del ı́ndice de Sequı́a Estandarizado (El No Paramétrico), el uso del modelo XGBoost,
-  poco usado y evaluado en la literatura en problemas de sequı́a, la aplicación de los
-	métodos en zonas con una más baja densidad y fiabilidad de la información climática in
-	situ, modificaciones sobre la estrategia de validación de la información para modificar el
-	comportamiento de los modelos impulsados por datos, entre otros.\\
+# 	Se incluyeron aquí varias modificaciones propuestas por diversos autores que tratan de 
+# 	empujar la innovación en el estudio de sequı́as entre ellas destacamos el uso de una versión
+# 	modificada del ı́ndice de Sequı́a Estandarizado (El No Paramétrico), el uso del modelo XGBoost,
+#   poco usado y evaluado en la literatura en problemas de sequı́a, la aplicación de los
+# 	métodos en zonas con una más baja densidad y fiabilidad de la información climática in
+# 	situ, modificaciones sobre la estrategia de validación de la información para modificar el
+# 	comportamiento de los modelos impulsados por datos, entre otros.\\
 	
-	En este estudio el modelo de XGBoost obtuvo mejores resultados no marcadamente en precisión,
-	pero si en la captura de la distribución de los datos, es pertinente evaluar este modelo
-	en otros ambientes, para ver en mas detalle su eficacia. Obteniendose un R^{2} de 0.777 en promedio para Random Forest
-	y un R^{2} de 0.768 para XGBoosts.\\
+# 	En este estudio el modelo de XGBoost obtuvo mejores resultados no marcadamente en precisión,
+# 	pero si en la captura de la distribución de los datos, es pertinente evaluar este modelo
+# 	en otros ambientes, para ver en mas detalle su eficacia. Obteniendose un R^{2} de 0.777 en promedio para Random Forest
+# 	y un R^{2} de 0.768 para XGBoosts.\\
 	
-	La discrepancia entre los métodos evaluados puede inducir a que estudios posteriores in-
-	cluyan la selección de caracterı́sticas, como método importante para obtener mejoras en la
-	construcción de los modelos.\\
+# 	La discrepancia entre los métodos evaluados puede inducir a que estudios posteriores in-
+# 	cluyan la selección de caracterı́sticas, como método importante para obtener mejoras en la
+# 	construcción de los modelos.\\
 	
-	Es necesario un estudio más exhaustivo en la medición del impacto de la validación cruzada
-	K-Fold Espacio-Temporal, pues es un paso importante para la efectiva adaptación de los
-	modelos de inteligencia artificial a problemas de ı́ndole espacial.\\
+# 	Es necesario un estudio más exhaustivo en la medición del impacto de la validación cruzada
+# 	K-Fold Espacio-Temporal, pues es un paso importante para la efectiva adaptación de los
+# 	modelos de inteligencia artificial a problemas de ı́ndole espacial.\\
 
 
   
 
 * Observaciones y Recomendaciones
 
+
+  El sensor MODIS se encuentra cerca del final de su vida util, y aunque su reemplazo ya esta orbitando
+  el satelite suomi NPP, sobre este aún no se han implementado la totalidad de los productos derivados de MODIS
+  sobre este sensor. Por lo se requiere un trabajo para continuar usando esta clase de predictores en los
+  análisis de sequía.
+
+  Este trabajo, se desarrollo sobre las instalaciones del cluster computacional de la Universidad del Valle.
+  Y en particular la predicción de las series temporales de sequía, necesitan de un entorno de cumputación de alto
+  rendimiento o similar, para ser predecido en un tiempo razonable.
+
+  La tecnología usada en este trabajo es escalable, mediante el uso de algunos reemplazos de las librerias utilizadas,
+  es necesario un trabajo de paralelización para obtener resultados en menor tiempo, o en computadoras con menos
+  recursos.
   
 
 
