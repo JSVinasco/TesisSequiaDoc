@@ -258,7 +258,7 @@ de imputación de datos, recorte y homogenización de las series de tiempo de to
 utilizados y extracción de datos de píxeles en los que se encuentran ubicadas las estaciones
 meteorológicas. Con los datos de las estaciones meteorológicas se calculó el índice
 estandarizado de precipitación (SPI). Donde además con los datos derivados de productos
-satelitales se buco espacializar el indicador (SPI) mediante experimentos con tres modelos
+satelitales se busco espacializar el indicador (SPI) mediante experimentos con tres modelos
 de inteligencia artificial diferentes, red neuronal, bosque aleatorio y XGBoosting; para
 tener en cuenta las particularidades de los datos espaciales y temporales, como lo son sus
 propiedades de autocorrelación espacial y temporal se implementó una metodología llamada
