@@ -38,12 +38,24 @@
 #+latex_header: \pagestyle{fancy}
 
 
-#+PROPERTY: header-args : exports none :tangle "/home/juan//Dropbox/Anteproyecto/bibliography/sequia.bib"
+# +PROPERTY: header-args : exports none :tangle "/home/juan//Dropbox/Anteproyecto/bibliography/sequia.bib"
+
+# +PROPERTY: header-args : exports none :tangle "/home/juan/Dropbox/bibliography/biblioteca.bib"
+
+
 # +LATEX_HEADER: \usepackage{biblatex} \DeclareFieldFormat{apacase}{#1} \addbibresource{~/Dropbox/Anteproyecto/bibliography/sequia.bib}
 
 # biblatex
 # +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/Anteproyecto/bibliography/sequia.bib}
 # +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/Anteproyecto/bibliography/sequia.bib}
+
+# +LATEX_HEADER: \usepackage{parskip}
+# +LATEX_HEADER: \bibliographystyle{ieeetran}
+# +LATEX_HEADER: \usepackage[natbib=true,backend=biber]{biblatex}
+# +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/bibliography/biblioteca.bib}
+
+
+
 #+LATEX_HEADER: \usepackage{parskip}
 #+LATEX_HEADER: \bibliographystyle{ieeetran}
 #+LATEX_HEADER: \usepackage[natbib=true,backend=biber]{biblatex}
@@ -1711,7 +1723,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	que no se encuentran en los datos de entrenamiento de manera 
 	que indirectamente se fuerce las propiedades espaciales y temporales 
 	en los modelos; además que se obtenga una visión más consecuente 
-	con los datos del poder predictivo de los modelos \cite{meyer2018improving} . \\
+	con los datos del poder predictivo de los modelos \cite{meyer_improving_2018} . \\
 
 
 	#+CAPTION: Estrategia de validación cruzada espacio-temporal
@@ -2387,7 +2399,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
    espacio temporales de la sequía, es decir la autocorrelación espacial y temporal, es un factor
    determinante a la hora de entrenar estos modelos y evaluar sus resultados, puesto que el no
    tenerlos en cuenta generalmente lleva a evaluaciones que son mas optimistas que el desempeño real
-   de los modelos.  Para implementar los anterior y basandose en el trabajo de \cite{meyer2018improving} que a través de
+   de los modelos.  Para implementar los anterior y basandose en el trabajo de \cite{meyer_improving_2018} que a través de
    la libreria CAST (Caret Applications for Spatio-Temporal models) usando la estrategia de validacion
    cruzada LLTO (Leave Location and Time Out) que consiste en generar los subconjuntos de la validación
    cruzada de modo que los datos sobre los que se entrenan los modelos les hace falta algunas estaciones
@@ -2759,7 +2771,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
     evaluación del modelo. Sin embargo este es rara vez el caso, por lo que otro metodo popular para realizar la evaluación es
     el de la validación cruzada, este mismo ha sido modificado para adaptarse a las particularidades de los datos espacio-temporales.
 
-    En este trabajo se implementó una rutina para aplicar el metodo propuesto por \citte{meyer2018improving}, y de esta manera
+    En este trabajo se implementó una rutina para aplicar el metodo propuesto por \cite{meyer_improving_2018}, y de esta manera
     realizar una evaluación mas realista de los modelos,
     Aunque esta estrategía no ha sido usada directamente en evaluar modelos de sequía   estos autores trabajaron en un problema similar,
     con la estimación de la temperatura superficial (LST)  en el continente Antartico\cite{meyer2016mapping}
