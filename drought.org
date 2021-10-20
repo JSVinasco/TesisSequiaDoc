@@ -212,9 +212,13 @@ se implementan una serie de algoritmos impulsados por datos para la integración
 este ı́ndice con productos satelitales referentes a diferentes variables del ciclo hidrológico para la
 derivación de productos del ı́ndice de precipitación estandarizado no paramétrico para el departamento de
 la Guajira consistentes espacial y temporalmente, en las escalas de 3, 6 y 9 meses.\\
+
+Obteniendo una serie temporal de mapas de SPI para la duración total del estudio, el modelo que mejor se aproximó fue el de XGBoosting con un error cuadrático medio estimado de 0,7 y un error absoluto medio de 0,8; frente a los 0,8 y 0,9 del bosque aleatorio, mientras que las redes neuronales no consiguieron captar el comportamiento del fenómeno. Estos errores se concentran en la estimación de los valores más altos y más bajos del SPI.  Además de un efecto pixelado en la predicción espacial. Finalmente, se midió la importancia de las variables utilizadas en la predicción, obteniendo como variable más importante la precipitación estimada por satélite (producto CHIRPS), seguida de la temperatura superficial y el indicador NDDI. \\
+
+
  
 
-Palabras clave: (Sequiza, Aprendizaje de Maquina, Modelos Espacio Temporales) .\\
+Palabras clave: (Sequía, Aprendizaje de Maquina, Modelos Espacio Temporales) .\\
 
 
 
@@ -607,6 +611,51 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	in situ representa un desafı́o.\\
 
 
+*** Sensores Remotos
+
+	En contraposición a las técnicas matemáticas expuestas en la
+	sección [[secinsitu]]  basadas 	en muestreo puntual sobre
+	el espacio geográfico, también se han empleado técnicas
+	indirectas de medición de variables ambientales relacionadas
+	a la sequía, basadas en una serie de 	procedimientos,
+	fı́sico-matemáticos denominados Teledetección.\\
+
+
+	Los sensores remotos como el proceso de detección y monitoreo
+	de caracterı́sticas fı́sicas de un
+	cuerpo mediante la medición de la radiación emitida por este
+	\cite{USGS_RS}\cite{NOAA_RS}\cite{schwalm2017global}\cite{Remote_Sensing}.
+	De esta ciencia se distinguirá la información que proviene de instrumentos a
+	bordo de satélites (ejemplo del muestreo de un satelite [[fig:AQUA2]]), drones o vehı́culos aerotransportados como observación de
+	la tierra.\\
+
+
+	La resolución espacial va de la mano con la resolución temporal que se define como el tiempo
+	que se demora un sensor satelital para sensar la misma locación geográfica, y debido a la
+	órbita del satélite tiene una relación inversamente proporcional con la resolución espacial.
+	Es decir a mayor resolución temporal, menor resolución espacial y viceversa.
+  A manera de ejemplo la figura [[fig:rasters-are-pixels]] muestra la resolución espacial de un satelite Landsat.\\
+
+
+	#+CAPTION: Muestreo de datos satelilates
+    #+ATTR_LATEX: width=0.9\textwidth
+    #+LABEL: fig:AQUA2
+    [[/home/juan/Dropbox/0_Tesis/imagenes/AQUA2.png]]
+
+
+	Finalmente y la propiedad más importante que se examinará
+	en este trabajo es la resolución espectral del sensor
+  (la figura [[fig:rasters-emspectrum]]) muestra el espectro electromagnetico) que
+	habla de su capacidad de obtener información en diferentes
+	longitudes de onda. Especı́ficamente en este estudio sobre
+	la sequía los sensores satelitales utilizados son capaces
+	de registrar la energı́a reflejada de diferentes coberturas
+	terrestres y variables ambientales, que coadyuvan a el
+	modelamiento de las sequías en especial de las sequías
+	agrı́colas y de variables ambientales relacionadas con el
+	ciclo hidrológico como se presenta a continuación.\\
+
+
 *** Técnicas basadas en modelos impulsados por datos para el modelamiento de Sequías
 
 
@@ -622,7 +671,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	la resolución espacial final de los productos.\\
 
 
-	Podrı́ amos definir los modelos impulsados por datos como un vasto conjunto 
+	Podrı́amos definir los modelos impulsados por datos como un vasto conjunto
 	de herramientas diseñadas por diferentes comunidades de investigación para 
 	entender el comportamiento de los datos, llamadas también técnicas de aprendizaje
 	\cite{james2013introduction}, donde estos se pueden clasificar en dos grandes 
@@ -634,7 +683,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	el presente trabajo consideraremos únicamente técnicas de aprendizaje supervisado.\\
 
 
-	Especı́ ficamente en el presente trabajo buscamos realizar una primera 
+	Especı́ficamente en el presente trabajo buscamos realizar una primera
 	aproximación a los modelos de aprendizaje o impulsados por datos para 
 	la modelación de fenó menos biofísicos en concretamente en sequía meteorológica.\\
 
@@ -667,14 +716,23 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	especıíficas del campo.\\
 
 
-	Finamente y dado que las caracterı́ sticas de autocorrelación 
+	Ahora bien, dado que las caracterı́sticas de autocorrelación
 	temporal se encuentra mejor retratadas en las series de tiempo 
 	de datos in situ y la autocorrelación espacial a su vez es 
 	representada más fidedignamente por los datos de sensores remotos, 
 	el uso de los algoritmos impulsados por datos representa una 
 	valiosa oportunidad para la fusión de estos conjuntos de datos 
-	y dar un paso adelante en la modelación de fenó menos biofísicos 
+	y dar un paso adelante en la modelación de fenómenos biofísicos
 	como lo es la sequía.\\
+
+
+
+
+
+
+
+
+
 
 
 
@@ -695,7 +753,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	Primeramente se definen algunos conceptos asociados a las series de tiempo, con 
 	la idea de tener en mente los elementos clave para el presente estudio.\\
 
-	De modo que se inicia con una definición u	na Serie de Tiempo es una serie de 
+	De modo que se inicia con una definición una Serie de Tiempo es una serie de
 	puntos indexados en el tiempo, que cumplen la propiedad de que los intervalos 
 	temporales en los que se toman las medidas son constantes, esto es debido a dos 
 	motivos, el primero es que toda la matemática que soporta la teorı́a de las series 
@@ -820,7 +878,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 
 
 #+tblname: tab:spi
-#+CAPTION: Tabla de valores de Referencia del SPI\\
+#+CAPTION: Valores de Referencia del SPI\\
 #+ATTR_LATEX: :align |l|r|
 | Valor SPI          | Intensidad de la Sequía |
 |--------------------+-------------------------|
@@ -1041,41 +1099,6 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 
 
 	*Geoestadı́stica*
-  
-	Ahora bien, las variables ambientales relacionadas con la 
-	ocurrencia y desarrollo de las sequías, no se comportan de
-	manera puntual, como lo supone la sección anterior, en 
-	realidad se trata de fenómenos que son continuos en el espacio,
-	pero por limitaciones tecnológicas y prácticas, son generalmente 
-	observadas en determinados puntos en el espacio. Esta condición 
-	abre la puerta a el uso de técnicas de estadı́stica ambiental en 
-	especial de la geoestadı́stica, para el estudio del comportamiento 
-	de la sequía, y las variables conexas. A continuación se realiza
-	una corta introducción a los conceptos clave de esta temática.\\
-
-
-	Se define la geoestadı́stica como una rama de la estadı́stica que 
-	trata de fenómenos espaciales, ofreciendo de herramienta para 
-	describir la continuidad espacial de muchos fenómenos naturales,
-	dado que a partir de una muestra de puntos s perteneciente a un
-	conjunto de puntos continuo D donde este es un conjunto fijo 
-	\cite{giraldo2002introduccion}. Para el caso la medición de las 
-	anomalı́as de una variable relacionada a la sequía como lo es la 
-	precipitación es medido en una muestra limitada de sitios en el 
-	espacio (s), determinado por localización de las estaciones 
-	meteorológicas disponibles y se trata de modelar un espacio 
-	geográfico continuo limitado por la zona de estudio.\\
-
-
-	Para describir matemáticamente dichos fenómenos es preciso 
-	reconocer que análogamente a las series temporales existe una 
-	propiedad intrı́nseca para los fenómenos susceptibles a ser 
-	estudiados con geoestadı́stica que es la dependencia espacial. 
-	Expresada matemáticamente como la autocorrelación espacial, 
-	que es una medida que describe que los datos geográficamente 
-	cercanos, tienden a ser similares en términos absolutos, y los
-	sitios lejanos geográficamente unos de otros, tienden a tener 
-	diferencias absolutas más pronunciadas.\\
 
 
 	Existen diferentes indicadores que abordan la medida de la 
@@ -1119,47 +1142,6 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 
 *** Sensores Remotos
 
-	En contraposición a las técnicas matemáticas expuestas en la
-	sección [[secinsitu]]  basadas 	en muestreo puntual sobre 
-	el espacio geográfico, también se han empleado técnicas 
-	indirectas de medición de variables ambientales relacionadas 
-	a la sequía, basadas en una serie de 	procedimientos, 
-	fı́sico-matemáticos denominados Teledetección.\\
-
-
-	Los sensores remotos como el proceso de detección y monitoreo 
-	de caracterı́sticas fı́sicas de un 
-	cuerpo mediante la medición de la radiación emitida por este
-	\cite{USGS_RS}\cite{NOAA_RS}\cite{schwalm2017global}\cite{Remote_Sensing}.
-	De esta ciencia se distinguirá la información que proviene de instrumentos a
-	bordo de satélites (ejemplo del muestreo de un satelite [[fig:AQUA2]]), drones o vehı́culos aerotransportados como observación de 
-	la tierra.\\
-
-
-	La resolución espacial va de la mano con la resolución temporal que se define como el tiempo
-	que se demora un sensor satelital para sensar la misma locación geográfica, y debido a la
-	órbita del satélite tiene una relación inversamente proporcional con la resolución espacial.
-	Es decir a mayor resolución temporal, menor resolución espacial y viceversa.
-  A manera de ejemplo la figura [[fig:rasters-are-pixels]] muestra la resolución espacial de un satelite Landsat.\\
-
-
-	#+CAPTION: Muestreo de datos satelilates
-    #+ATTR_LATEX: width=0.9\textwidth
-    #+LABEL: fig:AQUA2
-    [[/home/juan/Dropbox/0_Tesis/imagenes/AQUA2.png]]
-
-
-	Finalmente y la propiedad más importante que se examinará
-	en este trabajo es la resolución espectral del sensor
-  (la figura [[fig:rasters-emspectrum]]) muestra el espectro electromagnetico) que 
-	habla de su capacidad de obtener información en diferentes 
-	longitudes de onda. Especı́ficamente en este estudio sobre 
-	la sequía los sensores satelitales utilizados son capaces 
-	de registrar la energı́a reflejada de diferentes coberturas 
-	terrestres y variables ambientales, que coadyuvan a el 
-	modelamiento de las sequías en especial de las sequías 
-	agrı́colas y de variables ambientales relacionadas con el 
-	ciclo hidrológico como se presenta a continuación.\\
 
 
 	Entre las variables susceptibles de ser estudiadas por la 
@@ -1613,7 +1595,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	clásicos se centran en este parámetro, valiéndose inicialmente 
 	de estaciones meteorológicas, y con el tiempo se han estado 
 	integrando otro tipo de herramientas y variables para el estudio
-	de este fenómeno, estando estrechamente relacionado este 
+	de este fenómeno, que estan estrechamente relacionado este
 	cambio tecnológico con un cambio en la concepción de la sequía.\\
 
 
@@ -1644,11 +1626,8 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	\cite{xu2016research}. Entre los factores evaluados están:\\
 
 	La precipitación, la temperatura, la altitud, la vegetación
-	y la humedad del suelo.\\
-
-
-	Aplicando por su parte Precipitation anomaly percentage 
-	(Pa) method, Kendall (nonparametric trend test method), 
+	y la humedad del suelo. Aplicando por su parte Precipitation anomaly percentage
+	(Pa) method, Kendall (nonparametric trend test method),
 	y análisis de correlación \cite{xu2016research}.\\
 
 	Ahora bien otros autores como los que se describen a 
@@ -1678,10 +1657,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	EVI. Por otro lado para la precipitación se utilizó 
 	datos de la misión TRMM, y datos in situ para la 
 	validación del modelo de downscaling utilizado. La 
-	su zona de estudio fue la península de Corea.\\
-
-
-	En particular en su flujo de trabajo resalta la 
+	su zona de estudio fue la península de Corea. En particular en su flujo de trabajo resalta la
 	implementación del modelo de Aprendizaje de Máquina
 	de Random Forest con el fin de realizar una reducción
 	de escala de las variables utilizadas y mejorar la 
@@ -1694,10 +1670,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	utilizar datos de teledetección y de predicción de 
 	largo registro temporal para implementar un modelo 
 	de aprendizaje de máquina para áreas no evaluadas 
-	anteriormente.\\
-
-
-  Estos mismos autores afirman que un monitoreo de la 
+	anteriormente. Afirmando que un monitoreo de la
 	sequía en tiempo real o casi real se constituye en una
 	herramienta de gran valor para los sistemas de alerta 
 	temprana de sequía, y a partir de estos potenciar la toma
@@ -1718,9 +1691,7 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	(índice estandarizado de precipitación y evapotranspiración),
 	apuntando sus esfuerzos en determinar sequía meteorológica, es 
 	decir, un largo periodo sin precipitación o con baja precipitación 
-	respecto al promedio.
-
-	Evalúan cuatro modelos de aprendizaje de máquina para ver
+	respecto al promedio. 	Evalúan cuatro modelos de aprendizaje de máquina para identificar
 	cuál obtiene los mejores resultados, estos tres son árboles 
 	de Decisión, Bosques Aleatorios (R.F.), árboles extremadamente 
 	aleatorios (Extremely randomized trees ERT) y validación cruzada.
@@ -1749,8 +1720,8 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	Otros estudios realizan un análisis de las sequías centrándose 
 	en sus patrones globales y en sus perspectivas a futuro teniendo 
 	en cuenta las proyecciones climáticas sustentadas en supuesto de 
-	cambio climático \cite{schwalm2017global}. Sin embargo 
-	también, aplican el enfoque de Random Forest en su estudio, sobre
+	cambio climático \cite{schwalm2017global}. Sin embargo,
+	también aplican el enfoque de Random Forest en su estudio, sobre
 	todo para determinar el peso de las diferentes variables tenidas 
 	en cuenta. Concluyendo que la presencia del cambio climático
 	aumentará significativamente la probabilidad y frecuencia de la 
@@ -1771,19 +1742,11 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 
 ** Zona de Estudio
 
-	#+CAPTION: Zona de estudio del Proyecto
-    #+ATTR_LATEX: width=0.9\textwidth
-    #+LABEL: fig:ZE_salida_grafica3
-    [[/home/juan/Dropbox/0_Tesis/imagenes/ZE_salida_grafica3.png]]
-
-
 	El departamento de la Guajira, es la zona continental más septentrional de Colombia, limita
 	al oriente con Venezuela, al sur con los departamentos del Cesar, y el Magdalena, al occidente
 	y al norte con el Mar Caribe [[fig:ZE_salida_grafica3]].\\
 	Geográficamente el departamento está constituido por la península de la Guajira, una planicie en su centro,
-  y partes de la sierra Nevada de Santa Marta y del Perijá, extendiéndose
-	en una superficie de 20 848 (Km) 2 .\\
-	La presencia de estas formaciones montañosas, hace que en este departamento se encuentren
+  y partes de la sierra Nevada de Santa Marta y del Perijá, extendiéndose en una superficie de 20 848 (Km) 2 .\\ La presencia de estas formaciones montañosas, hace que en este departamento se encuentren
 	todos los pisos térmicos de la zona intertropical donde el ecosistema predominante son las
 	zonas desérticas y semidesérticas.\\
 	Por ultimo en cuanto a recursos hídricos sus principales fuentes son el Ranchería y el Cesar,
@@ -1791,6 +1754,12 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	embargo esta hidrografía presenta una muy baja regulación hídrica (es decir muchos causes
 	son temporales) que limitan la recuperación que puedan tener tanto los ecosistemas como
 	las personas a los fenómenos de sequía \cite{GLG}, \cite{garcia2014estudio}.\\
+
+    #+CAPTION: Zona de estudio del Proyecto
+    #+ATTR_LATEX: :width 10cm
+    #+LABEL: fig:ZE_salida_grafica3
+    [[/home/juan/Dropbox/0_Tesis/imagenes/ZE_salida_grafica3.png]]
+
 
 
 ** Conjunto de Datos
@@ -1823,9 +1792,9 @@ el departamento de la Guajira, por medio de tecnicas de aprendizaje de maquina, 
 	registro temporal para una caracterización de la sequía.\\
 	
 	#+CAPTION: Flujograma General del Proyecto
-    #+ATTR_LATEX: width=0.9\textwidth
+    #+ATTR_LATEX: :width 10cm
     #+LABEL: fig:flujograma
-    [[/home/juan/Dropbox/0_Tesis/imagenes/datos y procesamiento tesis sequia.png]]
+    [[/home/juan/Dropbox/0_Tesis/imagenes/flujograma2.png]]
 
 
 *** Pre-procesamiento de Datos In Situ
