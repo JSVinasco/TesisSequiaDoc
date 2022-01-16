@@ -1,0 +1,765 @@
+#+TITLE: Modelamiento de Sequías en el Departamento de la Guajira por medio de técnicas impulsadas por datos
+#+LaTeX_CLASS: report
+#+LaTeX_CLASS_OPTIONS: [12pt,a4paper]
+#+LANGUAGE:  es
+#+OPTIONS:   H:4 num:t toc:nil title:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:nil pri:nil tags:not-in-toc
+#+LATEX_HEADER: \usepackage[spanish]{babel}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+LATEX_HEADER: \usepackage{subfigure}
+#+LATEX_HEADER: \usepackage{graphicx}
+#+LATEX_HEADER: \usepackage{amsfonts,bm}
+#+LATEX_HEADER: \usepackage{amsmath}
+#+LATEX_HEADER: \usepackage{amssymb}
+#+LATEX_HEADER: \usepackage{ifsym}
+#+LATEX_HEADER: \usepackage{marvosym}
+#+LATEX_HEADER: \usepackage{url}
+#+LATEX_HEADER: \usepackage{fourier}
+#+latex_header: \usepackage[T1]{fontenc}
+#+LATEX_HEADER: \usepackage{geometry}
+#+LATEX_HEADER: \geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=4cm}
+#+LATEX_HEADER: \linespread{1.2}
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+latex_header: \usepackage{longtable}
+#+latex_header: \usepackage{epsfig}
+#+latex_header: \usepackage{epic}
+#+latex_header: \usepackage{eepic}
+#+latex_header: \usepackage{soul}
+#+latex_header: \usepackage{enumitem}
+#+latex_header: \usepackage{booktabs}
+#+latex_header: \usepackage{multirow}
+#+latex_header: \usepackage[normalem]{ulem}
+#+latex_header: \usepackage{hyperref}
+#+LATEX_HEADER: \hypersetup{colorlinks=true, linkcolor=black, citecolor=black, anchorcolor = black, citecolor = black, filecolor = black, urlcolor = black}
+#+latex_header: \usepackage{titlesec, blindtext, color}
+#+latex_header: \newcommand{\hsp}{\hspace{20pt}}
+#+latex_header: \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
+#+latex_header: \usepackage{fancyhdr}
+#+latex_header: \pagestyle{fancy}
+
+
+# +PROPERTY: header-args : exports none :tangle "/home/juan//Dropbox/Anteproyecto/bibliography/sequia.bib"
+
+# +PROPERTY: header-args : exports none :tangle "/home/juan/Dropbox/bibliography/biblioteca.bib"
+
+
+# +LATEX_HEADER: \usepackage{biblatex} \DeclareFieldFormat{apacase}{#1} \addbibresource{~/Dropbox/Anteproyecto/bibliography/sequia.bib}
+
+# biblatex
+# +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/Anteproyecto/bibliography/sequia.bib}
+# +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/Anteproyecto/bibliography/sequia.bib}
+
+# +LATEX_HEADER: \usepackage{parskip}
+# +LATEX_HEADER: \bibliographystyle{ieeetran}
+# +LATEX_HEADER: \usepackage[natbib=true,backend=biber]{biblatex}
+# +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/bibliography/biblioteca.bib}
+
+
+
+#+LATEX_HEADER: \usepackage{parskip}
+#+LATEX_HEADER: \bibliographystyle{ieeetran}
+#+LATEX_HEADER: \usepackage[natbib=true,backend=biber]{biblatex}
+#+LATEX_HEADER: \addbibresource{/home/juan/Dropbox/Anteproyecto/bibliography/sequia.bib}
+# +PROPERTY: header-args : exports none :tangle "/home/juan//Dropbox/Anteproyecto/bibliography/sequia.bib"
+#+KEYWORDS:   Sequı́a, Aprendizaje de Maquina, Modelos Espacio Temporales
+
+
+
+#+BEGIN_EXPORT latex
+  \begin{titlepage}
+  \newpage
+  %\setcounter{page}{1}
+  \begin{center}
+  \begin{figure}
+  \centering%
+  \epsfig{file=HojaTitulo/logo_univalle.eps,scale=0.12}%
+  \end{figure}
+  \thispagestyle{empty} \vspace*{0.1cm} \textbf{\huge
+  Modelamiento de Sequ\'\i{}a en el departamento de La Guajira, Colombia}\\[5.5cm]
+  \Large\textbf{Juan Sebasti\'an Vinasco Salinas}\\[5.5cm]
+  \small Universidad del Valle\\
+  Facultad de Ingenier\'\i{}a, Escuela Ingenier\'\i{}a Civil y Geom\'atica\\
+  Santiago de Cali, Colombia\\
+  2021\\
+  \end{center}
+
+  \newpage{\pagestyle{empty}\cleardoublepage}
+
+  \newpage
+  \begin{center}
+  \thispagestyle{empty} \vspace*{0cm} \textbf{\huge
+  Modelamiento de Sequ\'\i{}a en el departamento de la Guajira, Colombia}\\[2.0cm]
+  \Large\textbf{Juan Sebasti\'an Vinasco Salinas}\\[2.0cm]
+  \small Trabajo de grado presentado como requisito para optar al
+  t\'{\i}tulo de:\\
+  \textbf{Ingeniero Topogr\'afico}\\[2.0cm]
+  Director:\\
+  MSc. Francisco Luis Hernandez Torres \\[2.0cm]
+  L\'{\i}nea de Investigaci\'{o}n:\\
+  Modelamiento y monitoreo de fen\'omenos biof\'\i{}sicos \\
+  Grupo de Investigaci\'{o}n en Percepci\'on Remota\\[2.0cm]
+  Universidad del Valle\\
+  Facultad de Ingenier\'\i{}a, Escuela Ingenier\'\i{}a Civil y Geom\'atica\\
+  Santiago de Cali, Colombia\\
+  2021\\
+  \end{center}
+
+  \newpage{\pagestyle{empty}\cleardoublepage}
+
+  \newpage
+  \thispagestyle{empty} \textbf{}\normalsize
+  \\\\\\%
+  \textbf{Alea iacta est}\\[4.0cm]
+
+
+
+  \begin{flushright}
+  \begin{minipage}{8cm}
+      \noindent
+          \small
+          If you did not understand the nature of the beasts,\\
+          \\[1.0cm]
+          it would be of little use to know the mechanics of their anatomy. \\
+  \end{minipage}
+  \end{flushright}
+
+
+  \newpage{\pagestyle{empty}\cleardoublepage}
+\end{titlepage}
+
+  \newpage
+
+
+
+
+
+#+END_EXPORT
+
+
+* Agradecimientos
+  :PROPERTIES:
+  :UNNUMBERED: notoc
+  :END:
+
+  Para poder llegar a los resultados aquí descritos, he seguido un
+  proceso arduo y complejo y en cada pequeño paso hubo personas que me extendieron su mano para ayudarme, así que a continuación enumeraré algunas de esas personas. \\
+
+  Mi familia, sin cuyo apoyo a mi poco común y quizás algo irreflexiva
+  empresa de lanzarme a hacer un trabajo de grado como el presente.\\
+
+  A mis compañeros algunos que ejercieron como mentores Frank, Rafael,
+  Mauricio y Wilmer. Otros que me inspiraron a continuar a través del
+  ejemplo de sus proyectos, July, Sergio, Camilo, Daniel, Evelin, Laura,
+  Stephany, Jorge, Diego, Valentina, Angie y otros que se me escapan.\\
+
+  A mis profesores, que me enseñaron no solo conocimiento práctico sino también humano.\\
+
+  Al profesor Francisco que me enseño el valor de soñar y perseguir los sueños.\\
+
+  A la profesora Jackeline que me empujo para que pudiese llegar al presente resultado.\\
+
+  Al profesor Mauricio con quien empecé esta aventura llamada investigación.\\
+
+  A otros como Eduado Caicedo, Wilfredo Morales que compartieron su conocimiento en modelos impulsados por datos, al profesor John Sanabria que me abrio las puertas para a través de la tecnología extender los limites de los análisis que hacemos en la profesión, al menos en Univalle.\\
+
+  A todos los anteriores, gracias totales !!! \\
+
+
+
+* Resumen
+  :PROPERTIES:
+  :UNNUMBERED: notoc
+  :END:
+
+  Las sequías son procesos hidrometeorológicos que eliminan o disminuyen la cantidad y distribución espacial de la precipitación limitando la disponibilidad de agua superficial y/o subterránea, de modo que se presentan condiciones mucho mas secas de lo usual siendo estas potencialmente perjudiciales. En palabras de la Organización Metereológica Mundial en su Manual de Indicadores de Sequı́a este fenómeno natural es uno de los que mas daños económicos causan año tras año, afectando de manera significativa a los bines y la calidad de vida de las personas. En particular en Colombia una de las zonas mas vulnerables a este fenónmeno es el departamento de La Guajira, departamento que por sus condiciones geográficas, y sociales ha sido históricamente impactado por este fenómeno.\\
+
+  Ahora bien, con respecto a lo anterior, es preciso aclarar que las sequías a diferencia de otros fenómenos naturales se caracterizan por su usualmente cubrir áreas más extensas que sus contrapartes, además que su ocurrencia gradual y paulatina hace dificil determinar su duración absoluta, haciendo de la sequía un fenómeno especialmente suceptible al monitoreo constante. Igualmente la estracha relación existente entre los fenomenos de sequía y desbarajustes en las condiciones usuales de las diferentes variables del ciclo hidrológico, se hace necesario evaluar las ocurrencia de sequías con el comportamiento de variables como la precipitación, la temperatura superficial, el comportamiento de la vegetación, y la humedad presente en el suelo.\\
+
+  Sin embargo y apesar de la necesidad de monitoreo constate la evaluación de los fenómenos de sequía se puede verse limitado por la cantidad y calidad de los regstros necesarios para evaluarla, además de las limitaciones propias de las aproximaciones utilizadas, donde los indices basados en registros históricos de estaciones en terreno son más precisos pero tienen ua cobertura espacial pobre, por su parte las metodologías basadas en sensores remotos cubren grandes áreas utilizando un muestreo espacial mucho mas detallado pero adolencen de imprecisión.\\
+
+  En este orden de ideas en el trabajo aquí descrito adapta una metodología existente en la que a partir del cálculo del índice de precipitación estandariada no paramétrico en un conjunto de estaciones meteorológicas, se implementan una serie de algoritmos impulsados por datos para la integración e interpolación no lineal de este índice con productos satelitales referentes a diferentes variables del ciclo hidrológico para la derivación de productos del índice de precitación estandarizado no parametrico para el departamento de La Guajira consistentes espacial y temporalmente, en las escalas de 3, 6 y 9 meses.\\
+
+  Obteniendo una serie temporal de mapas de SPI para la duración total del estudio, el modelo que mejor se aproximo fue el de XGBoosts con un error cuadratido medio estimado de 0.7 y un error absoluto medio de 0.8; frente a los 0. y 0.9 de Random Forest, mientras que las redes neuronales no consiguieron captar el comportamiento del fenómeno. Estos errores se concentran en la estimación de los valores más altos y más bajos del SPI. Además de un efecto pixelado en la predicción espacial. Finalmente, se midió la importancia de las variables utilizadas en la predicción espacial, obteniendo como variable mas importante la precipitación estimada por satélite (producto CHIRPS), seguida de la temperatura superficial y el indicador NDDI.\\
+
+  Palabras clave: (Sequía, Aprendizaje de Maquina, Modelos Espacio Temporales).
+
+
+* Abstract
+   :PROPERTIES:
+  :UNNUMBERED: notoc
+  :END:
+
+Droughts are hydrometeorological processes that eliminate or diminish the amount and spatial distribution of precipitation limiting the availability of surface water and/or groundwater, so that much drier conditions than usual occur and are potentially harmful. In the words of the World Meteorological Organization in its Drought Indicators Manual, this natural phenomenon is one of the ones that causes the most economic damage year after year, significantly affecting people’s assets and quality of life. Particularly in Colombia, one of the most vulnerable areas to this phenomenon is the department of Guajira, a department that due to its geographical and social conditions has been historically impacted by this phenomenon.\\
+
+
+Now, with respect to the above, it is necessary to clarify that droughts, unlike other natural phenomena, are usually characterized by covering more extensive areas than their counterparts, and that their gradual and gradual occurrence makes it difficult to determine their absolute duration, making drought a phenomenon that is especially susceptible to constant monitoring. Likewise, the close relationship between drought phenomena and disturbances in the usual conditions of the different variables of the hydrological cycle, it is necessary to evaluate the occurrence of droughts with the behavior of variables such as precipitation, surface temperature, vegetation behavior, and the humidity present in the soil.\\
+
+However, and in spite of the need of constant monitoring, the evaluation of drought phenomena can be limited by the quantity and quality of the necessary registries to evaluate it, in addition to the limitations of the used approximations, where the indexes based on historical registries of stations in the field are more precise but have a poor spatial cover, on the other hand, the methodologies based on remote sensors cover great areas using a much more detailed spatial sampling but they suffer from imprecision.\\
+
+
+In this order of ideas in the work described here, a methodology is proposed in which from the calculation of the nonparametric standardized precipitation index in a set of meteorological stations, a series of algorithms driven by data are implemented for the integration and nonlinear interpolation of this index with satellite products referring to different variables of the hydrological cycle for the derivation of products of the nonparametric standardized precipitation index for the department of Guajira consistent spatially and temporally, in the scales of 3, 6 and 9 months.\\
+
+Obtaining a time series of SPI maps for the total length of the study, the model that best approximated was the XGBoosting model with an estimated mean square error of 0.7 and a mean absolute error of 0.8; compared to 0.8 and 0.9 for the random forest, while the neural networks failed to capture the behavior of the phenomenon. These errors are concentrated in the estimation of the highest and lowest SPI values.  In addition to a pixelated effect in the spatial prediction. Finally, the importance of the variables used in the prediction was measured, obtaining as the most important variable the precipitation estimated by satellite (CHIRPS product), followed by the surface temperature and the NDDI indicator. \\
+
+
+  Key words (Drought, Mahine Learning, Spatio-Temporal Models). \\
+# \ex_header: definecolor{gray75}{gray}{0.75}
+
+#+BEGIN_EXPORT latex
+\tableofcontents
+\listoffigures
+#+END_EXPORT
+
+* Introducción
+<<secintro>>
+
+
+Las sequías son... \\
+
+En el presente trabajo se propone la estimación y monitoreo de parámetros biofísicos relacionados con la sequía utilizando modelos de inteligencia artificial. Se utilizaron datos mensuales desde *1982* hasta *2014*, de precipitación provenientes de estaciones meteorológicas y datos entre el año *2000* y el *2014* de diferentes plataformas espaciales.\\
+
+Provenientes del sensor *MODIS* se seleccionaron los productos satélitales de temperatura superficial, índice de vegetación de diferencia normalizada, índice de vegetación mejoraddo, índice de área foliar y evapotranspitación.\\
+
+Del producto CHIRPS se obtuvo valores de precipitación en (mm) derivados de satelites cons sensores infrarojos y un conjunto de datos en tierra.\\
+
+El proceso metológico compredió en la identificación, evaluación y selección de imputación de datos, recorte y homogenización de las series de tiempo de todos los datos utilizados y extracción de datos de pixeles en los que se encontraban ubicadas las estaciones meteorológicas. Con los datos de las estaciones meteorológicas se cálculo el índice de precipitación estandarizado (SPI) no paramétrico. Donde además con los datos derivados de los productos satelitales se busco espacializar el indicador SPI mediante experimentos con tres modelos de inteligencia artificial diferentes, red neuronal perceptron multicapa, bosque aleatorio, XGBoosts; para tener en cuenta las particularidades de los datos espaciales y temporales, como los son sus propiedades de autocorrelacion espacial y temporal se implementó una metodología llamada validación cruzada espacio-temporal, de modo que los resultados obtenidos fueran realistas y no sobre optimistas.
+
+De modo que el presente documento se encuentra constituido por los siguientes capitulos.
+
+
+
+* Planteamiento del Problema
+<<secpm>>
+
+Uno de los retos colectivos más desafiantes a futuro, que la humanidad deberá enfrentar es el cambio climático y las consecuencias que este ha traído y traerá; uno de los más preocupantes es que a raíz de este cambio global se están alterando los regímenes de precipitación en todas sus escalas, que conforme a los pronósticos y la opinion general de los expertos es la ocurrencia cada vez mas frecuente y mas extrema de las sequías  \cite{schwalm2017global} .\\
+
+Como lo menciona la Convención de las Naciones Unidas para la lucha contra la Desertificación y la Sequía (UNCCD) las temperaturas más altas, los cambios en los patrones de precipitaciones y la mayor escasez de agua debido al cambio climatico alterarán la idoneidad de vastas regiones para la producción de alimentos y la vivienda humana \cite{unccd2017global}. Esto se evidencia en la constante batida de records de temperatura global, año a año. \\
+
+A nivel mundial la situación es preocupante, la ocurrencia de sequías en todo el globo, ha impactado los recursos en países africanos como Somalia, Sudan del Sur, Nigeria y Yemen, afectando un estimado de 20 Millones de personas \cite{Nyt}. Pero la sequía tambien afecta a países altamente industrializados, en el estado Norteaméricano de California recientemente ternimó una sequía de seis aos, la pero desde que se tienen registros, impactando el estilo de vida y la producción pecuaria de este estado Norte Americano\cite{Nyt}.
+
+En Colombia, una de las zonas que ha sido gravemente afectada por este fenómeno es el Departamento de La Guajira, zona de l país en la que la prolongada sequía de varios años aumento el desabastecimiento de agus y disminuyo los niveles de seguridad alimentaria, afectando unas 63.000 personas \cite{Wfp}, causando además la muerte de unos 4.770 niños entre 2007 y 2015 \cite{DW} .\\
+
+Este territorio tiene dos particularidades que lo hacen altamente vulnerable a las sequías, una es la alta tasa de pobreza que llega al 53.3%, lo que lo convierte en el segundo departamento del país en este sentido \cite{DPS}, y sus condiciones geográficas de ser en vuena medida una zona semidesértica, su clima es árido seco \cite{GLG}, asimismo su hidrografía presenta una muy baja regulación hídrica (es decir muchos causes son temporales) \cite{garcia2014estudio}, limitando la recuperación que puedan tener tanto los ecosistemas como las personas a los fenómenos de sequía. \\
+
+Ahora bien el estudio de la sequía en La Guajira se basa en redes meteorológicas e hidrológicas, en palabras de la Organización Metereológica Mundial en países en desarrollo suelen tener una densidad de estaciones inadecuada (insuficiente representatividad espacial) para medir los principales parámetros climaticos y de abastecimiento de agua, además la calidad de los datos también es un problema, debido a las lagunas temporales de que adolencen o a la inadecuada longitud de los registros  \cite{wmo2006vigilancia}. Esto se evidencia en la presencia de solo dos estaciones meteorológicas automáticas en el departamento, que se suman a unas 100 estaciones no automáticas, para cubrir un área aproximada de unos 20.848 km².\\
+
+En este orden de ideas la problemática ambiental que genera la ocurrencia de sequías y otras problemáticas ambientales en general, requieren de un intenso trabajo de levantemiento de datos y generación de información que permitan la construcción adecuada y oportuna de medidas de adaptación, y manejo tendientes a tratar el problema.
+
+
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
+* Objetivos
+<<secobj>>
+
+** Objetivo General:
+Representar el comportamiento espacio temporal de la sequía en el departamento de La Guajira, por medio de técnicas de aprendizaje automatico, y haciendo uso de variables biofísicas.\\
+
+
+** Objetivos Específicos
+- Caracterizas las variables que permitan evaluar la sequía en las condiciones semi-deserticas de La Guajira.\\
+- Modelar las condiciones de Sequía de La Guajira, por medio de información espacio temporal, entre los años *2000* y *2013*.\\
+- Validar los resultados obtenidos con información de estaciones meteorológicas.\\
+
+
+* Justificación
+<<secjust>>
+
+El secretario general de la Organización Metereológica Mundial, M. Jarraud menciona "A lo largo de la historia de la humanidad, la sequía ha sido uno de los problemas que han afectado a nuestro nienestar y a la seguridad alimentaria" \cite{wmo2006vigilancia}. Sin embargo es necesario precisar que la sequía no es en si misma un desastre, sino que puede llegar a serlo en función de sus efectos sobre la población local, sobre la economía y sobre el ambiente y en función de la capacidad de estos últimos para hacer frente al fenómeno y recuperarse de tales efectos \cite{wmo2006vigilancia}.\\
+
+Para el caso del departamento de La Guajira, este ultimo aspecto, toma preponderancia, pues la población de este departamento tiene unos altos índices de pobreza que llegan al 53% \cite{DPS}. Además la habitan alrededor de 267.000 indigenas wayuu \cite{DPS} que se concentran en las zonas más aridas y secas del departamento por estas mismas condiciones geográficas, este pueblo tiene condiciones de vida nómadas y semi-nómadas, lo anterior es preocupante pues habla de una población con problemas y vulnerabilidades grandes para hacerle frente a los fenómenos de sequía.\\
+
+En este punto cobra importancia la gestión de los riesgos de sequía que tiene por objeto mejorar la capacidad de la sociedad para hacer frente a ese fenómeno, donde la vigilancia y alerta temprana de la sequía son dos componentes importantes en la gestión del riesgos de sequía \cite{wmo2006vigilancia} .\\
+
+En este orden de ideas, los beneficios que trae la implementación de este proyecto son diversos, pues la información generada y comunicada tendrá incidencia en la toma de decisiones.\\
+
+Decisiones sobre la gestión del recurso hídrico, van a permitir la adopción oportuna de medidas para mitigar la desertificación y la sequía impactando a sectores como la agricultura y la ganadería tanto a gran escala como la de subsistencia, además permitir el aducuado manejo de las conceciones de agua de la industria minera del departamento.\\
+
+Permitirá además una mejoría significativa en la planeación y ejecución de obras para la captación y potibilización de agua  \cite{minvivienda},  pues sectorizar las zonas más afectadas por la sequía, en conjunto con otra información como la hidrografía superficial y subterranea (acuíferos), posibilita que estas obras se ubiquen en los lugares con las mejores condiciones, impactando a su vez la calidad y oferta continua del recurso hídrico. \\
+
+Por otro lado decisiones en cuanto a política pública, guiados por este estudio de la mano de la previsión y las alertas sobre las condiciones de sequía facultaría al Estado para mitigar los efectos de las sequías en la salud de la población por medio de campaas que minimicen cifras como la de menores muertos, igualmete políticas públicas tienen el potencial de impactar positivamente sobre los medios de subsistencia de la población para que se adapten mejor a las condiciones secas.\\
+
+
+
+
+* Marco Conceptual
+<<secmc>>
+
+** Sequía
+<<secdef>>
+
+La sequía es un fenómeno hidrometeorológico, en el que a raíz de un deficit en la disponibilidad del recurso hídrico desencadenado por una baja relativa respecto a los niveles promedio de la precipitación, se genera una perturbación generalizada en todas las partes constituyentes del ciclo hidrológico, afectando una region geográfica particular, durante un intervalo de tiempo acotado. \\
+
+Un aspecto importante a tener en cuenta es que a diferencia de otros fenómenos naturales causantes de desastres, las sequías son acontecimientos que se desarrollan de manera lenta en el tiempo y extendida en el espacio, es decir su formación se ve en términos de semanas y meses, en casos extremos en años (no confundir con desertificación). \\
+
+En consecuencia, la sequia es un fenómeno hídrologico incluido en el contexto del ciclo hidrológico, y dad su ocurrencia, sus efectos se van propagando en cada parte del sistema, tomando diferentes denominaciones según la clase de recurso hídrico impactado, a continuación se describen los tipos de sequía mas aceptados en la literatura y en particular se señala la variable del ciclo hídrologico afectada. \\
+
+*** Sequía Meteorológica
+<<seqmeteo>>
+
+Este tipo de sequía es el más común y se caracteriza por ser la primera en manifestarse, podría definirse como un deficit de precipitación prolongado por cierto periodo de tiempo respecto al comportamiento normal o promedio de la zona geográfica de estudio.\\
+
+*** Sequía Agricola
+<<seqagri>>
+Esta se presenta como consecuencia de la anterior y en esta se evidencia como la falta de agua precipitada disminuye la cantidad de agua almacenada en el suelo (humedad del suelo), afectando así la disponibilidad del recurso hídrico en la zona de raíces para las plantas y cultivos; lo clave en este tipo de sequías es la modelación de la humedad del suelo, y el estrés hídrico de las plantas.[fn:4] \\
+
+
+
+*** Sequía Socio-económica
+<<seqecono>>
+
+Finalmente, la afectación sufrida por la sociedades humanas generada por un fenomeno de sequía se denomina sequía socio-economica, y su impacto se puede vislumbrar en como la falta del recurso hídrico altera el desempeño normal de las personas, es la más dificil de modelar por que afecta temas como la provisión de servicios publicos, limitaciones a las industrias en la producción por falta de agua, entre muchos otros. Y no solo depende de las condiciones naturales sino que tambien insiden variables como la resilencia de las comunidades o el sector económico estudiado.[fn:4] \\
+
+
+# defino detalladamente los tipos de datos
+Los sensores remotos y las rachas de datos hidrometeorológicos son la forma es que se recolecta la información necesaria para modelar la sequía, en este contexto estas se definiran a continuación.\\
+
+
+
+
+** Rachas de datos hidrometeorológicos
+
+Las rachas de datos hidrometeorológicos se refieren a datos climaticos u ambientales tomados en campo con el objetivo de estudiar o monitorear un fenómeno bio-físicos que pueden ser muy distintas mediciones con muy diferentes estrategías de medición. Eso sí dadas las caracteristicas de la sequía como se mensiona en la sección  [[modseq]], es preciso usar variables ambientales relacionadas con el ciclo hidrológico, mas aún dados los largos periodos de retorno de la sequía, es preponderante que los registros sean de la más larga duración posible, registros de variables como la precipitación, la temperatura y la evapotranspitación (por poner algunos ejemplos) de las estaciones climatológicas e hidrometeorológicas de una zona geográfica en particular. \\
+
+** Sensores Remotos
+
+Los sensores remotos son en su definición mas general todos aquellos instrumentos capaces de obtener información sobre un objetivo de manera indirecta o a distancia; no obstante la clase específica de sensores remotos utiles para el estudio de la sequía se refiere usualmente a sensores transportados en vehículos satelitales, el estudio de las diferentes variables biofísicas a través de dichos sensores se conoce por diferentes nombres, sensores remotos o teledetección en la literatura norteaméricana u observación de la tierra en la literatura europea[fn:5].\\
+
+Ahora bien de forma más formal la  *Teledetección* es el proceso de detección y monitoreo de características físicas de un cuerpo mediante la medición de la radiación reflejada, emitida o dispersada por este[fn:6][fn:7][fn:8] \cite{schwalm2017global}.\\
+
+#+CAPTION: Ejemplo de como es el muestreo de información realizado por un sensor remoto.
+#+ATTR_LATEX: :width 8cm
+#+LABEL: fig:AQUA2
+[[~/Dropbox/0_Tesis/imagenes/AQUA2.png]]
+
+Una caracteristica importante del tipo de información básica derivada de sensores remotos es que por sus caracteristicas intrinsecas como la distancia entre el sensor y el objetivo, el intervalo de tiempo entre observaciones o las longitudes de onda utilizadas para caracterizar la cubierta observada se suele clasificar los datos de acuerdo a las siguientes categorias.\\
+
+- *Resolución Espacial* esta se refiere a el tamaño mínimo del objetivo que un sensor puede caracterizar individualmente, es expresada usualmente como el tamaño del pixel sobre el terreno, cuyas unidades son metros.\\
+
+#+CAPTION: Resolución Espacial
+#+ATTR_LATEX: :width 8cm
+#+LABEL: fig:rasters-are-pixels
+[[~/Dropbox/0_Tesis/imagenes/rasters-are-pixels.png]]
+
+- *Resolución Temporal* esta se refiere a el intervalo de tiempo entre tomas por parte del sensor, dada la ubicación de estos sensores en orbita terrestre solo es posible sensar un objetivo con las mismas condiciones cada cierto intervalo de tiempo, cuyas unidades son dias o minutos.\\
+
+  En particular la resolución espacial y temporal tienen una relación inversamente proporcional, entre mas alta la resolución espacial, mas baja es la temporal; sin embargo esto evoluciona con los nuevos desarrollos en intrumentación.\\
+
+- *Resolución Espectral* esta se refiere a la parte del espectro electromagnético que es observada por el sensor, usualmente son unas cuantas franjas estrechas, cuyas unidades son micrometros.\\
+
+  En particular los sensores usados en el presente trabajo toman información en longitudes de onda de la zona visible, infrarojo cercano e infrarojo térmico.\\
+
+#+CAPTION: Espectro Electromagnético
+#+ATTR_LATEX: :width 8cm
+#+LABEL: fig:rasters-emspectrum
+[[~/Dropbox/0_Tesis/imagenes/rasters-emspectrum.png]]
+
+
+- *Resolución Radiométrica* esta se refiere al nivel de detalle con el que el sensor es capaz de disernir entre dos diferentes respuestas, es decir que tan sensible es a los cambios en la señal, se suele medir en el número de bits en los que el sensor graba la información captada.\\
+
+  Esta resolución también a ido evolucionando en el tiempo y usualmente los sensores más modernos tienen mayores capacidades.\\
+
+
+** Modelamiento de Sequías
+<<modseq>>
+
+# defino por la sequia es dificil de modelar
+Es preciso aclarar que las sequías se constituyen en uno de los peligros naturales más costosos económicamente hablando además de ser uno de los técnicamente mas desafiantes  \cite{svoboda2016handbook}; puesto que las zonas afectadas usualmente cubren áreas mucho mas extensas que la de otros fénomenos naturales considerados desastres (por ejemplo un inundación), sumado a el hecho de que su ocurrencia es gradual o paulatina, esto la hace especialmente suceptible al monitoreo constante  \cite{svoboda2016handbook}. \\
+
+# introduzco las estrategias para modelar la sequia
+Ahora bien desde el punto de vista del modelamiento del fenómeno, y haciendo énfasis en las características de este, entre otras un comportamiento altamente variable tanto en el espacio, como en el tiempo; es posible utilizar tres aproximaciones diferentes para su descripción, estas son un enfoque basado en el comportamiento temporal, la espacialización de este enfoque temporal y finalmente una aproximación usando datos remotamente sensados.
+
+# modelamiento temporal o clasico
+
+# adolencen estos metodos
+
+# geoestadistica como estrategia para espacializar
+
+# modelamiento por radiación electromagnética
+Por el contratio a lo anterior, los
+
+# Fin de los metodos clasicos
+
+** Técnicas basadas en modelos impulsados por datos para el modelamiento de Sequías
+
+Los modelos impulsados por datos son una familia de modelos y/o algoritmos capaces de establecer relaciones entre distintas variables y adaptarse de acuerdo al fenomeno estudiado, esta flexibilidad los hace atractivos para entre otras cosas servir de puente entre los diferentes tipos de datos recolectados para modelar la sequía y fusionarlos de manera que se explote los puntos fuertes de cada estrategía y se cubran los puntos debiles.
+
+
+
+* Marco Teórico
+<<secmt>>
+
+Continuando con el capitulo anterior la Parte [[secmc]] donde se presentan algunas definiciones sobre los temas que se tocan en este documento, procederemos a formalizar teoricamente dichas definiciones relevantes.
+
+** Sequía
+# Aproximacion matematica a la sequia definir SPI y SPI no estandarizado
+Para empezar y recapitulando en la sección [[secdef]] la sequía es básicamente una perturbación sobre el ciclo hídrologico, la aproximación mas obvia a la sequía meteorologica es medir la perturbación del agua precipitada sobre la region de estudio. \\
+
+Existen distintas maneras de modelar la perturbación o el deficit de la precipitación sin embargo la Organización Meteorológica Mundial recomienda el uso de entre otros el Índice de Precipitación Estandarizado o *SPI*, este fue introducido por investigadores de la Universidad Estatal de Colorado \cite{mckee1995drought}. y fue diseñado para cuantificar los déficits de precipitación a partir de una serie o racha de datos de precipitación continuamente
+
+#+tblname: tab:spi
+#+CAPTION: Valores de Referencia del SPI\\
+#+ATTR_LATEX: :align |l|r|
+| Valor SPI          | Intensidad de la Sequía |
+|--------------------+-------------------------|
+| SPI > 2.0          | Severamente Humedo      |
+| 1.5 < SPI <= 2.0   | Moderadamente Humedo    |
+| 1.0 < SPI <= 1.5   | Anormalmente Humedo     |
+| 1.0 <= SPI <= -1.0 | Normal                  |
+| -1.5 <= SPI -1.0   | Anormalmente Seco       |
+| SPI < -2.0         | Severamente Seco        |
+
+
+
+#+NAME: eqn:gaussiana
+    \begin{equation}
+    g(x) =  \frac{ 1 }{  \beta^{\alpha} \gamma(\alpha) } x^{\alpha - 1} e^{\frac{-x}{\beta} }, (x > 0)
+\end{equation}
+
+#+NAME: eqn:prob
+    \begin{equation}
+    G(x); \int_{0}^{x} g(x)dx = \frac{ 1 }{  \beta^{\alpha} \gamma(\alpha) } = \int_{0}^{x} x^{\alpha - 1} e^{\frac{-x}{\beta} } dx
+    \end{equation}
+
+
+#+NAME: eqn:forma
+\begin{equation}
+\alpha = \frac{ 1 + \sqrt{(1 + \frac{ 4 * A }{3} )} }{ 4 * A}
+\end{equation}
+
+#+NAME: eqn:escala
+\begin{equation}
+\beta = \frac{\Bar{x}}{\alpha}
+\end{equation}
+
+
+#+NAME: eqn:aux
+\begin{equation}
+A = ln(\Bar{x}) - \frac{\sum ln (x)}{n}
+\end{equation}
+
+
+
+#+NAME: eqn:corr
+\begin{equation}
+H(x) = q + (1 - q ) G(x)
+\end{equation}
+
+
+#+NAME: eqn:densidad
+    \begin{equation}
+H(x) = \frac{1}{\sqrt{2 \pi}} \int_{\infty}^{x} e^{\frac{-t^2}{2}}dt
+\end{equation}
+
+
+#+NAME: eqn:caso11
+\begin{equation}
+SPI = -( t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 d_3 ^t3})
+\end{equation}
+
+
+#+NAME: eqn:caso12
+\begin{equation}
+t = \sqrt{-2 * ln (H(x))}
+\end{equation}
+
+#+NAME: eqn:caso21
+\begin{equation}
+SPI =  t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 d_3 ^t3}
+\end{equation}
+
+
+
+#+NAME: eqn:caso22
+\begin{equation}
+t = \sqrt{-2 * ln(1-    H(x))}
+\end{equation}
+
+
+#+NAME: eqn:prob2
+\begin{equation}
+p(X_i) = \frac{i - 0.44}{n + 0.12}
+\end{equation}
+
+
+#+NAME: eqn:si
+\begin{equation}
+SI = \phi^{-1} (p)
+\end{equation}
+
+#+NAME: eqn:si2
+\begin{equation}
+SI = \left\{
+    \begin{array}{ll}
+-( t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 d_3 ^t3}) si 0 < p 	\leq 0.5 \\
+t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 d_3 ^t3}  si 0.5 < p 	\leq 1
+    \end{array}
+    \right.
+\end{equation}
+
+# ** Datos
+# Definir las rachas de datos hidrometeorológicos
+# *** Rachas de datos hidrometeorológicos /in situ/
+# *** Información derivada de datos satelitales
+# **** Índices basados en Teledetección
+# **** Productos de Teledetección
+
+** Modelos
+*** Datos /in situ/
+**** Series de Tiempo
+**** Geoestadística
+
+#+NAME: eqn:moran
+\begin{equation}
+I = \frac{\sum_{i}\sum_{j} W_{i j} C_{i j}}{s^2 \sum_{i}\sum_{j} W_{i j}}
+\end{equation}
+
+
+#+NAME: eqn:s
+\begin{equation}
+S^2 = \frac{\sum_{i = 1}^{n} (X_{i} - \Bar{X})^2}{n}
+\end{equation}
+
+*** Remotamente Sensados
+**** Índices de basados en teledetección
+#+NAME: eqn:ndvi
+\begin{equation}
+NDVI = \left( \frac{\rho_{nir} - \rho_{rojo} }{ \rho_{nir} + \rho_{rojo}} \right)
+\end{equation}
+
+
+#+NAME: eqn:evi
+\begin{equation}
+EVI = \left( \frac{\rho_{nir} - \rho_{rojo} }{ L + \rho_{nir} + c1 \rho_{rojo} + c2\rho{azul}} \right)
+\end{equation}
+
+#+NAME: eqn:ndwi
+\begin{equation}
+NDWI = \left( \frac{\rho_{nir} - \rho_{swir}}{ \rho_{nir} + \rho_{swir}} \right)
+\end{equation}
+
+#+NAME: eqn:nddi
+\begin{equation}
+NDDI = \left( \frac{NDVI - NDWI}{ NDVI + NDWI} \right)
+\end{equation}
+
+
+**** Productos derivados de datos satelitales
+*** Modelos Impulsados por datos
+**** Arboles de Decisión
+**** Redes Neuronales
+**** Validación Cruzada
+
+*LLTO*
+
+Es un caso especial de la validación cruzada, propuesto inicialmente por \cite{Meyer} para enfrentar una apropiada validación en modelos espacio-temporales, teniendo encuenta las propiedades de auto-correlación espacial y auto-correlación temporal, donde su combinación es conocida como
+.
+
+* Marco de Referencia
+<<secmr>>
+
+La gestión de los riesgos de sequía tiene por objetivo mejorar la capacidad de la sociedad para hacer frente a eses fenómeno, donde la vigilancia y aletra temprana de la sequía son dos componentes importante de la gestión del riesgo de sequías \cite{wmo2006vigilancia}. \\
+
+El monitoreo de la sequía utilizando índices espectrales puede contribuir a diversos procesos de toma de decisiones y al desarrollo de sistemas de alerta temprana de sequía \cite{PARK2016157}, impactando positivamente las zonas afectadas por este fenómeno. Por este motivo, diferentes autores han abordado esta tématica desde perspectivas diferentes.\\
+
+Como por definición la sequía es una disminución temporal y espacial de la precipitación pues lógicamente los estudios de sequía más clásicos se centran en este parámetro, valiendonse incialmente de estaciones meteorológicas, pasado un tiempo se han integrado otro tipo de variables para el estudio de este fenómeno, que esta estrechamente relacionado con un cambio en la concepción de la sequía. \\
+
+Un caso de este tipo de aproximación que se puede denominar clásica es la descrita por \cite{ceron2014sequias}, donde se evalúa la adaptabilidad que puede tener los agricultores de una cuenca en la region de Dagua, Colombia, por medio del estudio de las estaciones meteorológicas de la zona, evaluando la posición y continuidad temporal de los datos que proveen estas estaciones para realizar su análisis \cite{ceron2014sequias}.\\
+
+Por su parte en \cite{CaracterizacionSequias} se hace un recuento de las diferentes técnicas tanto clásicas como comtemporáneas para la evaluación de sequías, resaltando a su vez las técnicas basadas en el análisis estadístico mediante índices de series históricas de estaciones de campo, técnicas e índices sustentados en la teledetección, y la poderosa combinan
+ que puede resultar de ambas \cite{CaracterizacionSequias}.\\
+
+Sin embargo la complejidad de este fenómeno ha requerido de la combinación de diferentes variables para su caracterización, es el caso de \cite{xu2016research} donde se evaluó la cantidad y la distribución espacial de la precipitación, y a partir de esto se determinó los factores que influencian el fenómeno de la sequía \cite{xu2016research}. Entre los factores evaluados estan:\\
+
+La precipitación, la temperatura, la altitud, la vegetación y la humedad del suelo. Aplicando por su parte /Precipitation Anomaly Percentage (Pa) /, y análisis de correlación \cite{xu2016research}. \\
+
+Ahora bien otros autores como los que se describen a continuación utilizaron unas aproximaciones mas contemporáneas, entre las que resalta la implementación de técnicas de inteligencia artificial (I.A.) aplicadas al sensoramiento remoto en especial para mejorar la resolución espacial de conjuntos de datos que son muy precisos en cuanto a su resolución temporal, y de este modo hacer un control y monitoreó más efectivo.\\
+
+Es el caso de  \cite{park2017drought}, centraron sus esfuerzos en la determinación de la humedad del suelo como índicador de la presnecia o ausencia de la sequía, bajo el supuesto de que la humedad del suelo es un factor clave en el monitoreo de la sequía pues se relaciona con la precipitación, evapotranspitación \\
+
+
+
+
+
+* Marco Metodológico
+<<secmm>>
+** Zona de Estudio
+
+El departamento de La Guajira, es la zona continental mas septrional de Colombia, limita al oriente con Venezuela, al sur con los departamentos del Cesar, y el Magdalena, al occidente y al norte con el Mar Caribe como se puede detallar en la figura [[fig:ZE_salina_grafica3]].\\
+
+Geográficamente el departamento está constituido por la peninsula de La Guajira, una planicie en su centro, y partes de la sierra Nevada de Santa Marta y de la Serranía del Perijá, extendiendose en una superficie de 20 848 (km²). La presencia de estas formaciones montañosas, hace que en este departamento se encuentren todos los pisos termicos de la zona intertropical donde el ecosistema predominante son las zonas deserticas y semidesértica.\\
+
+Por último en cuanto a recursis hídircos sus principales fuentes son el rio Ranchería y el rio Cesar, adempas del Jerez, Ancho y Palomino; adempas de arroyos, pozos acuíferos o jagüeyes  \cite{GLG}; sin embargo esta hidrografía presenta una muy baja regulación hídrica (es decir muchos causes son temporales) lo que limita la recuperación que puede llegar a tener tanto los ecosistemas como las personas a lo fenomenos de sequía\cite{GLG}\cite{garcia2014estudio}.
+
+
+
+#+CAPTION: Zona de estudio del proyecto
+#+ATTR_LATEX: :width 8cm
+#+LABEL: fig:ZE_salina_grafica3
+[[~/Dropbox/0_Tesis/imagenes/ZE_salida_grafica3.png]]
+
+** Conjunto de Datos
+
+El conjunto de datos utilizado para realizar el presente proyecto, se describe a continuación.\\
+
+Variables derivadas de datos /in situ/:
+
+- Precipitación.
+
+Variables derivadas del sensor MODIS y su resolución espacial:
+
+- Temperatura Superficial (LST) (1000 m) \cite{Dewan1999modis}.
+- Índice de Vegetación Normalizado (NDVI) (250 m) \cite{huete1999modis}.
+- Índice de Vegetación Mejorado (EVI) (250 m) \cite{huete1999modis} .
+- Índie de Área Foliar (LAI) (500 m) \cite{knyazikhin1999modis}.
+- Evapotranspiración  (ET) (500 m ).
+
+Variables derivadas del productos CHIRPS (/Group InfraRed Precipitaction with statio data/):
+- Precipitación. (5000 m).
+
+
+
+** Métodos
+
+Como se puede ver en la figura [[fig:flujograma]] donde se puede observar el flujo de trabajo diseñado.
+
+
+#+CAPTION: Flujograma General del Proyecto
+#+ATTR_LATEX: :width 13cm
+#+LABEL: fig:flujograma
+[[~/Dropbox/0_Tesis/imagenes/flujograma2.png]]
+
+
+*** Pre-procesamiento de datos /in situ/
+
+*Selección de estaciones*\\
+*Imputación de datos faltantes*\\
+*Cálculo SPI no paramétrico*\\
+
+*** Pre-procesamiento de datos raster
+
+En esta sección de la metodología se constituye de todos los pasos necesarios para transformar los datos descargados de los servidores de las agencias espaciales y de las Unidades de Investigación de distintas universidades del mundo, transformandolos para ser consumidos por los modelos seleccionados para realizar la fusión.\\
+
+*Descarga de Productos*
+
+El primer paso consiste en la descarga automática de los productos raster utilizados, para esta descarga se utilizaron dos estrategías, según el proveedor de datos.\\
+
+El primer proveedor es la /Universidad de California Santa Bárbara/, en la página web de su /Centro de Riesgos Climáticos/. Que mediante el uso de la herramiena de línea de comandos /WGET/ se creo una pequeña rutina que pudiese descargar los datos diarios de precipitación para el periodo de tiempo de .\\
+
+En segundo lugar y por medio de la utilidad de línea de comandos de la librería de /Python PyModis/ se ejecuto la descarga de los productos derivados del sensor MODIS.\\
+
+*Proyección de datos*
+*Recorte*
+*Ingestión en GRASS GIS*
+*Aplicación Máscara de agua*
+*Homogenenización de la serie raster*
+*Cálculo NDWI y NDDI*
+*Relleno de datos faltantes*
+*** Procesamiento
+*Extracción de valores en la localización de las estaciones*
+*Matriz de entrenamiento*
+*validación cruzada espacio-temporal (LLTO)*
+*** Entrenamiento y ajuste de hiperparamétros
+* Resultados
+<<secresult>>
+** Pre-procesamiento de datos /in situ/
+** Pre-procesamiento de datos raster
+** Entrenamiento y Evaluación de Modelos
+*** Métricas de Error
+** Predicción del SPI no paramétrico
+*** Correlación de las predicciones
+*** Comportamiento Temporal
+*** Comportamiento Espacial
+*** Importancia de las variables
+
+* Discusión
+<<secdisc>>
+
+Distintos autores han investigado el modelamiento y monitoreo de sequías, cada uno proponiendo distintas metodologías que aún no convergen a un único tratamiento del problema, hoy en día varias investigaciones se centran en el uso de técnicas de /machine learning/, como en el presente trabajo, donde se propendé por fusionar datos de diferentes sensores, para aprovechar al máximo las virtudes de cada fuente.\\
+
+Por ejemplo en Colombia, el organismo encargado de monitorear el estado de los recursos hídricos a nivel nacional es el Instituto de Hidrología, Metereología y Estudios Ambientales (IDEAM). Que al igual que lo aquí expuesto realiza un monitoreo mensual del índicador de sequía meteorológica SPI, sin embargo su monitoreo es realizado en ventanas temporales de 1 y 12 meses. Además los métodos usados en su estimación difieren puesto que el IDEAM basa su metodología en un monitoreo clasico desde el punto de vista meramente hídrologico, por lo que sus fuentes de datos se limitan a las estaciones meteorológicas, realizando un exhaustivo análisis hidrológico que incluye estimación de periodos de retorno, análisis tendenciales, entre otros. Finalmente el estudio del IDEAM espacializa el comportamiento de la sequía usando interpolaciones basadas en métodos geoestadísticos, en contraposición a los modelos impulsados por datos expuestos en este trabajo. Dicho lo anterior, no es claro cual es el método utiliado por el IDEAM para espacializar sus registros de SPI cálculados sobre las estaciones meteorológicas, tampoco es claro el error o incertidumbre asociada a dicha estimación.\cite{garcia2014estudio} \cite{ideam2018estudio}.\\
+
+Por otro lado desde el punto de vista de la academia se han presentado una serie de propuestas de mejoras sobre la modelación de sequías, mejoras que dadas las limitaciones de datos y recursos de computo se inteto implementar, por ejemplo la estimación estandar el *SPI* se realiza mediante la estandarización de una función de probabilidad que se ajuste a un racha de precipitación medida en una estación, meteorológica dada; sin embargo esta proximación supone cierta homogeneidad en la zona de estudio, puesto que asume que el comportamiento de la precipitación sera similar en un área determinada.\\
+
+Este no siempre es el caso, sobre todo cuando los estudios cubre áreas extensas, debido a lo anterior\cite{farahmand2015generalized}, introduce en al literatura el *SPI No Paramétrico*, que proponen dada la falta de flexibilidad del método actual, este consiste en ajustar una función de probabilidad empírica a las precipitacionesde cada estación meteorológica de la zona de estudio, y posteriormente realizar la estandarización para estimar el SPI.\\
+
+En su estudio \cite{farahmand2015generalized} en comparación al presnete estudio, trabajan su modelación de sequía a una resolucion menos detallada, en una extensión global y con unas fuentes de datos que se limitan a datos de preciítación cálculados por diferentes centros espcializadis a nivel internacional, además por la amplitud de la zona de estudio usan el algoritmo k-vecinos (para identificar 5 regiones climáticas) como aproximación a la regionalización climática de su zona de estudio y proceden a cálcular modelos individuales especializados para cada uno de  los cinco regiones. Finalmente y probablemente debido a la mayor amplitud de las fuentes de intormación obtengan resultados relevantes como un R² mínimo de 0.95, en compración al R² de 0.777 en promedio para el Random Forest y el R² de 0.769 para el XGBoosts obtenidos en este estudio.\\
+
+Más recientemente la literatura en cuanto a la modelación de sequías a virado a el uso de técnicas que permitan una espacialización fidedigna de los índices de sequía cálculados usando datos de estaciones meteorológicas, es el caso de \cite{rhee2017meteorological}, \cite{PARK2016157}, \cite{park2017drought}. \\
+
+Esta clase de aproximaciones a la sequía, al ser basados en modelos impulsados por datos, usualmente requieren de una gran cantidad de datos para ajustar los modelos, por lo que la baja densidad y en ocaciones los problemas de calidad de los datos en la zona estudiada pueden llegar a impactar la capacidad de los modelos para explicar el fenómeno de sequía estudiado.\\
+
+Aunque los autores consultados realizaron estudios con un
+
+
+
+* Conclusiones
+<<secconclu>>
+
+En el presente trabajo se implemento una metodología para el modelamiento de una función de interpolación no líneal, para la espacialización del indicador *SPI no paramétrico* en la zona de estudio del departamento de La Guajira, Colombia entre el año *2000* y el año *2014*. Como un estudio de caso en el modelamiento de sequías.\\
+
+Para lo anterior, se sustentaron los pasos metológicos en revisión de literatura, de diferentes diciplinas, que desde su perspectivan apoyaron a diferentes partes del presente trabajo.\\
+
+El proceso metodológico compredió la identificación, evaluación y selección de una serie de estaciones meteorológicas entre *1982* y el *2012* aptas para el cálculo del SPI no parametrico mediante la agregación de la precipitación a acumulados mensuales y su relleno en aquellas ventanas temporales donde existían datos faltantes mediante un método de imputación de datos; adempas de la descarga,  proyección, recorte, aplicación de mascara y homogenización terporal con el acumulado o promedio de datos a nivel mensual.\\
+
+Se seleccionaron variables explicatias y se optó por tres modelos de aprendizaje de maquina para realizar la interpolación, las redes neuronales, y clásico y robusto Random Forest, y la promesa XGBoosts.\\
+
+De estos el que mejor resultado obtuvo fue en XGBoosts con una correlación o R² de 0.777 y de un MSE de 0.914 y un MAE de 0.841 frente a Random Forest con un R² de 0.768 y un MSE de 0.914 y un MAE de 0.841.\\
+
+Al ser datos con autocorrelacion espacial y temporal se optó por realizar el entrenamiento de los modelos usando la metodología de validación cruzada k-fold tipo LLTO (Leave Location and Time Out) con el fin de obtener una evaluación mas fidedigna.\\
+
+Esta metodología presneta  fortalezas como la posibilidad de aplicarse sobre vastos territoriso sin cambio ssignificativos, su escaliabilidad para realizar un monitoreo a nivel nacional, funciona con una precisión alta a pesar de la poca disponibilidad de información. Pero tiene debilidades como la necesidad de investigar más sobre los modelos espacio temporales y como evaluarlos.\\
+
+El presente trabajo como caso de uso, puede ser un insumo para la formulación de monitoreo de sequías por  parte de las autoridades del país, las metodoloias expuestas aunque en una área limitada, demuestran que es posible escalarlas.
+
+Algunos temas dejados por fuerta de este trabajo tienen el potencial de mejorar los resultados aquí expuestos, por ejemplo la incorporación de experimentos en metodos mas sofisticados de selección de caracteristicas de evaluación de los modelos con conjuntos de datos independiantes, entre otros.
+
+
+
+* Observaciones y Recomendaciones
+<<secobs>>
+* Anexos
+<<secanex>>
+** AED Estaciones Metereológicas
+** Imputación de datos
+** Gráficos Adicionales
+** Ciencia Reproducible
+
+En el animo de seguir los postulados de la /Ciencia Reproducible/, que aboga por compartir libremente no solo los resultados de una investigación sino de los elementos necesarios para reproducirla, esto incluye una descripción clara del procedimiento seguido, los datos en orden de ejecutar los experimentos sumado a el codigo fuente y el ambiente de desarrollo usado, con el fin de detectar porsibles errores. \\
+
+En este orden de ideas es posible consultar a través de internet los elementos anteriormente descritos, en las siguientes plataformas.\\
+
+- Ambiente de desarrollo:
+ *[[https://hub.docker.com/repository/docker/jsvinasco/grass-py3-ml2][DockerHub]]*
+
+- Codigo desarrollado:
+ *[[https://github.com/JSVinasco/spatioTemporalDrought][Repositorio en GitHub]]*
+
+- La base de datos generada para este proyecto:
+  *[[https://drive.google.com/drive/folders/1P6Wa3zRBHy4u5txvLanaA6nBIgrA3vAB?usp=sharing][Sequía]]*
+
+
+
+* Bibliografía
+<<secbiblio>>
+  :PROPERTIES:
+  :TITLE: f
+  :UNNUMBERED: t
+  :END:
+  #+LATEX: \printbibliography[heading=none]
+
+* Footnotes
+
+[fn:8] https://www.usgs.gov/faqs/what-remote-sensing-and-what-it-used?qt-news_science_products=0#qt-news_science_products
+
+[fn:7] https://oceanservice.noaa.gov/facts/remotesensing.html
+[fn:6] https://www.sciencedirect.com/topics/agricultural-and-biological-sciences/remote-sensing
+
+[fn:5] En este trabajo utilizaremos los terminos *Sensores Remotos*, *Teledetección* u *Observación de la Tierra* de manera indistinta y siempre refiriendonos a el estudio de variables bio-físicas por medio de sensores sobre plataformas satelitales.
+[fn:4] Las sequías agricolas y socio-economicas queda por fuera del alcance de este trabajo, aunque algunas de las variables que describen el estres hídrico son usadas como predictores.
+
+[fn:1]https://deepmind.com/learning-resources/deep-learning-lecture-series-2020
+
+[fn:2]http://introtodeeplearning.com/
+
+[fn:3]http://introtodeeplearning.com/
