@@ -36,30 +36,30 @@
 #+latex_header: \titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
 #+latex_header: \usepackage{fancyhdr}
 #+latex_header: \pagestyle{fancy}
+#+LATEX_HEADER: \usepackage{subcaption}
+#+LATEX_HEADER: \captionsetup[table]{skip=8pt}
+# +PROPERTY: header-args : exports none :tangle "~/Dropbox/Anteproyecto/bibliography/sequia.bib"
 
-
-# +PROPERTY: header-args : exports none :tangle "/home/juan//Dropbox/Anteproyecto/bibliography/sequia.bib"
-
-# +PROPERTY: header-args : exports none :tangle "/home/juan/Dropbox/bibliography/biblioteca.bib"
+# +PROPERTY: header-args : exports none :tangle "~/Dropbox/bibliography/biblioteca.bib"
 
 
 # +LATEX_HEADER: \usepackage{biblatex} \DeclareFieldFormat{apacase}{#1} \addbibresource{~/Dropbox/Anteproyecto/bibliography/sequia.bib}
 
 # biblatex
-# +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/Anteproyecto/bibliography/sequia.bib}
-# +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/Anteproyecto/bibliography/sequia.bib}
+# +LATEX_HEADER: \addbibresource{~/Dropbox/Anteproyecto/bibliography/sequia.bib}
+# +LATEX_HEADER: \addbibresource{~/Dropbox/Anteproyecto/bibliography/sequia.bib}
 
 # +LATEX_HEADER: \usepackage{parskip}
 # +LATEX_HEADER: \bibliographystyle{ieeetran}
 # +LATEX_HEADER: \usepackage[natbib=true,backend=biber]{biblatex}
-# +LATEX_HEADER: \addbibresource{/home/juan/Dropbox/bibliography/biblioteca.bib}
+# +LATEX_HEADER: \addbibresource{~/Dropbox/bibliography/biblioteca.bib}
 
 
 
 #+LATEX_HEADER: \usepackage{parskip}
 #+LATEX_HEADER: \bibliographystyle{ieeetran}
 #+LATEX_HEADER: \usepackage[natbib=true,backend=biber]{biblatex}
-#+LATEX_HEADER: \addbibresource{/home/juan/Dropbox/Anteproyecto/bibliography/sequia.bib}
+#+LATEX_HEADER: \addbibresource{~/Dropbox/Anteproyecto/bibliography/sequia.bib}
 # +PROPERTY: header-args : exports none :tangle "/home/juan//Dropbox/Anteproyecto/bibliography/sequia.bib"
 #+KEYWORDS:   Sequı́a, Aprendizaje de Maquina, Modelos Espacio Temporales
 
@@ -80,7 +80,7 @@
   \small Universidad del Valle\\
   Facultad de Ingenier\'\i{}a, Escuela Ingenier\'\i{}a Civil y Geom\'atica\\
   Santiago de Cali, Colombia\\
-  2021\\
+  2022\\
   \end{center}
 
   \newpage{\pagestyle{empty}\cleardoublepage}
@@ -101,7 +101,7 @@
   Universidad del Valle\\
   Facultad de Ingenier\'\i{}a, Escuela Ingenier\'\i{}a Civil y Geom\'atica\\
   Santiago de Cali, Colombia\\
-  2021\\
+  2022\\
   \end{center}
 
   \newpage{\pagestyle{empty}\cleardoublepage}
@@ -127,7 +127,6 @@
   \newpage{\pagestyle{empty}\cleardoublepage}
 \end{titlepage}
 
-  \newpage
 
 
 
@@ -135,6 +134,7 @@
 
 #+END_EXPORT
 
+#  \newpage
 
 * Agradecimientos
   :PROPERTIES:
@@ -165,7 +165,23 @@
   A todos los anteriores, gracias totales !!! \\
 
 
+#+LATEX:  \newpage
 
+* Abreviaturas
+  :PROPERTIES:
+  :UNNUMBERED: notoc
+  :END:
+
+ NDVI : Índice Normalizado de Vegetación.\\
+ NDWI : Índice de Agua Normalizado.\\
+ EVI : Índice de Vegetación Mejorado. \\
+ LST : Temperatura Superficial. \\
+ SPI: Índice de Sequía Estandarizado.\\
+ SPI No Paramétrico: Índice de Sequía Estandarizado No Paramétrico.\\
+ RF : /Random Forest/ o Bosque Aleatorio.\\
+ XG : /XGBoost/ o /Xtrem Gradient Boosting/ o Aumento Extremo del Gradiente.\\
+ NN : /Neural Networks/ o Redes Neuronales Aritificiales\\.
+#+LATEX:  \newpage
 * Resumen
   :PROPERTIES:
   :UNNUMBERED: notoc
@@ -203,18 +219,19 @@ Obtaining a time series of SPI maps for the total length of the study, the model
 
 
   Key words (Drought, Mahine Learning, Spatio-Temporal Models). \\
-# \ex_header: definecolor{gray75}{gray}{0.75}
+# \latex_header: definecolor{gray75}{gray}{0.75}
 
 #+BEGIN_EXPORT latex
 \tableofcontents
 \listoffigures
+\listoftables
 #+END_EXPORT
 
 * Introducción
 <<secintro>>
 
 
-Las sequías son... \\
+Las sequías como fenomenos hidrometeorológicos extremos dependendiendo de las condiciones de la zona afectada pueden llegar a tener una incidencia mayor sobre las comunidades que la padecen, sin embargo la caracterización de esta es difícil debido a su comportamiento espacio-temporal sobre amplías zonas y la ausencia de una estrategía de muestro de información que capture la integridad del fenomeno.\\
 
 En el presente trabajo se propone la estimación y monitoreo de parámetros biofísicos relacionados con la sequía utilizando modelos de inteligencia artificial. Se utilizaron datos mensuales desde *1982* hasta *2014*, de precipitación provenientes de estaciones meteorológicas y datos entre el año *2000* y el *2014* de diferentes plataformas espaciales.\\
 
@@ -224,9 +241,7 @@ Del producto CHIRPS se obtuvo valores de precipitación en (mm) derivados de sat
 
 El proceso metológico compredió en la identificación, evaluación y selección de imputación de datos, recorte y homogenización de las series de tiempo de todos los datos utilizados y extracción de datos de pixeles en los que se encontraban ubicadas las estaciones meteorológicas. Con los datos de las estaciones meteorológicas se cálculo el índice de precipitación estandarizado (SPI) no paramétrico. Donde además con los datos derivados de los productos satelitales se busco espacializar el indicador SPI mediante experimentos con tres modelos de inteligencia artificial diferentes, red neuronal perceptron multicapa, bosque aleatorio, XGBoosts; para tener en cuenta las particularidades de los datos espaciales y temporales, como los son sus propiedades de autocorrelacion espacial y temporal se implementó una metodología llamada validación cruzada espacio-temporal, de modo que los resultados obtenidos fueran realistas y no sobre optimistas.
 
-De modo que el presente documento se encuentra constituido por los siguientes capitulos.
-
-
+De modo que el presente documento se encuentra dividido en diferentes capitules, los cuales son Introducción [[secintro]], Planteamiento del Problema [[secpm]], Objetivos [[secobj]], Justificación [[secjust]], Marco Conceptual [[secmc]], Marco Teórico [[secmt]], Marco Referencial [[secmr]], Marco Conceptual [[secmm]], Resultados [[secresult]], Discusión [[secdisc]], Conclusiones [[secconclu]], Observaciones y Recomendaciones [[secobs]], Anexos [[secanex]], Bibliografía [[secbiblio]].
 
 * Planteamiento del Problema
 <<secpm>>
@@ -292,7 +307,7 @@ La sequía es un fenómeno hidrometeorológico, en el que a raíz de un deficit 
 
 Un aspecto importante a tener en cuenta es que a diferencia de otros fenómenos naturales causantes de desastres, las sequías son acontecimientos que se desarrollan de manera lenta en el tiempo y extendida en el espacio, es decir su formación se ve en términos de semanas y meses, en casos extremos en años (no confundir con desertificación). \\
 
-En consecuencia, la sequia es un fenómeno hídrologico incluido en el contexto del ciclo hidrológico, y dad su ocurrencia, sus efectos se van propagando en cada parte del sistema, tomando diferentes denominaciones según la clase de recurso hídrico impactado, a continuación se describen los tipos de sequía mas aceptados en la literatura y en particular se señala la variable del ciclo hídrologico afectada. \\
+En consecuencia, la sequia es un fenómeno hídrologico incluido en el contexto del ciclo hidrológico, y dada su ocurrencia, sus efectos se van propagando en cada parte del sistema, tomando diferentes denominaciones según la clase de recurso hídrico impactado, a continuación se describen los tipos de sequía mas aceptados en la literatura y en particular se señala la variable del ciclo hídrologico afectada. \\
 
 *** Sequía Meteorológica
 <<seqmeteo>>
@@ -322,6 +337,7 @@ Los sensores remotos y las rachas de datos hidrometeorológicos son la forma es 
 Las rachas de datos hidrometeorológicos se refieren a datos climaticos u ambientales tomados en campo con el objetivo de estudiar o monitorear un fenómeno bio-físicos que pueden ser muy distintas mediciones con muy diferentes estrategías de medición. Eso sí dadas las caracteristicas de la sequía como se mensiona en la sección  [[modseq]], es preciso usar variables ambientales relacionadas con el ciclo hidrológico, mas aún dados los largos periodos de retorno de la sequía, es preponderante que los registros sean de la más larga duración posible, registros de variables como la precipitación, la temperatura y la evapotranspitación (por poner algunos ejemplos) de las estaciones climatológicas e hidrometeorológicas de una zona geográfica en particular. \\
 
 ** Sensores Remotos
+<<secsr>>
 
 Los sensores remotos son en su definición mas general todos aquellos instrumentos capaces de obtener información sobre un objetivo de manera indirecta o a distancia; no obstante la clase específica de sensores remotos utiles para el estudio de la sequía se refiere usualmente a sensores transportados en vehículos satelitales, el estudio de las diferentes variables biofísicas a través de dichos sensores se conoce por diferentes nombres, sensores remotos o teledetección en la literatura norteaméricana u observación de la tierra en la literatura europea[fn:5].\\
 
@@ -367,22 +383,42 @@ Una caracteristica importante del tipo de información básica derivada de senso
 Es preciso aclarar que las sequías se constituyen en uno de los peligros naturales más costosos económicamente hablando además de ser uno de los técnicamente mas desafiantes  \cite{svoboda2016handbook}; puesto que las zonas afectadas usualmente cubren áreas mucho mas extensas que la de otros fénomenos naturales considerados desastres (por ejemplo un inundación), sumado a el hecho de que su ocurrencia es gradual o paulatina, esto la hace especialmente suceptible al monitoreo constante  \cite{svoboda2016handbook}. \\
 
 # introduzco las estrategias para modelar la sequia
-Ahora bien desde el punto de vista del modelamiento del fenómeno, y haciendo énfasis en las características de este, entre otras un comportamiento altamente variable tanto en el espacio, como en el tiempo; es posible utilizar tres aproximaciones diferentes para su descripción, estas son un enfoque basado en el comportamiento temporal, la espacialización de este enfoque temporal y finalmente una aproximación usando datos remotamente sensados.
+Ahora bien desde el punto de vista del modelamiento del fenómeno, y haciendo énfasis en las características de este, entre otras un comportamiento altamente variable tanto en el espacio, como en el tiempo; Dada la complejidad señalada, y con el objetivo de usar una metrica resumén del comportamiento del fenómeno se han desarrollado y adoptado según el caso diferentes índices para medir el comportamiento de la sequía. \\
+
+Podemos dividir estos índices en dos grandes familias, los índices relacionados a las rachas de datos hidrometeorológicos y aquellos que tienen su origen en datos derivados de teledetección espacial.\\
+
 
 # modelamiento temporal o clasico
+Para empezar los índices basados en rachas de datos hidrometeorológicos, usualmente desarrollan diferentes ténicas de transformación, ponderación, y estandarización de variables relacionadas al ciclo hidrológico \cite{CaracterizacionSequias}. Entre los indicadores mas utilizados encontramos el Índice de Precipitación Estandarizado o *SPI*, y el *Índice de Sequía de Palmer*. El primero es un tipo de estandarización de la precipitación, y es usado para el modelamiento de sequías meteorológicas, el segundo mas complejo que el anterior usa una aproximación a un balance hídrico sobre la zona de estudio.\\
 
 # adolencen estos metodos
+Ahora bien, este tipo de aproximaciones tienen varias limitaciones, la principal recae sobre la disponibilidad y calidad de los datos necesarios para cálcular los índices, esta es los periodos de retorno propios del ciclo hidrologico, por lo que es necesario que las rachas de datos tenga un mínimo de 30 años continuos.\\
+
+Por otro lado, dado que estos índices de sequía son cálculados, en base a datos de estaciones meteorológicas o hídrologicas, tambien es cierto que las estimaciones son confiables en el punto exacto en el que se muestreo la información. Por lo que la información de la sequía carece de una dimensión espacial.\\
 
 # geoestadistica como estrategia para espacializar
+Para esto ultimo, se han aplicado estimaciones basadas en una rama de la estadística llamada geoestadistica, que tiene entre otros como objetivo estimar los valores de una variables en el espacio dado un muestro espacial. Sin embargo la precisión de estas aproximaciones no es la deseable. \\
 
 # modelamiento por radiación electromagnética
-Por el contratio a lo anterior, los
+Por otro lado, y desde los años ochentas, se han desarrollado, pero sobretodo adaptado índices basados en la teledetección como aproximación a la sequía, dada la capacidad de la teledetección para capturar información relacionada con el contenido de clorofila, humedad de la hoja o temperatura de la superficie \cite{CaracterizacionSequias}.\\
+
+Uno de los indicadores clasicos para seguir el comportamiento del estado vegetativo de las plantas en el /Índice de Vegetación Normalizado/ o *NDVI*, variaciones de este como el /Índice de Vegetación Mejorado/ tambien son ampliamente usados. Otros como el /Índice de Área Foliar/ o el /Índice de Agua Normalizado/ o el /Índice de Sequía Normalizado/ pueden ser buenos descriptores del comportamiento de la sequía.\\
+
+Sin embargo , los datos remotamente sensados, pueden ser usados como entrada para complejos modelos de inversión de la transferencia radiativa y cálcular otro tipo de variables de interes como lo son la Temperatura Supercial o *LST* por sus siglas en ingles (/Land Surface Temperature/) o incluso estimaciones de la /Evapotranspiración/ (*ET*) o incluso estimaciones de la precipitación.\\
+
+Sin embargo estos métodos usualmente adolecen precisiones altas para caracterizar el comportamiento de la sequía.\\
+
 
 # Fin de los metodos clasicos
+Ahora bien, el paso lógico seria mezclar información proveniente de las rachas hidrológicas y de los datos remotamente sensados para obtener productos de sequía operacionales con una alta precisión y una distribución homogenea en el espacio. Sabido que no existe una manera obvia de combinar estas fuentes de datos y de su comportamiento no líneal, el uso de métodos impulsados por datos puede ser una manera factible de combinar esta información.\\
 
 ** Técnicas basadas en modelos impulsados por datos para el modelamiento de Sequías
 
-Los modelos impulsados por datos son una familia de modelos y/o algoritmos capaces de establecer relaciones entre distintas variables y adaptarse de acuerdo al fenomeno estudiado, esta flexibilidad los hace atractivos para entre otras cosas servir de puente entre los diferentes tipos de datos recolectados para modelar la sequía y fusionarlos de manera que se explote los puntos fuertes de cada estrategía y se cubran los puntos debiles.
+Los modelos impulsados por datos son una familia de modelos y/o algoritmos capaces de establecer relaciones entre distintas variables y adaptarse de acuerdo al fenomeno estudiado, esta flexibilidad los hace atractivos para entre otras cosas servir de puente entre los diferentes tipos de datos recolectados para modelar la sequía y fusionarlos de manera que se explote los puntos fuertes de cada estrategía y se cubran los puntos debiles.\\
+
+Genericamente los modelos impulsados por datos son conocidos como "/Inteligencia Artificial/", y se corresponde con el estado actual del intento de la humanidad por sintetizar su propia inteligencia, ahora bien los modelos impulsados por datos son un conjunto enorme de algoritmos y modelos matematicos, alimentado por otras ramas del saber, entre sus grandes aportantes tenemos a el /Aprendizaje Estadístico/ y el /Aprendizaje de Maquina/.\\
+
+Actualmente varios de los algoritmos desarrollados en esta rama del saber se encuentran en desuso, y la mayoría de los esfuerzos se centran en dos grandes familias, los algoritmos basados en arboles de decisión, y los algoritmos basados en redes neuronales artificiales, en particular un sub-grupo de estos modelos conocido como /Aprendizaje Profundo/, ha recibido mucha atención desde el 2014 año en el que se empezo a popularizar en el campo de la visión por computador; sin embargo este se encuentra por fuera del alcance de este trabajo.\\
 
 
 
@@ -395,11 +431,14 @@ Continuando con el capitulo anterior la Parte [[secmc]] donde se presentan algun
 # Aproximacion matematica a la sequia definir SPI y SPI no estandarizado
 Para empezar y recapitulando en la sección [[secdef]] la sequía es básicamente una perturbación sobre el ciclo hídrologico, la aproximación mas obvia a la sequía meteorologica es medir la perturbación del agua precipitada sobre la region de estudio. \\
 
-Existen distintas maneras de modelar la perturbación o el deficit de la precipitación sin embargo la Organización Meteorológica Mundial recomienda el uso de entre otros el Índice de Precipitación Estandarizado o *SPI*, este fue introducido por investigadores de la Universidad Estatal de Colorado \cite{mckee1995drought}. y fue diseñado para cuantificar los déficits de precipitación a partir de una serie o racha de datos de precipitación continuamente
+Existen distintas maneras de modelar la perturbación o el deficit de la precipitación sin embargo la Organización Meteorológica Mundial recomienda el uso de entre otros el Índice de Precipitación Estandarizado o *SPI*, este fue introducido por investigadores de la Universidad Estatal de Colorado \cite{mckee1995drought}. y fue diseñado para cuantificar los déficits de precipitación a partir de una serie o racha de datos de precipitación medido continuamente por al menos 30 años.\\
+
+Los posibles valores del SPI y su interpretación se listan en el cuadro [[tab:spi]].
 
 #+tblname: tab:spi
 #+CAPTION: Valores de Referencia del SPI\\
 #+ATTR_LATEX: :align |l|r|
+|--------------------+-------------------------|
 | Valor SPI          | Intensidad de la Sequía |
 |--------------------+-------------------------|
 | SPI > 2.0          | Severamente Humedo      |
@@ -408,19 +447,26 @@ Existen distintas maneras de modelar la perturbación o el deficit de la precipi
 | 1.0 <= SPI <= -1.0 | Normal                  |
 | -1.5 <= SPI -1.0   | Anormalmente Seco       |
 | SPI < -2.0         | Severamente Seco        |
+|--------------------+-------------------------|
 
+Para obtener el SPI original, se aplica el siguiente algoritmo a partir de los resgistros de precipitación, agregados en ventanas de 3, 6 o 9 meses comúnmente, luego se realiza la visualización en frecuencia de la preciítación acumulada.
 
+Luego se verifica empíricamente que la precipitación no sigue una distribución normal o gaussiana, por lo que se aplica la siguiente ecuación [[eqn:gaussiana]] que corresponde a la función de densidad gamama \cite{fonnegra2017desarrollo}.\\
 
 #+NAME: eqn:gaussiana
-    \begin{equation}
-    g(x) =  \frac{ 1 }{  \beta^{\alpha} \gamma(\alpha) } x^{\alpha - 1} e^{\frac{-x}{\beta} }, (x > 0)
+\begin{equation}
+g(x) =  \frac{ 1 }{  \beta^{\alpha} \gamma(\alpha) } x^{\alpha - 1} e^{\frac{-x}{\beta} }, (x > 0)
 \end{equation}
 
-#+NAME: eqn:prob
-    \begin{equation}
-    G(x); \int_{0}^{x} g(x)dx = \frac{ 1 }{  \beta^{\alpha} \gamma(\alpha) } = \int_{0}^{x} x^{\alpha - 1} e^{\frac{-x}{\beta} } dx
-    \end{equation}
+donde $\alpha$ es un parámetro de ajuste ($\alpha > 0$), $\beta$ es un parámetro de escala ($\beta >0$) y $x$ la cantidad de precipitación acumulada ($x>0$). De manera que la probabilidad acumulada de precipitación para una escala de tiempo dada es de ([[eqn:prob]]):
 
+
+#+NAME: eqn:prob
+\begin{equation}
+G(x); \int_{0}^{x} g(x)dx = \frac{ 1 }{  \beta^{\alpha} \gamma(\alpha) } = \int_{0}^{x} x^{\alpha - 1} e^{\frac{-x}{\beta} } dx
+\end{equation}
+
+Los parámetros de forma y escala ([[eqn:forma]], [[eqn:escala]]) se calculan usando las siguientes ecuaciones. \\
 
 #+NAME: eqn:forma
 \begin{equation}
@@ -433,42 +479,55 @@ Existen distintas maneras de modelar la perturbación o el deficit de la precipi
 \end{equation}
 
 
+Que a su vez dependen de una variable auxiliar definida por ([[eqn:aux]]):\\
+
 #+NAME: eqn:aux
 \begin{equation}
 A = ln(\Bar{x}) - \frac{\sum ln (x)}{n}
 \end{equation}
 
 
+Donde n es el número de precipitaciones observadas y \Bar{x} es el promedio de la precipitación bajo la escala de interés \cite{fonnegra2017desarrollo}.\\
+
+
+Dado que es posible que exista una precipitación de cero y la función gamma es indefinida para este valor, se aplica un factor de corrección al ajuste que depende de la precipitación nula. Donde la probabilidad acumulada total es de: ([[eqn:corr]])\\
 
 #+NAME: eqn:corr
 \begin{equation}
 H(x) = q + (1 - q ) G(x)
 \end{equation}
 
+Donde q  es la probabilidad de que ocurra un cero y este se calcula como \(q= m/n\), siendo \(m\) el número de ceros en la serie de tiempo n. Por otra parte \((1-q)\) es la probabilidad de que no ocurra un cero \cite{fonnegra2017desarrollo}.\\
+
+Ahora como para transformar esta función de densidad de probabilidad 	acumulada a la distribución normal, se aplica la siguiente ecuación ([[eqn:densidad]]):
 
 #+NAME: eqn:densidad
-    \begin{equation}
+\begin{equation}
 H(x) = \frac{1}{\sqrt{2 \pi}} \int_{\infty}^{x} e^{\frac{-t^2}{2}}dt
 \end{equation}
 
+Dándose dos posibles casos de solución:\\
+
+
+- Caso 1: 0 < H(x) \leqslant 0,5.
 
 #+NAME: eqn:caso11
 \begin{equation}
 SPI = -( t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 d_3 ^t3})
 \end{equation}
 
-
 #+NAME: eqn:caso12
 \begin{equation}
 t = \sqrt{-2 * ln (H(x))}
 \end{equation}
 
+- Caso 2: 0.5 < H(x) \leqslant 1.
+
+
 #+NAME: eqn:caso21
 \begin{equation}
 SPI =  t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 d_3 ^t3}
 \end{equation}
-
-
 
 #+NAME: eqn:caso22
 \begin{equation}
@@ -476,16 +535,42 @@ t = \sqrt{-2 * ln(1-    H(x))}
 \end{equation}
 
 
+Con valores de constantes de: $c_0$ = 2,515517, $c_1$ = 0, 802853, $c_2$ = 0,010328, $d_1$ = 1, 432788, $d_2$ = 0,189269, $d_3$ =0, 001308 \cite{fonnegra2017desarrollo}.\\
+
+Sin embargo este indicador adolece de algunas propiedades necesarias para su aplicación sobre extensas áreas geográficas. Entre estas la precipitación se constituye en el único dato de entrada del indicador, dejando de lado variables relevantes como lo son la temperatura, o la humedad del suelo \cite{svoboda2016handbook}.\\
+
+
+
+Otra variable importante a tener en cuenta es la longitud mı́nima de registro necesaria para la aplicación de este índice que viene a ser de no menos de 20 años, y se recomiendan al menos 30 sin embargo en paı́ses en desarrollo como el que nos atañe estos registros son más bien escasos  y además de eso la consistencia de los datos usualmente no es la idónea y se presentan periodos de tiempo sin registros, o registros erróneos debido a daños en los sensores.\\
+
+
+Finalmente la debilidad más importante del SPI en su cálculo ordinario presupone que el registro en frecuencia de la precipitación se ajusta a una distribución de probabilidad usualmente la distribución gamma, sin embargo y especialmente cuando existen áreas extensas y comportamiento climático variado se puede dar el caso que diferentes distribuciones de probabilidad se ajusten a diferentes condiciones climato-geográficas o sencillamente que el supuesto no se cumpla.\\
+
+
+Esta última dificultad fue abordada en el año 2014 por dos investigadores de la universidad del California Irvine \cite{farahmand2015generalized}, que propusieron un marco general para la derivación de indicadores de sequía no paramétrica estandarizada.\\
+
+
+Para esto los autores proponen sustituir el ajuste de una distribución de probabilidad (gamma en el ejemplo anterior), por una función de probabilidad empı́rica, por medio de un método llamada empirical gringorten plotting position. Lo anterior expresado de una forma más formal, se describe en la siguiente sección:\\
+
+
+Partiendo de la ecuación (5 -8 [[eqn:gaussiana]] ), el método propone reemplazar la función gamma por la posición de graficación de 	gringorten denotada por ([[eqn:prob2]]):\\
+
 #+NAME: eqn:prob2
 \begin{equation}
 p(X_i) = \frac{i - 0.44}{n + 0.12}
 \end{equation}
 
+donde n denota el tamaño de la muestra, i denota el rango de la precipitación no cero, y p(xi) corresponde a la probabilidad empı́rica. Usando esta aproximación empı́rica	no necesita de la ecuaciones (5-14, 5-15, 5-16, 5-17, 5-18 )  ([[eqn:densidad]],[[eqn:caso11]],[[eqn:caso12]],[[eqn:caso22]])
+para derribar probabilidades empı́ricas la salida de la ecuación p(X)puede ser transformada en un índice estandarizado mediante la siguiente ecuación ([[eqn:si]]):\\
 
 #+NAME: eqn:si
 \begin{equation}
 SI = \phi^{-1} (p)
 \end{equation}
+
+
+donde \phi corresponde a la función de distribución normal  y p es la probabilidad derivada de (5 - 19 [[eqn:prob2]]) También se pueden estandarizar los percentiles utilizando la siguiente aproximación comúnmente utilizada ([[eqn:si2]]).\\
+
 
 #+NAME: eqn:si2
 \begin{equation}
@@ -497,22 +582,89 @@ t - \frac{c_0 + c_1 t + c_2 t^2}{1 + d_1 t + d_2 t^2 d_3 ^t3}  si 0.5 < p 	\leq 
     \right.
 \end{equation}
 
-# ** Datos
-# Definir las rachas de datos hidrometeorológicos
-# *** Rachas de datos hidrometeorológicos /in situ/
-# *** Información derivada de datos satelitales
-# **** Índices basados en Teledetección
-# **** Productos de Teledetección
+donde \(c_0 = 2.515517; c_1 0.802583; c_2 = 0:010328; d_1 1.432788; d_2 = 0.189269; d_3 = 0.001308\) \\
+
+
+
 
 ** Modelos
+
+Ahora bien, las aproximaciones matematicas a la hora de modelar el comportamiento de la sequía dependen en buena medida del tipo de mediciones que se esten utilizando para su caracterización, distinguiremos dos tipos de datos, los datos de rachas hidrometeorológicas en este caso de precipitición, con dos sub casos el analisis temporal y el analisis espacial de estos; por otro lado distingueremos los datos provinientes de sensores remotos.\\
+
+
 *** Datos /in situ/
+
+Las rachas de datos hidrometeorológicos /in situ/ por sus características intrínsecas es posible realizar ciertas modelaciones
+
+
 **** Series de Tiempo
+
+Primeramente una *Serie de Tiempo* es posible definirla como una serie de puntos indexados en el tiempo, que cumplen la propiedad de que los intervalos temporales en los que se tomand las medidas son constantes y dotados de una dependencia estadística entre unos y otros.\\
+
+La dependencia puede ser definida como la relación líneal entre una serie y una versión retrasada de sí misma en el tiempo, también conocida como auto-correlación temporal. Esta ultima puede ser expresada matematicamente por medio de la Función de Autocorrelación (/ACF/ [[eqn:ACF]] por sus siglas en íngles), que es descrita matematicamente mediante la seguiente ecuación:\\
+
+#+NAME: eqn:ACF
+\begin{equation}
+p(s,t) = \frac{\gamma(s,t)}{\sqrt{\gamma(s,t) \cdot \gamma(t,t)}}\\
+\end{equation}
+
+
+
+Dada la autocorrelación temporal de las series de tiempo, estas tienden a tener comportamientos mas o menos ciclicos, dichos comportamientos pueden dividirse en tres elementos constituyentes para facilitar su modelamientos, y pueden ser
+.
+
+
+#+NAME: eqn:tdc
+\begin{equation}
+Y (t) = T (t) + S (t) + e (t)
+\end{equation}
+
+La tendencia se refiere a el crecimiento, decrecimiento o estanciamiento de la serie a lo largo de toda la ventana temporal de estudio y se puede definir matematicamente como :
+
+#+NAME: eqn:tendencia
+\begin{equation}
+\widehat{T}_{tendencial}   = \frac{1}{m} \cdot \sum_{k=-k}^{k} y_t + j,
+\end{equation}
+
+Por su parte la estacionalidad, se refiere a los ciclos cuasí-repetitivos de una serie temporal dada, definiendose matematicamente como:
+
+#+NAME: eqn:estacionalidad
+\begin{equation}
+\widehat{T}_{t estacional} = \frac{1}{8}y_{t-2} +\frac{1}{4}y_{t-1} + \frac{1}{4}y_{t} + \frac{1}{4}y_{t+1} + \frac{1}{4}y_{t+2}
+\end{equation}
+
+El ultimo componente es la aleatoreidad de la serie temporal, definido como $e(t)$ y como su nombre lo dice tiene un comportamiento aleatorio.
+
+El planteamiento anterior de las series temporales, puede ser usado para la imputación de datos faltantes, en particular para el método /Seasonally Decomposed Missing Value Imputation/.\\
+
+Este método funciona bajo el supuesto de que la serie puede ser caracterizada por los tres anteriores elementos constituyentes, y estima un valor faltante de una serie temporal dado en un tiempo dado, según el valor de la tendencia y la estacionalidad, y calcula el error de esta estimación como:\\
+
+#+NAME: eqn:error
+\begin{equation}
+\widehat{T}_{t error} = \widehat{T}_t - (\widehat{T}_{ tendencial} + \widehat{T}_{t estacional})
+\end{equation}
+
+Finalmente asigna o imputa el valor faltante según la siguiente ecuación:
+
+#+NAME: eqn:descomposicion
+\begin{equation}
+X (t) = T (t) + S (t) + e' (t)
+\end{equation}
+
+Donde $T$ corresponde a la tendencia de la serie, $S$ corresponde a la estacionalidad y $e'$ es un valor aleatorio para un tiempo $(t)$.
+
 **** Geoestadística
+
+Similar a autocorrelación temporal, las mediciones tomadas en el espacio tambien tienden a correlacionarse entre ellas, esto se conoce como autocorrelación espacial y es una propiedad que nos dice que los valores medidos geograficamente más proximos tienden a ser mas similares entre sí que aquellos tomados a distancias muy largas.\\
+
+Aunque existen distintas maneras de modelar este comportamiento en este documento mensionaremos únicamente a el *Índice de Moran*. Formalmente el coeficiente de Autocorrelación espacial Global de Moran o *I* es un índice que evalúa la extensión de la autocorrelación espacial entre un conjunto de veldas o pixeles $n = x_i$ localizado en areas contiguas, donde $_i$ es el rango í-esimo o el valor de $X$.\\
 
 #+NAME: eqn:moran
 \begin{equation}
 I = \frac{\sum_{i}\sum_{j} W_{i j} C_{i j}}{s^2 \sum_{i}\sum_{j} W_{i j}}
 \end{equation}
+
+Donde $w_{ij} = 1$ si la celda $i$ y $j$ son vecinas, de otro modo $w_{ij} =0;$ y $c_ij = (X_i -) (X_j -)$ son variables, en particular y otra locación respectivamente.\\
 
 
 #+NAME: eqn:s
@@ -520,23 +672,53 @@ I = \frac{\sum_{i}\sum_{j} W_{i j} C_{i j}}{s^2 \sum_{i}\sum_{j} W_{i j}}
 S^2 = \frac{\sum_{i = 1}^{n} (X_{i} - \Bar{X})^2}{n}
 \end{equation}
 
+Los valores positivos del Índice de Moran indican similitud entre los vecinos, los valores negativos indican que los valores de puntos ceranos son disímiles y finalmente los valores cercanos a cero indican que se trata de un proceso aleatorio no modelable por medio de técnicas de interpolación.\\
+
+
+Existen distintas metodologías uq explotan la propiedad de la autocorrelación espacial para la prediccción de locaciones desconocidas en el espacio, sin embargo, esto no se abordara en el presente documento.\\
+
 *** Remotamente Sensados
+
+Como se menciono anteriormente (en la sección [[secsr]]) los sensores remotos son utiles para derivar indicadores relacionados con la sequía, en particular hay dos tipos de variables derivadas de la teledetección que son utiles, los índices de vegetación relacionados con el estado vegetativo de las plantas y otras variables relacionadas con el cilo hidrologico.\\
+
+
 **** Índices de basados en teledetección
+
+La primera familia de variables descriptoras de la sequía encontramos una de las ramas de la teledetección mas clasicas y con mas historia los índices de vegetación.\\
+
+Estos son combinaciones inteligentes usualmente normalizadas de diferentes longitudes de onda usadas para caracterizar el estado vegetativo de las plantas.\\
+
+Uno de los más antiguos y ampliamente utilizado es el índice normalizado de vegetación \cite{chuvieco1996fundamentos}, este índice explota el hecho de que el estado vegetativo de la planta esta íntimamente ligado a la respuesta de la reflectancia en los rangos del rojo e infrarojo cercano. Definiendose matematicamente como:\\
+
 #+NAME: eqn:ndvi
 \begin{equation}
 NDVI = \left( \frac{\rho_{nir} - \rho_{rojo} }{ \rho_{nir} + \rho_{rojo}} \right)
 \end{equation}
 
+Donde $\rho_{nir}$ corresponde a una reflectancia dada en el infrarojo cercano y $\rho_{rojo}$ a una reflectancia en el rojo.\\
+
+Ampliamente utilizado dada su sencillez, y su sensibilidad a los cambios en el contenido de clorofila de las plantas \cite{fonnegra2017desarrollo}.
+
+
+En el NDVI en particular se han detectado algunos problemas de saturación con la vegetación densa, es decir el indicador pierde la capacidad de discriminar cuando las concentraciones de material vegetal son altas, existen distintas propuestas para reemplazar este índicador y evitar estos problemas de saturación, el mas importante es quizas el índice de vegetación mejorado, descrito con la siguiente ecuación.\\
 
 #+NAME: eqn:evi
 \begin{equation}
-EVI = \left( \frac{\rho_{nir} - \rho_{rojo} }{ L + \rho_{nir} + c1 \rho_{rojo} + c2\rho{azul}} \right)
+EVI = \left( \frac{\rho_{nir} - \rho_{rojo} }{ L + \rho_{nir} + c1 * \rho_{rojo} + c2 * \rho{azul}} \right)
 \end{equation}
+
+Donde $\rhon{nir}, $\rhon{rojo} $\rhon{azul}$ se refieren a las reflectancias en las longitudes de onda roja, infraroja y azul respectivamente y $L$ corresponden a unas constantes, L es un facot de corrección asociado a la contaminación de la señal por la reflectividad del suelo, y los parametros $c1 y c2$ son parametros de corrección de los efectos atmosfericos sobre la longitud de onda roja y azul.\\
+
+Por otro lado tenemos algunos índices relacionados la humedad de las cubiertas observadas, tenemos por ejemplo el índice dea agua normalizado, definido por la siguiente ecuación.\\
 
 #+NAME: eqn:ndwi
 \begin{equation}
 NDWI = \left( \frac{\rho_{nir} - \rho_{swir}}{ \rho_{nir} + \rho_{swir}} \right)
 \end{equation}
+
+Donde $\rho_{nir} y \rho{swir}$ corresponden a la reflectancia en la longitud de onda del infrarojo cercano y el infrarojo de onda corta.\\
+
+Finalmente, realizando una combinación normalizada del comporteamiento de la vegetación derivada del NDCI y de la humedad de las cubierta caracterizada por NDWI, se ha propuesto el índice de sequía normalizado, definido por la siguiente ecuación.\\
 
 #+NAME: eqn:nddi
 \begin{equation}
@@ -545,15 +727,136 @@ NDDI = \left( \frac{NDVI - NDWI}{ NDVI + NDWI} \right)
 
 
 **** Productos derivados de datos satelitales
+
+Por otro lado es tambien posible derivar información de sensores remotos utilizando relaciones mas complejas que las estandarizaciones entre logitudes de onda vistas anteriormente. Estos metodos usualmente se derivan de modelos de transferencia radiativa y la inversión de los mismos, en algunos casos usan estos modelos como entrada a modelos de balance hídrico o de flujos de carbono, dependiendo de la aplicación.\\
+
+En este trabajo se utiliza la temperatura superficial (LST), Evapotranspiración (ET), Índice de Área Foliar (LAI) y el producto de precipitación CHRIPS como datos derivados de productos satelitales.\\
+
+Son metodos bastante complejos, por lo que estos solo se metodos solo se mensionan y se recomienda la lectura del respectivo Documento de Bases Teorícas del Algoritmo (ATBD por sus siglas en ingles /Algorith Theorical Basis Document/) de cada producto si se desea profundizar.\\
+
 *** Modelos Impulsados por datos
+
+A continuación introduciremos teoricamente formalmente los algoritmos utilizados en el presente trabajo, estos algoritmos hacen parte de una rama del conocimiento llamada /Machine Learning/ o Apredizaje automatico,\\
+
+*Regla de Predicción*
+
+*Aprendizaje Supervizado*
+
+Existen una enorme variedad de algoritmos desarrollados en el marco anteriormente mensionado, sin embargo existen dos grupos o familias de modelos que resaltan y que abordaremos a continuación.\\
+
 **** Arboles de Decisión
-**** Redes Neuronales
+
+Los arboles de decisión, o CART es un algortimo diseñado para la generación automatica de un grafó capaz de representar la complejidad de un conjunto de datos mediante su división a diferentes niveles en dos nodos hijos  a partir de escisiones numéricas repetidamente. Ahora bien, la idea del crecimiento de un árbol es escoger la
+
+La formulación de este algoritmo también denominado el proceso de crecimiento de un arbol puede dividirse en cuatro pasos y estos son:
+
+- Selección de Caracteristicas:
+
+  En este paso se selecciona una caracteristica o variable descriptor que será usada en este nivel para dividir el conjunto de datos, de acuerdo a la varianza de cada variable independiente.\\
+
+- Condiciones de División:
+  En el siguiente paso se una el error medio cuadrático de todas las muestras que caen en dicho nodo para determinar qué tan válido ha sido la división escogida.\\
+
+- Condiciones de Parada:
+
+  + Sí, un nodo se convierte en puro es en todos los casos en el nodo tiene un valor identico a la variable dependiente, así que el nodo no será dividido.\\
+  + Sí en todos los casos tienen valores idénticos para cada predictor, el nodo no será diidido.\\
+  + Sí el tamaño del nodo es menor que el especificado por el usuario, el nodo no será dividido.\\
+  + Sí el nodo resultado es hijo de un nodo cuya talla es menor que la especificada por el usuario el nodo no será dividido.\\
+
+- Poda
+
+  Un arbol mal configurado o sin criterios de parada adicionales, puede llegar a sobre ajustarse a los datos de entrada, por lo que algunos autores usan técnicas de podado de árboles, sin embargo estas no son consideradas en el presente trabajo.
+
+
+
+**** Bosque Aleatorio
+
+Los arboles de decisión por su diseño mismo tienden a sobre entrenarse sobre los datos de entrenamiento, este comportamiento tambien conocido como "memorización" de los modelos.\\
+
+Para evitar esto una propuesta interesante que mejora a los CART, es el bosque aleatorio o /Random Forest/ este algoritmo introduce dos cambios importantes para evitar el sobre entrenamiento.\\
+
+El primero y mas importante es el Impulso o /Boosting/
+este se basa en la idea de que la combinación de muchos modelos debiles puede dar como resultado un modelo fuerte. Estos modelos debiles son de hecho CART individuales.\\
+
+Ahora bien para evitar que estos modelos debiles sean muy similares entre sí, se introduce el otro gran cambio y este es el Embolsado o /Bagging/ este consiste en entrenar cada uno de los modelos debiles sobre un sub-conjunto unico de los datos de entrenamiento.\\
+
+
+
+**** Aumento Extremo del Gradiente
+
+/Gradient Boosting Machine/
+
+**** Redes Neuronales Artificiales
+
+Son una familia modelos de inteligencia artificial que intenta reproducir el comportamiento del cerebro, principalmente la relación entre la neuronas y sus conexiones. Estos modelos se constituyen por un grupo de elementos conocidos como neuronas que trabajan conjuntamente. Cada una de estas partes de la red recibe información y esta es enviada por medio de interconexiones hacia otras neuronas. En base a esta concepción es posible utilizar distintas configuraciones para realizar clasificaciones, regresiones, agrupaciones entre otros.\\
+
+- Perceptron
+
+  La forma mas simple y la base de las redes neuronales es el perceptrón, un modelo matematico que trata de reproducir el comportamiento individual de una neurona. Se define matematicamente según la ecuación [[eqn:perceptron]].
+
+#+NAME: eqn:perceptron
+\begin{equation}
+\label{eq:aqui-le-mostramos-como-hacerle-la-llave-grandPerceptrone}
+f(x) =
+sign \bigg[
+\sum_{i=1}^{n} w_j \cdot x_{i \cdot j} + B
+\bigg]
+\end{equation}
+
+Esta ecuación esta constituida por una composición de funciones, la primera es una función líneal constituida por un los pesos $w_j$ y el bias $B$ y por una función de activación $sign$ que aplica una transformación afín a la función anterior.
+
+
+- Red Neuronal
+
+
+
+#+NAME: eqn:nn
+\begin{equation}
+\label{eq: Pesos}
+f(x) =
+W_0 + k \cdot
+\sum_{i=1}^{n} w_i \cdot x_{i}
+\end{equation}
+
+Donde $w_0$ es el vector de Bias, $w_i$ es el vector de pesos, $x_i$ la matriz de variables independientes y $k$ la transformación no líneal.
+
+- Propagación hacia atrás
+
+#+NAME: eqn:bp
+\begin{equation}
+\nabla w_{i j }(n) = \eta \cdot \delta \cdot J \cdot x_{ij} \cdot + \alpha \cdot \nabla w_{i j }(n - 1)
+\end{equation}
+
+
 **** Validación Cruzada
 
-*LLTO*
+La validación cruzada tambien conocida como /K-Fold Cross Validation[fn:9]/, es una ténica desarrollada para probar o testear la estabilidad y capacidad de los modelos entrenados sobre conjuntos con pocos datos, la idea general es dividir el conjunto completo de datos en paquetes más pequeños conocidos como /folds/, que a su vez se subdividen dos conjuntos uno para entrenamiento y otro para prueba, de manera que los algoritmos a evaluar seran entrenados de manera independiente en cada uno de los subconjuntos de entrenamiento y se testearan sobre los conjuntos de prueba.\\
 
-Es un caso especial de la validación cruzada, propuesto inicialmente por \cite{Meyer} para enfrentar una apropiada validación en modelos espacio-temporales, teniendo encuenta las propiedades de auto-correlación espacial y auto-correlación temporal, donde su combinación es conocida como
-.
+#+CAPTION: Representación gráfica Validación cruzada
+#+ATTR_LATEX:  :width 7cm
+#+LABEL: fig:CV
+[[~/Dropbox/0_Tesis/imagenes/CV.png]]
+
+*LLTO CV*
+
+El *LLTO CV* o /Leave Location and Time Out - CV/ es un caso especial de la validación cruzada, propuesto inicialmente por \cite{Meyer} para enfrentar una apropiada validación en modelos espacio-temporales, teniendo encuenta las propiedades de auto-correlación espacial y auto-correlación temporal, donde su combinación es conocida como
+
+
+#+CAPTION: Validación cruzada en estaciones meteorológicas
+#+ATTR_LATEX: :width 7cm
+#+LABEL: fig:Estaciones
+[[~/Dropbox/0_Tesis/imagenes/Estaciones.png]]
+
+La idea detras del uso de la estrategía de validación cruzada *LLTO* es dada la limitada cobertura espacial de las estaciones y la imposibilidad de tener datos independientes para la evaluación, es subdividir los datos de manera se incite a los modelos entrenados a generalizar y capturar la autocorrelación tanto espacial como temporal.\\
+
+Como ejemplo dadas las estaciones azul, roja y amarilla, para las fechas circulo, cuadrado y triangulo, definidas en la figura [[fig:Estaciones]] [fn:10] la estrategía *LLTO CV* divide los datos con los criterios espaciales y temporales mensionados, obteniendo el resultado visualizado en la Figura [[fig:KFoldLTSO]] [fn:10].\\
+
+
+#+CAPTION: Estrategia de validación cruzada espacio-temporal
+#+ATTR_LATEX: width=0.9\textwidth
+#+LABEL: fig:KFoldLTSO
+[[~/Dropbox/0_Tesis/imagenes/KFoldLTSO.png]]
 
 * Marco de Referencia
 <<secmr>>
@@ -615,7 +918,7 @@ Variables derivadas del sensor MODIS y su resolución espacial:
 - Evapotranspiración  (ET) (500 m ).
 
 Variables derivadas del productos CHIRPS (/Group InfraRed Precipitaction with statio data/):
-- Precipitación. (5000 m).
+- Precipitación. (5000 m)[fn:11].
 
 
 
@@ -629,16 +932,44 @@ Como se puede ver en la figura [[fig:flujograma]] donde se puede observar el flu
 #+LABEL: fig:flujograma
 [[~/Dropbox/0_Tesis/imagenes/flujograma2.png]]
 
-
+#+LATEX: \newpage
 *** Pre-procesamiento de datos /in situ/
 
 *Selección de estaciones*\\
-*Imputación de datos faltantes*\\
-*Cálculo SPI no paramétrico*\\
+
+En la zona de estudio encontramos 160 estaciones meteorológicas o hídrologicas con mediciones de precipitación diaria. A paso seguido se aplico un doble filtro de calidad sobre la información, el primero fue la selección de aquellas estaciones con resgistros faltantes o nulos no mayores al 10% de todos los registros, y el segundo una continuidad de los resgistros no menos a 32 años, entre 1980 y 2012.
+
+Dado que el SPI requiere que la entrada de datos tenga el registro completo de la serie de tiempo, se procedio a imputar los valores faltantes.
+
+*Imputación de datos faltantes*
+
+A continuación se estudiaron distintos metodos de imputación de datos, se selecionaron los siguientes:
+
+- /Last observation carried fodward/
+- Suevizado de Kalman
+- /Seasonally Decomposed Missing Value Imputation/
+- /Seasonally Splitted Missing Value Imputation/
+
+De los anteriores se seleccionó el método de /Seasonally Decomposed Missing Value Imputation/, pues obtuvo los errores de imputación mas bajos sobre una muestra de 10 estaciones con alrededor del 10% de datos faltantes.\\
+
+De manera practica se utilizo la librería de R /ImputeTS/ para realizar este procesamieno.\\
+
+Una vez obtenidas las series completas, se procedio a acumular los datos de precipitación a escala mensual.\\
+
+*Cálculo SPI no paramétrico*
+
+Seguidamente se realizo la estimación del *SPI no paramétrico* para las ventanas temporales de 3, 6 y 9 meses. Para esto se utilizo una biblioteca originalmente diseñada para /MATLAB/ llamada /Standarized Drought Analysis Toolbox (SDAT)/.\\
+
+Se implementaron unas pequeñas modificaciones sobre la biblioteca, la primera es que se ejecuto sobre un ambiente de software libre llamado /Octave/ para asegurar que se cumplieran los postulados de la ciencia reproducible [fn:12]. Y el segundo que se realizo una mínima modificación sobre el código fuente para que la biblioteca calculara el *SPI no paramétrico* sobre todas las estaciones del estudio.\\
 
 *** Pre-procesamiento de datos raster
 
 En esta sección de la metodología se constituye de todos los pasos necesarios para transformar los datos descargados de los servidores de las agencias espaciales y de las Unidades de Investigación de distintas universidades del mundo, transformandolos para ser consumidos por los modelos seleccionados para realizar la fusión.\\
+
+	#+CAPTION:Flujograma de preprocesamiento raster
+#+ATTR_LATEX: :width 7cm
+#+LABEL: fig:flujograma_raster
+[[~/Dropbox/0_Tesis/imagenes/image13.png]]
 
 *Descarga de Productos*
 
@@ -649,28 +980,422 @@ El primer proveedor es la /Universidad de California Santa Bárbara/, en la pág
 En segundo lugar y por medio de la utilidad de línea de comandos de la librería de /Python PyModis/ se ejecuto la descarga de los productos derivados del sensor MODIS.\\
 
 *Proyección de datos*
+
+El siguiente paso de la metodología consiste en la asignación de una proyección cartográfica a los datos MODIS, pues el formato nativo de esta es *.hdf carece de dicho sistema de referencia. Así que se procedio a utilizar el módulo /modis_mosaic.py/ para construir el mosaico virtual de cada uno de los productos creandose un archivo en formato *.vrt. A continuación se realiza la conversión la información a formato *.TIF haciendo uso del módulo /modis_convert.py/.
+
+
 *Recorte*
+
+Luego se realiza el recorte de la información raster a la zona de estdio, dibujada a mano alzada, de manera que incluye la totalidad del Departamento de La Guajira, para este procesamiento se utilizó el modulo /gdal_warp/ de la librería GDAL (Librería de Abstracción de Datos Geográficos). La figura muestra el resultado del recorte de las imágenes a la zona de estudio.
+
+#+CAPTION: Recorte a la zona de estudio
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:cut_line
+[[~/Dropbox/0_Tesis/imagenes/image18.png]]
+
+
 *Ingestión en GRASS GIS*
+
+A paso seguido se realizó la ingestión de la información en el software GRASS GIS, de manera que se aprovechará todas las potencialidades de este software que incluyen pero no se limitan al soporte de un marco para series de tiempo de datos raster y vectoriales, menejo eficiente de la memoria RAM, orden en el conjunto de datos y finalmente un almacenamiento eficiente en disco duro.\\
+
+Además se escalan los valores de los productos, para que estos queden almacenados en us valores reales físicos, para esto se usa la información interna de los productos para enmascarar los pixeles no validos.\\
+
 *Aplicación Máscara de agua*
+
+Dado que la zona de estudio se encuentra a orillas del Mar Caribe, es necesario tener en cuenta que la zona de modelación está limitada por el contorno de la supoerficie de agua, por lo tanto se utiliza el producto de máscara de agua de MODIS, para invalidar los valores pertenecientes a las superficies de agua.\\
+
 *Homogenenización de la serie raster*
+
+Acto seguido y teniendo en cuenta que los diferentes productos tienen resoluciones temporales diferentes es necesario homogeneizar las series, dado que el indicador objetivo el *SPI no paramétrico* se estima a escala mensual, es necesario agrupar la información de los productos a esta escala.\\
+
+Tenemos tres casos según el producto. Por un lado estan el producto de precipitación y por el otro tenemos los productos MODIS que se distribuyen en dos resoluciones temporales, los productos de 8 dias y los de 16 dias.\\
+
+- CHIRPS: Para la preciítación los datos de CHRIPS pueden ser descargados a distintas escalas, en particular para este estudio se descargo el producto diario de precipitación y este se acumulo a escala mensual.\\
+
+- MODIS 8 días : Estos productos que incluyen ET, LAI, LST. Estos se promediaron a escala mensual.\\
+
+- MODIS 16 días : El producto distribuido con esta resolución temporal es el MOD13, el producto de Índices de Vegetación, del que se obtiene el NDVI, el EVI y las bandas infraroja cercana e infraroja media. A estas series se imputo sobre la serie el valor promedio en el tiempo, para obtener una serie de 8 dias, posteriormente se promediaron los valores para obtener la serie mensual.  \\
+
+
+#+LATEX: \newpage
 *Cálculo NDWI y NDDI*
+
+Adicional a lo anterior, se genereraron dos variables explicativas adicionales de los productos descargados, estos se describen a continuación. \\
+
+#+CAPTION: Cálculo NDDI
+#+ATTR_LATEX: :width 5cm
+#+LABEL: fig:calculo_NDDI
+[[~/Dropbox/0_Tesis/imagenes/calclulo_NDDI.png]]
+
+Se extraen las bandas de infrarojo cernano e infrarojo medio del producto MOD13 y se aplica la ecuación [[eqn:ndwi]].\\
+
+A continuación se procede a calcular el NDDI, para esto se utilizan los productos de NDVI y NDWI recientemente cálculado según la ecuación [[eqn:nddi]].\\
+
 *Relleno de datos faltantes*
+
+Dada la persistente nubosidad de la zona de estudio, y a pesar del uso de ventanas temporales de 8 días para minimizar este efecto, aún se pueden encontrar amplías zonas con píxeles no válidos, debido en particular a la presencia de nubes.\\
+
+Se aplico un método de relleno de datos faltantes para series de tiempo raster homogéneos en sus resoluciones espaciales y temporales, basado en una modificación del análisis de componentes principales e implementado mediate el software R, en particular el paquete o libreria /sinkr/ donde se encuentra implementado el algoritmo /DINEOF/ para su formalización teorica ver la <<secidf>>.\\
+
+Una vez surtido lo anterior se da por finalizado el pre-procesamiento raster.\\
+
 *** Procesamiento
 *Extracción de valores en la localización de las estaciones*
+
+
+/in situ/ 1982 - 2012
+
+Entrenamiento 2000 - 2012
+
+Predicción 2000 y 2014
+
 *Matriz de entrenamiento*
 *validación cruzada espacio-temporal (LLTO)*
 *** Entrenamiento y ajuste de hiperparamétros
+
+**** Arboles
+**** Redes
+- epocas
+-
+*** Validación Cruzada
+
 * Resultados
 <<secresult>>
 ** Pre-procesamiento de datos /in situ/
+
+#+CAPTION: Ejemplo de datos faltantes en una serie temporal
+#+ATTR_LATEX: width=0.9\textwidth
+#+LABEL: fig:distribucion_NA_tiempo
+[[~/Dropbox/0_Tesis/imagenes/distribucion_imputado_tiempo.png]]
+
+
+*Gráfico de una Estación de muestra*
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_1632.png]]
+
+
+** TODO Mensionar la climatología de la zona
+
 ** Pre-procesamiento de datos raster
-** Entrenamiento y Evaluación de Modelos
+
+*** Precipitacion
+
+
+#+CAPTION: Comportamiento promedio mensual de la precipitación
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_Prec
+[[~/Dropbox/0_Tesis/imagenes/level_plot_Prec.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual de la precipitación
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_Prec
+[[~/Dropbox/0_Tesis/imagenes/densityplot_Prec.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual de la precipitación
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_Prec
+[[~/Dropbox/0_Tesis/imagenes/bwplot_Prec.pdf]]
+
+#+LATEX: \newpage
+
+*** Evapotranspiración
+
+
+
+#+CAPTION: Comportamiento promedio mensual de la evapotranspitación
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_et
+[[~/Dropbox/0_Tesis/imagenes/level_plot_et.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual de la evapotranspitación
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_et
+[[~/Dropbox/0_Tesis/imagenes/densityplot_et.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual de la evapotranspitación
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_et
+[[~/Dropbox/0_Tesis/imagenes/bwplot_et.pdf]]
+
+
+#+LATEX: \newpage
+
+*** Temperatura Superficial
+
+
+#+CAPTION: Comportamiento promedio mensual de la temperatura Superficial
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_LST
+[[~/Dropbox/0_Tesis/imagenes/level_plot_LST.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual de la temperatura Superficial
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_LST
+[[~/Dropbox/0_Tesis/imagenes/densityplot_LST.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual de la temperatura Superficial
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_LST
+[[~/Dropbox/0_Tesis/imagenes/bwplot_LST.pdf]]
+
+
+#+LATEX: \newpage
+
+
+*** NDWI
+
+
+
+#+CAPTION: Comportamiento promedio mensual del NDWI
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_ndwi
+[[~/Dropbox/0_Tesis/imagenes/level_plot_ndwi.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual del NDWI
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_ndwi
+[[~/Dropbox/0_Tesis/imagenes/densityplot_ndwi.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual del NDWI
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_ndwi
+[[~/Dropbox/0_Tesis/imagenes/bwplot_ndwi.pdf]]
+
+
+
+#+LATEX: \newpage
+
+*** NDVI
+
+
+
+#+CAPTION: Comportamiento promedio mensual del NDVI
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_ndvi
+[[~/Dropbox/0_Tesis/imagenes/level_plot_ndvi.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual del NDVI
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_ndvi
+[[~/Dropbox/0_Tesis/imagenes/densityplot_ndvi.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual del NDVI
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_ndvi
+[[~/Dropbox/0_Tesis/imagenes/bwplot_ndvi.pdf]]
+
+
+#+LATEX: \newpage
+
+*** EVI
+
+
+
+#+CAPTION: Comportamiento promedio mensual del EVI
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_evi
+[[~/Dropbox/0_Tesis/imagenes/level_plot_evi.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual del EVI
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_evi
+[[~/Dropbox/0_Tesis/imagenes/densityplot_evi.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual del EVI
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_evi
+[[~/Dropbox/0_Tesis/imagenes/bwplot_evi.pdf]]
+
+
+#+LATEX: \newpage
+
+
+*** LAI
+
+
+
+#+CAPTION: Comportamiento promedio mensual del LAI
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_lai
+[[~/Dropbox/0_Tesis/imagenes/level_plot_lai.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual del LAI
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_lai
+[[~/Dropbox/0_Tesis/imagenes/densityplot_lai.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual del LAI
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_lai
+[[~/Dropbox/0_Tesis/imagenes/bwplot_lai.pdf]]
+
+
+#+LATEX: \newpage
+
+
+*** NDDI
+
+
+
+#+CAPTION: Comportamiento promedio mensual del NDDI
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_nddi
+[[~/Dropbox/0_Tesis/imagenes/level_plot_nddi.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual del NDDI
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_nddi
+[[~/Dropbox/0_Tesis/imagenes/densityplot_nddi.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual del NDDI
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_lai
+[[~/Dropbox/0_Tesis/imagenes/bwplot_nddi.pdf]]
+
+
+#+LATEX: \newpage
+
+** SPI no paramétrico estimado
 *** Métricas de Error
-** Predicción del SPI no paramétrico
-*** Correlación de las predicciones
+
+# +tblname: tab:mae
+#+CAPTION: Tabla de errores MAE promedio.\\
+#+ATTR_LATEX: :align |l|l|l|
+|------------------+--------+--------|
+| Ventana Temporal | RF MAE | XG MAE |
+|------------------+--------+--------|
+| 3 meses          |  0.736 |  0.785 |
+| 6 meses          |  0.783 |  0.863 |
+| 9 meses          |  0.814 |  0.875 |
+|------------------+--------+--------|
+
+
+
+#+tblname: tab:mse
+#+CAPTION: Tabla de errores MSE promedio\\
+#+ATTR_LATEX: :align |l|l|l|
+|------------------+--------+--------|
+| Ventana Temporal | RF MSE | XG MSE |
+|------------------+--------+--------|
+| 3 meses          |  0.856 |  0.883 |
+| 6 meses          |  0.883 |  0.927 |
+| 9 meses          |  0.901 |  0.934 |
+|------------------+--------+--------|
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
+*** Ajuste de los Valores
+
+#+CAPTION: Correlacion entre los valores reales y predichos Random Forest
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_3_meses.png]]
+
+#+CAPTION: Correlacion entre los valores reales y predichos Random Forest
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_6_meses.png]]
+
+
+#+CAPTION: Correlacion entre los valores reales y predichos Random Forest
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_9_meses.png]]
+
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
 *** Comportamiento Temporal
+#+CAPTION: Perfil temporal entre los valores reales y predichos Random Forest 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_RF_trn_completa.png]]
+
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_XG_trn_completa.png]]
+
+
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
 *** Comportamiento Espacial
-*** Importancia de las variables
+
+*RF*
+
+#+CAPTION: Comportamiento promedio mensual de la predicción SPI por RF
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_SPI_RF2
+[[~/Dropbox/0_Tesis/imagenes/level_plot_SPI_RF2.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual de la predicción SPI por RF
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_SPI_RF2
+[[~/Dropbox/0_Tesis/imagenes/densityplot_SPI_RF2.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual de la prediccion SPI por RF
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_SPI_RF2
+[[~/Dropbox/0_Tesis/imagenes/bwplot_SPI_RF2.pdf]]
+
+#+LATEX: \newpage
+
+*XG*
+
+#+CAPTION: Comportamiento promedio mensual de la predicción SPI por XG
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:level_plot_SPI_XG
+[[~/Dropbox/0_Tesis/imagenes/level_plot_SPI_XG.pdf]]
+
+
+#+CAPTION: Gráfico de densidad promedio mensual de la predicción SPI por XG
+#+ATTR_LATEX: :width 15cm
+#+LABEL: fig:densityplot_SPI_XG
+[[~/Dropbox/0_Tesis/imagenes/densityplot_SPI_XG.pdf]]
+
+
+#+CAPTION: Gráfico de caja-violín promedio mensual de la prediccion SPI por XG
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:bwplot_SPI_XG
+[[~/Dropbox/0_Tesis/imagenes/bwplot_SPI_XG.pdf]]
+
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
+
+*** Importancia de los predictores
+
+#+CAPTION: Importancia de las variables predictoras Random Forest 3 Meses
+#+ATTR_LATEX: :width 12cm
+#+LABEL: fig:importanciaRF
+[[~/Dropbox/0_Tesis/imagenes/importanciaRF.png]]
+
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
 
 * Discusión
 <<secdisc>>
@@ -704,7 +1429,7 @@ El proceso metodológico compredió la identificación, evaluación y selección
 
 Se seleccionaron variables explicatias y se optó por tres modelos de aprendizaje de maquina para realizar la interpolación, las redes neuronales, y clásico y robusto Random Forest, y la promesa XGBoosts.\\
 
-De estos el que mejor resultado obtuvo fue en XGBoosts con una correlación o R² de 0.777 y de un MSE de 0.914 y un MAE de 0.841 frente a Random Forest con un R² de 0.768 y un MSE de 0.914 y un MAE de 0.841.\\
+De estos el  que mejor resultado obtuvo fue en XGBoosts con una correlación o R² de 0.777 y de un MSE de 0.914 y un MAE de 0.841 frente a Random Forest con un R² de 0.768 y un MSE de 0.914 y un MAE de 0.841.\\
 
 Al ser datos con autocorrelacion espacial y temporal se optó por realizar el entrenamiento de los modelos usando la metodología de validación cruzada k-fold tipo LLTO (Leave Location and Time Out) con el fin de obtener una evaluación mas fidedigna.\\
 
@@ -718,16 +1443,44 @@ Algunos temas dejados por fuerta de este trabajo tienen el potencial de mejorar 
 
 * Observaciones y Recomendaciones
 <<secobs>>
+
+Una observación importante sobre la metodología presentada y es que el sensor /MODIS/ (/Moderate-Resolution Imaging Spectroradiometer/) abordo de los vehiculos satelitales /Terra/ y /Aqua/, y del que se derivan la mayoría de las variables predictoras de este proyecto se encuentra muy cerca del final de su vida util, y su reemplazo el sensor VIIRS (/Visible Infrared Imaging Radiometer Suite/) abordo del vehículo satelital /Suomi NPP (National Polar-Orbiting Partnership)/, aún no tiene en fase operacional los mismos productos cientificos que el actual /MODIS/, por lo que la continuidad de las obervaciones no esta garantizado.\\
+
 * Anexos
 <<secanex>>
 ** AED Estaciones Metereológicas
-** Imputación de datos
-** Gráficos Adicionales
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_1632.png]]
+
+
+
+** Imputación de datos[fn:13]
+<<secidf>>
+
+El problema del relleno de datos faltantes es común en las ciencias ambientales, muchas veces se generan información que por diversas razones esta contaminada y puede ser explotada solo parcialmente o no ser explotada en absoluto.\\
+
+Por tal motivo desde distintas diciplinas sean desarrollado métodos para resolver este problema dependiendo del tipo de dato que se pierde y adaptando a dominions precisos.\\
+
+Dado que los productos satelitales opticos e infrarojos son altamente afectados por la presencia de nubes, en este trabajo nos servimos de un algoritmo llamado *DINEOF* desarrollado para el relleno de datos en series remotamente sensadas de datos oceanográficos para el relleno de los datos, de las variables predictoras afectadas por la nubosidad (LST, NDVI, EVI, LAI, ET).\\
+
+Dicho método se basa en las *EOF* o /Empirical Orthogonal Functions/ por como son conocidos estos métodos en la comunidad oceanografica, tambien conocida en otras comunidades como un tipo especial de los /Componentes Principales/.\\
+
+- Tecnica de reduccion de dimensiones y usar esta version de los datos con compresión para rellenar los datos.
+
+
+
+
+
+
 ** Ciencia Reproducible
+<<seccr>>
 
-En el animo de seguir los postulados de la /Ciencia Reproducible/, que aboga por compartir libremente no solo los resultados de una investigación sino de los elementos necesarios para reproducirla, esto incluye una descripción clara del procedimiento seguido, los datos en orden de ejecutar los experimentos sumado a el codigo fuente y el ambiente de desarrollo usado, con el fin de detectar porsibles errores. \\
+En el animo de seguir los postulados de la /Ciencia Reproducible/, que aboga por compartir libremente no solo los resultados de una investigación sino de los elementos necesarios para reproducirla, esto incluye una descripción clara del procedimiento seguido, los datos en orden de ejecutar los experimentos sumado a el codigo fuente y el ambiente de desarrollo usado, son compartidos, con el fin de detectar porsibles errores. \\
 
-En este orden de ideas es posible consultar a través de internet los elementos anteriormente descritos, en las siguientes plataformas.\\
+En este orden de ideas es posible consultar esta información a través de internet los elementos anteriormente descritos, en las siguientes plataformas.\\
 
 - Ambiente de desarrollo:
  *[[https://hub.docker.com/repository/docker/jsvinasco/grass-py3-ml2][DockerHub]]*
@@ -749,6 +1502,13 @@ En este orden de ideas es posible consultar a través de internet los elementos 
   #+LATEX: \printbibliography[heading=none]
 
 * Footnotes
+[fn:13] Este capitulo esta altamente inspirado en
+
+[fn:12] Ver sección [[seccr]]
+[fn:11] https://www.chc.ucsb.edu/data/chirps
+
+[fn:10] Figuras tomadas de: \cite{Meyer}
+[fn:9] /CV: Cross Validation/
 
 [fn:8] https://www.usgs.gov/faqs/what-remote-sensing-and-what-it-used?qt-news_science_products=0#qt-news_science_products
 
