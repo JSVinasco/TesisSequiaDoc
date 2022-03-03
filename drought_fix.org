@@ -736,9 +736,32 @@ Son metodos bastante complejos, por lo que estos solo se metodos solo se mension
 
 *** Modelos Impulsados por datos
 
-A continuación introduciremos teoricamente formalmente los algoritmos utilizados en el presente trabajo, estos algoritmos hacen parte de una rama del conocimiento llamada /Machine Learning/ o Apredizaje automatico,\\
+A continuación introduciremos teoricamente formalmente los algoritmos utilizados en el presente trabajo, estos algoritmos hacen parte de una rama del conocimiento llamada /Machine Learning/ o Apredizaje automatico, una sub-rama de la inteligencia artificial.\\
 
-*Regla de Predicción*
+Para empezar el /Machine Learning/ es un conjunto de estrategias, técnicas y métodos, tanto teóricos como practicos que tratan de abordar problemas complejos que /a priori/ no son facilmente programables o pueden ser llevados a cabo por un sistema experto. El ejemplo clasico es el reconocimiento de rostros en una imagen, es sumamente complicado imaginar una serie de reglas absolutas para generar un algoritmo capaz de reconocer caras en una fotografía.\\
+
+La forma de abordar los problemas por parte del /machine learning/ tambien es diferente, usualmente en las metodologías clasicas se optaba por contruir el modelo mas simple posible que pudiese resolver un problema dado; dando como resultado la preponderancia de modelos líneales por su simplicidad y por sobre todo la capacidad explicativa de esta familia de modelos.\\
+
+*Regla de Predicción*\\
+
+Esta idea es, sin embargo, descartada por completo por la aproximación basada en /machine learning/ puesto que la idea aquí es encontrar una regla de predicción entre un conjunto de variables predictoras  y una o varas variables a predecir  . Según la siguiente ecuación\\
+
+#+NAME: eqn:reglapred1
+\begin{equation}
+f: \mathbb{R}^{d} \to   \mathbb{R}
+\end{equation}
+
+
+#+NAME: eqn:reglapred2
+\begin{equation}
+*x* \mapsto y
+\end{equation}
+
+
+Los modelos usualmente utilizados para aproximar la *regla de predicción* son modelos usualmente modelos genericos, con una gran cantidad de parametros sumados a una estrategía definida para \\
+
+
+
 
 *Aprendizaje Supervizado*
 
@@ -786,6 +809,10 @@ Ahora bien para evitar que estos modelos debiles sean muy similares entre sí, s
 **** Aumento Extremo del Gradiente
 
 /Gradient Boosting Machine/
+
+Bagging
+
+Gradient Decent
 
 **** Redes Neuronales Artificiales
 
@@ -1090,16 +1117,25 @@ Predicción 2000 y 2014
 [[~/Dropbox/0_Tesis/imagenes/level_plot_Prec.pdf]]
 
 
+Comportamiento relativamente diferenciado en tres regiones geográficas marcadas sobre la zona de estudio con unas precipitaciones mas altas sobre la zona de la sierra nevada de santa marta, seguida por una zona de transición y finalmente una zona semi desertica al norte con unas precipitaciones cercanas a cero a lo largo del periodo de datos de MODIS disponibles.\\
+
+
+
 #+CAPTION: Gráfico de densidad promedio mensual de la precipitación
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_Prec
 [[~/Dropbox/0_Tesis/imagenes/densityplot_Prec.pdf]]
 
+En el comportamiento en frecuencia se ve claramente la concentración de los valores de precipitaciones nulas y concentradas a inicio del año.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual de la precipitación
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:bwplot_Prec
 [[~/Dropbox/0_Tesis/imagenes/bwplot_Prec.pdf]]
+
+Se observa un comportamiento unimodal en la distribución de la precipitación a lo largo del año, en el promedio de la ventana temporal del año 2000 al 2014.\\
+
+Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes al año.\\
 
 #+LATEX: \newpage
 
@@ -1457,7 +1493,8 @@ Una observación importante sobre la metodología presentada y es que el sensor 
 
 
 
-** Imputación de datos[fn:13]
+** Imputación de datos
+# [fn:13]
 <<secidf>>
 
 El problema del relleno de datos faltantes es común en las ciencias ambientales, muchas veces se generan información que por diversas razones esta contaminada y puede ser explotada solo parcialmente o no ser explotada en absoluto.\\
@@ -1502,7 +1539,7 @@ En este orden de ideas es posible consultar esta información a través de inter
   #+LATEX: \printbibliography[heading=none]
 
 * Footnotes
-[fn:13] Este capitulo esta altamente inspirado en
+# [fn:13] Este capitulo esta altamente inspirado en
 
 [fn:12] Ver sección [[seccr]]
 [fn:11] https://www.chc.ucsb.edu/data/chirps
