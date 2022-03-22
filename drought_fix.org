@@ -181,6 +181,12 @@
  RF : /Random Forest/ o Bosque Aleatorio.\\
  XG : /XGBoost/ o /Xtrem Gradient Boosting/ o Aumento Extremo del Gradiente.\\
  NN : /Neural Networks/ o Redes Neuronales Aritificiales\\.
+ CART : /Classification And Regression Trees/ o Arboles de Classificación y Regresión.
+ MOD11A2 : Producto MODIS Temperatura Supercial
+ MOD16A2 : Producto MODIS Evapotranspiración
+ MCD43B3 :
+ MCD15A2 :
+ MYD13A2 : Producto MODIS índices de vegetación
 #+LATEX:  \newpage
 * Resumen
   :PROPERTIES:
@@ -273,7 +279,7 @@ Representar el comportamiento espacio temporal de la sequía en el departamento 
 
 ** Objetivos Específicos
 - Caracterizas las variables que permitan evaluar la sequía en las condiciones semi-deserticas de La Guajira.\\
-- Modelar las condiciones de Sequía de La Guajira, por medio de información espacio temporal, entre los años *2000* y *2013*.\\
+- Modelar las condiciones de Sequía de La Guajira, por medio de información espacio temporal, entre los años *2000* y *2012*.\\
 - Validar los resultados obtenidos con información de estaciones meteorológicas.\\
 
 
@@ -744,7 +750,7 @@ La forma de abordar los problemas por parte del /machine learning/ tambien es di
 
 *Regla de Predicción*\\
 
-Esta idea es, sin embargo, descartada por completo por la aproximación basada en /machine learning/ puesto que la idea aquí es encontrar una regla de predicción entre un conjunto de variables predictoras  y una o varas variables a predecir  . Según la siguiente ecuación\\
+Esta idea es, sin embargo, descartada por completo por la aproximación basada en /machine learning/ puesto que la idea aquí es encontrar una regla de predicción entre un conjunto de variables predictoras  y una o varias variables a predecir. Según la siguiente ecuación\\
 
 #+NAME: eqn:reglapred1
 \begin{equation}
@@ -758,29 +764,28 @@ f: \mathbb{R}^{d} \to   \mathbb{R}
 \end{equation}
 
 
-Los modelos usualmente utilizados para aproximar la *regla de predicción* son modelos usualmente modelos genericos, con una gran cantidad de parametros sumados a una estrategía definida para \\
-
-
-
-
 *Aprendizaje Supervizado*
+
+Donde la estrategía para encontrar esta regla de predicción se basa en minimizar una función de perdida entre el resultado obtenido y el resultado deseado, ajustando un conjunto de hiperparametros \theta que controlan el comportamiento de la función de predicción hallada.  \\
+
+La estrategía  anteriormente descrita se conoce como aprendizaje supervizado, y es la estrategía de /machine learning/ mas relevante hoy en día, mas no la única[fn:13].
 
 Existen una enorme variedad de algoritmos desarrollados en el marco anteriormente mensionado, sin embargo existen dos grupos o familias de modelos que resaltan y que abordaremos a continuación.\\
 
 **** Arboles de Decisión
 
-Los arboles de decisión, o CART es un algortimo diseñado para la generación automatica de un grafó capaz de representar la complejidad de un conjunto de datos mediante su división a diferentes niveles en dos nodos hijos  a partir de escisiones numéricas repetidamente. Ahora bien, la idea del crecimiento de un árbol es escoger la
+Los arboles de decisión, o CART es un algortimo diseñado para la generación automatica de un grafó capaz de representar la complejidad de un conjunto de datos mediante su división a diferentes niveles en dos nodos hijos  a partir de escisiones numéricas repetidamente. Ahora bien, la idea del crecimiento de un árbol es escoger la división ente todas las posibles divisiones en la que los datos del nodo hijo sean los más puros porsibles.\\
 
-La formulación de este algoritmo también denominado el proceso de crecimiento de un arbol puede dividirse en cuatro pasos y estos son:
+La formulación de este algoritmo también denominado el proceso de crecimiento de un arbol puede dividirse en cuatro pasos y estos son:\\
 
-- Selección de Caracteristicas:
+- Selección de Caracteristicas:\\
 
   En este paso se selecciona una caracteristica o variable descriptor que será usada en este nivel para dividir el conjunto de datos, de acuerdo a la varianza de cada variable independiente.\\
 
-- Condiciones de División:
+- Condiciones de División:\\
   En el siguiente paso se una el error medio cuadrático de todas las muestras que caen en dicho nodo para determinar qué tan válido ha sido la división escogida.\\
 
-- Condiciones de Parada:
+- Condiciones de Parada:\\
 
   + Sí, un nodo se convierte en puro es en todos los casos en el nodo tiene un valor identico a la variable dependiente, así que el nodo no será dividido.\\
   + Sí en todos los casos tienen valores idénticos para cada predictor, el nodo no será diidido.\\
@@ -789,11 +794,16 @@ La formulación de este algoritmo también denominado el proceso de crecimiento 
 
 - Poda
 
-  Un arbol mal configurado o sin criterios de parada adicionales, puede llegar a sobre ajustarse a los datos de entrada, por lo que algunos autores usan técnicas de podado de árboles, sin embargo estas no son consideradas en el presente trabajo.
+  Un arbol mal configurado o sin criterios de parada adicionales, puede llegar a sobre ajustarse a los datos de entrada, por lo que algunos autores usan técnicas de podado de árboles, sin embargo estas no son consideradas en el presente trabajo.\\
 
 
 
 **** Bosque Aleatorio
+
+	#+CAPTION: Representación del Funcionamiento del algoritmo Bosque Aleatorio
+    #+ATTR_LATEX: width=0.9\textwidth
+    #+LABEL: fig:RF
+    [[/home/juanse/Dropbox/0_Tesis/imagenes/RF.png]]
 
 Los arboles de decisión por su diseño mismo tienden a sobre entrenarse sobre los datos de entrenamiento, este comportamiento tambien conocido como "memorización" de los modelos.\\
 
@@ -804,15 +814,45 @@ este se basa en la idea de que la combinación de muchos modelos debiles puede d
 
 Ahora bien para evitar que estos modelos debiles sean muy similares entre sí, se introduce el otro gran cambio y este es el Embolsado o /Bagging/ este consiste en entrenar cada uno de los modelos debiles sobre un sub-conjunto unico de los datos de entrenamiento.\\
 
+La generación de un conjunto de arboles entrenados en sub-conjuntos de datos diferentes y que las decisiones se realizan en base a el voto de la mayoría, es lo que consiste el algoritmo de bosque aleatorio. \\
+
 
 
 **** Aumento Extremo del Gradiente
 
-/Gradient Boosting Machine/
+El algoritmo de Bosque Aleatorio es un algoritmo famoso y ampliamente utilizado en distintos contextos, no solo a nivel experimental, sino que también en producción, ejemplos de esto son la cadena de clasificación de imagenes de satelite Iota-2  \cite{rs9010095}, sin embargo otro algoritmo basado en CART ha obtenido resultados interesantes y lo definiremos de manera formal a continuación:
 
-Bagging
+A diferencia del modelo de Bosque Aleatorio, el algoritmo Aumento Extremo del Gradiente, variación de las /Gradient Boosting Machine/ en este algoritmo el impulso o /Boosting/ se usa de una manera diferente, se genera un conjunto usualmente pequeño de arboles de decisión y estos son mejorados iterativamente usando una función de perdida con regularización descrito matematicamente así: \cite{chen2016xgboost} \\
 
-Gradient Decent
+Se un conjunto de datos de n ejemplos y m numero de predictores, un conjunto de CART se define como los k-esímos
+
+#+NAME: eqn:cart_xg
+\begin{equation}
+\hat{y} = \phi(x_i) = \sum_{k=1}^{k} f_k(x_i) , f_k \in \mathcal{F}
+\end{equation}
+donde F es el espacio de arboles de regresión conocido tambien como CART. Aquí cada $f_k$ representa un CART distinto e independiente \cite{chen2016xgboost}.\\
+
+Estos arboles son optimizados mínimizando la siguiente función objetivo:
+
+#+NAME: eqn:xg_optim
+\begin{equation}
+\mathcal{L}(\phi) = \sum_{i} l(\hat{y_i}, y_i) + \sum_{k} \Omega(f_k)
+\end{equation}
+
+donde :
+#+NAME: eqn:xg_optim
+\begin{equation}
+\Omega(f) = \gammaT + \frac{1}{2} \lambda ||w||^2
+\end{equation}
+
+Donde l es la función de perdida convexa diferenciable entre la predicción $\hat{y_i}$ y el valor real $y_i$. El segundo termino $\Omega$ penaliza la complejidad del modelo[fn:14] \cite{chen2016xgboost}.
+
+
+
+# Bagging
+
+# Gradient Decent
+
 
 **** Redes Neuronales Artificiales
 
@@ -857,11 +897,12 @@ Donde $w_0$ es el vector de Bias, $w_i$ es el vector de pesos, $x_i$ la matriz d
 
 
 **** Validación Cruzada
+<<secvalcruz>>
 
 La validación cruzada tambien conocida como /K-Fold Cross Validation[fn:9]/, es una ténica desarrollada para probar o testear la estabilidad y capacidad de los modelos entrenados sobre conjuntos con pocos datos, la idea general es dividir el conjunto completo de datos en paquetes más pequeños conocidos como /folds/, que a su vez se subdividen dos conjuntos uno para entrenamiento y otro para prueba, de manera que los algoritmos a evaluar seran entrenados de manera independiente en cada uno de los subconjuntos de entrenamiento y se testearan sobre los conjuntos de prueba.\\
 
 #+CAPTION: Representación gráfica Validación cruzada
-#+ATTR_LATEX:  :width 7cm
+#+ATTR_LATEX: :width 5cm
 #+LABEL: fig:CV
 [[~/Dropbox/0_Tesis/imagenes/CV.png]]
 
@@ -875,7 +916,7 @@ El *LLTO CV* o /Leave Location and Time Out - CV/ es un caso especial de la vali
 #+LABEL: fig:Estaciones
 [[~/Dropbox/0_Tesis/imagenes/Estaciones.png]]
 
-La idea detras del uso de la estrategía de validación cruzada *LLTO* es dada la limitada cobertura espacial de las estaciones y la imposibilidad de tener datos independientes para la evaluación, es subdividir los datos de manera se incite a los modelos entrenados a generalizar y capturar la autocorrelación tanto espacial como temporal.\\
+La idea detras del uso de la estrategía de validación cruzada *LLTO* es dada la limitada cobertura espacial de las estaciones y la imposibilidad de tener datos independientes para la evaluación, es subdividir los datos de manera se incite a los modelos entrenados a generalizar y capturar la autocorrelación tanto espacial como temporal\cite{wikle2019spatio}.\\
 
 Como ejemplo dadas las estaciones azul, roja y amarilla, para las fechas circulo, cuadrado y triangulo, definidas en la figura [[fig:Estaciones]] [fn:10] la estrategía *LLTO CV* divide los datos con los criterios espaciales y temporales mensionados, obteniendo el resultado visualizado en la Figura [[fig:KFoldLTSO]] [fn:10].\\
 
@@ -896,18 +937,32 @@ Como por definición la sequía es una disminución temporal y espacial de la pr
 
 Un caso de este tipo de aproximación que se puede denominar clásica es la descrita por \cite{ceron2014sequias}, donde se evalúa la adaptabilidad que puede tener los agricultores de una cuenca en la region de Dagua, Colombia, por medio del estudio de las estaciones meteorológicas de la zona, evaluando la posición y continuidad temporal de los datos que proveen estas estaciones para realizar su análisis \cite{ceron2014sequias}.\\
 
-Por su parte en \cite{CaracterizacionSequias} se hace un recuento de las diferentes técnicas tanto clásicas como comtemporáneas para la evaluación de sequías, resaltando a su vez las técnicas basadas en el análisis estadístico mediante índices de series históricas de estaciones de campo, técnicas e índices sustentados en la teledetección, y la poderosa combinan
- que puede resultar de ambas \cite{CaracterizacionSequias}.\\
+Por su parte en \cite{CaracterizacionSequias} se hace un recuento de las diferentes técnicas tanto clásicas como comtemporáneas para la evaluación de sequías, resaltando a su vez las técnicas basadas en el análisis estadístico mediante índices de series históricas de estaciones de campo, técnicas e índices sustentados en la teledetección, y la poderosa combinanción que puede resultar de ambas \cite{CaracterizacionSequias}.\\
 
 Sin embargo la complejidad de este fenómeno ha requerido de la combinación de diferentes variables para su caracterización, es el caso de \cite{xu2016research} donde se evaluó la cantidad y la distribución espacial de la precipitación, y a partir de esto se determinó los factores que influencian el fenómeno de la sequía \cite{xu2016research}. Entre los factores evaluados estan:\\
 
-La precipitación, la temperatura, la altitud, la vegetación y la humedad del suelo. Aplicando por su parte /Precipitation Anomaly Percentage (Pa) /, y análisis de correlación \cite{xu2016research}. \\
+La precipitación, la temperatura, la altitud, la vegetación y la humedad del suelo. Aplicando por su parte /Precipitation Anomaly Percentage (Pa)/, y análisis de correlación \cite{xu2016research}. \\
 
 Ahora bien otros autores como los que se describen a continuación utilizaron unas aproximaciones mas contemporáneas, entre las que resalta la implementación de técnicas de inteligencia artificial (I.A.) aplicadas al sensoramiento remoto en especial para mejorar la resolución espacial de conjuntos de datos que son muy precisos en cuanto a su resolución temporal, y de este modo hacer un control y monitoreó más efectivo.\\
 
-Es el caso de  \cite{park2017drought}, centraron sus esfuerzos en la determinación de la humedad del suelo como índicador de la presnecia o ausencia de la sequía, bajo el supuesto de que la humedad del suelo es un factor clave en el monitoreo de la sequía pues se relaciona con la precipitación, evapotranspitación \\
+Es el caso de  \cite{park2017drought}, centraron sus esfuerzos en la determinación de la humedad del suelo como índicador de la presencia o ausencia de la sequía, bajo el supuesto de que la humedad del suelo es un factor clave en el monitoreo de la sequía pues se relaciona con la precipitación, evapotranspitación y ek rendimiento de cultivos \cite{park2017drought}\\
+
+Para esto se valieron de datos del sensor AMSR-E a bordo del satélite AQUA, además de productos de MODIS, como el MOD11A2, MOD16A2, MCD43B3, MCD15A2 MYD13A2, que constituyen temperatura superficial, evapotranspiración, albedo, índice de área foliar. NDVI, y EVI. Por otro lado, para la precipitación usaron datos de la misión TRMM, y datos /in situ/ para la validación del modelo de /downscaling/ o de desagregación utilizado. La zona de estudio fue la peninsula de Corea. En particular en su flujo de trabajo resalta la implementación del modelo de /Machine Learning/ Bosque Aleatorio con el fin de realizar la reducción de la escala del las variables utilizadas y mejorar la resolución expacial de los datos sin perder al resolucion temporal, el coeficiente de correlacion R² ascendio a entre 0.93 y 0.95 con un RMSE asociado de entre 0.32 y 0.035.\\
+
+Por otro lado \cite{rhee2017meteorological}, los autores prentende utilizar datos de teledetección y prediccción de un largo registro temporal para implementar un modelo de aprendizaje de maquina para las áreas no evaluadas anteriormente en su zona de estudio. Afirmando que un monitoreo de la sequía en tiempo real o casi real se constituye en una herramienta de gran valor para los sistemas de alerta temprana de sequía, y a partir de estos potenciar la toma de decisiones apropiadas que en ultima instancia disminuta los daos que ocacionan las sequías\cite{rhee2017meteorological}.\\
+
+Por lo que es importante evaluar las metodologías para realizas los pronisticos de sequía que incluyen modelos de regresión, modelos de series de tiempo, redes neuronales artificiales, y modelos híbridos; estos métodos se aplican con el fin de determinar aspectos de los pronósticos como la estimación del inicio y fin del fenómeno, la severidad de este, su probabilidad de ocurrencia, entre otros.\\
+
+Para esto \cite{rhee2017meteorological}, centra su estudio en el uso del SPI y el SPEI (índice estandarizado de precipitación y evapotranspiración), apuntando sus esfuerzos en determinar sequía meteorológica. Evaluando cuatro modelos de aprendizaje de máquina para identificar cuál obtiene los mejores resultados, estos tres son arboles de decisión (CART), Bosque Aleatorio (RF) y arboles extremadamente aleatorios, comparando los anteriores con una interpolación espacial tipo Kriging.\\
+
+Entre los resultados destaca un mejor comportamiento de los modelos de aprendizaje de maquina tipo regresión sobre los modelos de clasificación, centrando sus resultados en analizar los primeros. Donde los arboles extremadamente aleatorios obtuvieron los resultados mas relevantes.\\
+
+En un sentido similar se dirigio \cite{park2017drought}, este autor en base a productos de precipitación TRMM aplicaron tres enfoques de aprendizaje automatico basados en arboles; Bosque Aleatorio (RF), Arboles de Regresión Ptenciados, y Cubista; modelos que han demostrado ser robustos y flexibles para muchas aplicaciones de regresión, usando estos para evaluar la relación entre los factores de sequía y las condiciones de sequía.\\
+
+Con base en esto se aplico el SPI, NDVI, y LST obteniendo que el NDVI era la variable mas importante en las regiones humedas y el LST en las regiones aridas al momento de caracterizar la sequía\cite{PARK2016157}.\\
 
 
+Otros estudios realizan un análisis de los comportamientos globales de la sequía, y las perspectivas a futuro del fenomeno, teniendo en cuenta las proyecciones climaticas sustentadas en el cambio climatico \cite{schwalm2017global} . Sin embargo, también aplican el algoritmo de Random Forest en su estudio para determinar la importancia de los diferentes predictores; concluyendo que a raíz del cambio climatico, es altamente probable que los tiempos de recuperación despues de un evento de sequía sean insuficientes para los ecosistemas, aumentando la exposición y vulnerabilidad de estos mismos ante los fenómenos de sequía\cite{schwalm2017global}.\\
 
 
 
@@ -1067,30 +1122,61 @@ Se aplico un método de relleno de datos faltantes para series de tiempo raster 
 Una vez surtido lo anterior se da por finalizado el pre-procesamiento raster.\\
 
 *** Procesamiento
-*Extracción de valores en la localización de las estaciones*
 
+Una vez los datos de las fuentes raster e /in situ/ estan homogenizadas a una muestreo temporal común, y dadas las diferencias en la ventana temporal de disponiblidad de datos para ambas fuentes de datos se selecciona la intersección de ambas para generar un conjunto el conjunto de datos de entrenamiento.\\
 
-/in situ/ 1982 - 2012
+Esto es tomar los datos /in situ/ con una ventana temporal entre 1982 - 2014, los datos raster con una ventana temporal de 2000 - 2012, de modo que el periodo de predicción comprende entre 2000 y 2012.\\
 
-Entrenamiento 2000 - 2012
+Una vez se completa lo anterior, se realiza la extracción de valores de las diferentes varaibles explicativas en la localización de las estaciones. Y se contruye lo que se conoce como una *Matriz de entrenamiento*; matriz que sera usada para ajustar los algoritmos seleccionados.\\
 
-Predicción 2000 y 2014
-
-*Matriz de entrenamiento*
-*validación cruzada espacio-temporal (LLTO)*
 *** Entrenamiento y ajuste de hiperparamétros
 
-**** Arboles
-**** Redes
-- epocas
--
+Una vez constituida la matriz de entrenamiento se procede a realizar la selección de hiper-parametros para ajustar los algoritmos seleccionados, estos son:
+
+**** Random Forest
+- Numero de estimadores : 100
+- Criterio : error medio cuadrático
+- numero mínimo de muestras a dividir : 2
+- numero mínimo de muestras por hoja : 1
+- mínimo de decrecimiento de la impureza : 0.0
+
+**** XGBoosts
+- Numero de estimadores : 10
+- objective : error medio cuadratico
+- numero de columnas de muestra por arbol : 0.3
+- tasa de aprendizaje : 0.1
+- profundidad máxima : 5
+- alfa: 10
+**** MLP
+- Arquitectura :
+  + Numero de entradas: 8
+  + Capas ocultas : 1
+  + Numero de neuronas en la capa oculta : 11
+  + Capa de salida : 1
+- Función de Activación : ReLu y linear
+- Dropout: 0.05
+- tamaño del batch : 25
+- numero de epocas : 1000
+- tasa de aprendizaje : 0.0001
+
+
 *** Validación Cruzada
+Una vez ajustados los modelos estos deben de ser evaluados, la estrategía utilizada fue la de *validación cruzada espacio-temporal (LLTO)*. \\
+
+Esta estrategía introducida en [[secvalcruz]] tiene como objeto evaluar la robustez de los métodos aplicados, para ello se aplico una validación cruzada con 20 subconjuntos de datos, divididos a su vez en 70% para entrenamiento y 30% para validación. A cada uno de estos subconjuntos se ajusto los modelos seleccionados de manera independiente, y se evaluaron las metricas de Error Medio Absoluto (MAE) y Error Medio Cuadratico (MSE).\\
+
+La implementación de esta sección se realizo haciendo uso de la librería CAST implementada en R, adicionalmente se aplico una interfaz con Python a través de R2py2.\\
+
+
+*** Importancia de las Variables
+
+Finalmente los modelos basados en arboles, en particular el Random Forest permite evaluar la importancia de las variables predictoras sobre la estimación final, se realizara la extracción de esta información para mejorar la interpretabilidad de los modelos.\\
 
 * Resultados
 <<secresult>>
 ** Pre-procesamiento de datos /in situ/
 
-#+CAPTION: Ejemplo de datos faltantes en una serie temporal
+#+CAPTION: Imputación de datos faltantes en una estación de muestra
 #+ATTR_LATEX: width=0.9\textwidth
 #+LABEL: fig:distribucion_NA_tiempo
 [[~/Dropbox/0_Tesis/imagenes/distribucion_imputado_tiempo.png]]
@@ -1098,7 +1184,7 @@ Predicción 2000 y 2014
 
 *Gráfico de una Estación de muestra*
 
-#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+CAPTION: Comportamiento del SPI en una estación de muestra entre el año 2000 y el año 2012.\\
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
 [[~/Dropbox/0_Tesis/imagenes/spi_1632.png]]
@@ -1311,6 +1397,9 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 #+LATEX: \newpage
 
 ** SPI no paramétrico estimado
+
+Dada la imposiblidad de la red neuronal tipo Perceptrón Multi-capa implementado de converger, este modelo es decartado de los analisis posteriores.\\
+
 *** Métricas de Error
 
 # +tblname: tab:mae
@@ -1444,14 +1533,43 @@ Por otro lado desde el punto de vista de la academia se han presentado una serie
 
 Este no siempre es el caso, sobre todo cuando los estudios cubre áreas extensas, debido a lo anterior\cite{farahmand2015generalized}, introduce en al literatura el *SPI No Paramétrico*, que proponen dada la falta de flexibilidad del método actual, este consiste en ajustar una función de probabilidad empírica a las precipitacionesde cada estación meteorológica de la zona de estudio, y posteriormente realizar la estandarización para estimar el SPI.\\
 
-En su estudio \cite{farahmand2015generalized} en comparación al presnete estudio, trabajan su modelación de sequía a una resolucion menos detallada, en una extensión global y con unas fuentes de datos que se limitan a datos de preciítación cálculados por diferentes centros espcializadis a nivel internacional, además por la amplitud de la zona de estudio usan el algoritmo k-vecinos (para identificar 5 regiones climáticas) como aproximación a la regionalización climática de su zona de estudio y proceden a cálcular modelos individuales especializados para cada uno de  los cinco regiones. Finalmente y probablemente debido a la mayor amplitud de las fuentes de intormación obtengan resultados relevantes como un R² mínimo de 0.95, en compración al R² de 0.777 en promedio para el Random Forest y el R² de 0.769 para el XGBoosts obtenidos en este estudio.\\
+En su estudio \cite{farahmand2015generalized} en comparación al presente estudio, trabajan su modelación de sequía a una resolucion menos detallada, en una extensión global y con unas fuentes de datos que se limitan a datos de precítación cálculados por diferentes centros espcializadis a nivel internacional, además por la amplitud de la zona de estudio usan el algoritmo k-vecinos (para identificar 5 regiones climáticas) como aproximación a la regionalización climática de su zona de estudio y proceden a cálcular modelos individuales especializados para cada uno de  los cinco regiones. Finalmente y probablemente debido a la mayor amplitud de las fuentes de intormación obtengan resultados relevantes como un R² mínimo de 0.95, en compración al R² de 0.777 en promedio para el Random Forest y el R² de 0.769 para el XGBoosts obtenidos en este estudio.\\
 
 Más recientemente la literatura en cuanto a la modelación de sequías a virado a el uso de técnicas que permitan una espacialización fidedigna de los índices de sequía cálculados usando datos de estaciones meteorológicas, es el caso de \cite{rhee2017meteorological}, \cite{PARK2016157}, \cite{park2017drought}. \\
 
 Esta clase de aproximaciones a la sequía, al ser basados en modelos impulsados por datos, usualmente requieren de una gran cantidad de datos para ajustar los modelos, por lo que la baja densidad y en ocaciones los problemas de calidad de los datos en la zona estudiada pueden llegar a impactar la capacidad de los modelos para explicar el fenómeno de sequía estudiado.\\
 
-Aunque los autores consultados realizaron estudios con un
+Aunque los autores consultados realizaron estudios con un número de estaciones variable lo que puede impactar la comporación de los estudios, que aunque poseen condiciones similares, estas distan de ser identicas. Por ejemplo \cite{feng2019machine} usa en su estiod dos resdes de estaciones independientes, localizadas en el sur-oriente de Australia, uno correspondiente a 13 estaciones usadas para entrenar y validar el modelo, y otra red que asceinde a 2242 estaciones, usadas unicamente con el proposito de testear los modelos, en un área que asciende a 360 000 km². Por su parte \cite{rhee2017meteorological} centra su estudio sobre la peninsula coreana, incluyendo 61 estaciones sobre un área de estudio de unos 100 284 km². En comparación el presente estudio se utilizaron 51 estaciones sobre un área de unos 30 000 km² aproximadamente.\\
 
+En cuanto a los datos de precipitación, su suo no varía mucho entre los diferentes autores, se usan los datos en mm como principal predictor de los modelos aplicados. Por ejemplo  \cite{alizadeh2018fusion} enfocó su estudio únicamente en precipitación, no uso predictores adicionales, para compensar esto combinón diferentes productos satelitales para tener distintas estimaciones de sequía para cada unidad mínima observada.\\
+
+Sin embargo, debido a la gran cantidad de productos derivados del sensor MODIS, este provee de varios predictores, por ejemplo \cite{rhee2017meteorological}, utiliza variables como la temperatura superficial (LST), la Precipitación, Índices de vegetación (NDVI), además de algunas bandas espectrales 7 en total. Por su parte \cite{park2017drought} en su estudio enfocado en la sequía agricola, y la humedad del suelo, utilizó com opredictores la temperatura superficial (LST), la evapotranspiración (ET), el Albedo, índice de área foliar (LAI), e indices de vegetación (NDVI, EVI). Basado en lo anterior, en el presente estudio se seleccionaron las varables predictoras, Precipitación, Temperatura Superficial (LST), variables del ciclo hidrológico Evapotranspiración (ET) comportamiento de la vegetación, índice de área foliar (LAI), e índices de vegetación  (NDVI, ET), un indice de humedad (NDWI) y una aproximación a la sequía (NDDI).\\
+
+
+
+# \cite{alizadeh2018fusion}\cite{rhee2017meteorological} \cite{feng2019machine}
+
+Finalmente, \cite{PARK2016157} indica como las varialbes Temperatura Superficial (LST) y Evapotranspiración (ET) muestran una importancia alta para la estimación del SPI en el corto plazo, a diferencia de otros predictores como el los índices de vegetación (NDVI) y el Índice Normalizado de Sequía Multi-Banda (NDMI) que tienen implicaciones en el largo plazo. Esto contrasta con los resultados obtenidos en este estudio donde las ventanas temporales selecionadas se conservo el orden de la importancia de las variables predictoras, encabezadas por la Precipitación,  Temperatura Superficial (LST) y el Índice de Sequía Normalizado (NDDI).\\
+
+De manera similar los estudios consultados son consistentes con el presente en que los modelos derivados de los CART como el Bosque Aleatorio (RF) o el Aumento Extremo del Gradiente (XGBoost) obtienen mejores resultados en este tipo de problemas. Por ejemplo \cite{park2017drought} al igual que  \cite{PARK2016157} evalua el uso de modelos como Bosque Aleatorio (RF), Cubista, y /Bossted Regression Trees/; por su parte \cite{rhee2017meteorological} opta por el uso de CART y Arboles Extremadamente Aleatorios.\\
+
+Por el contrario otros autores consideran otros modelos como las Máquinas  de Soporte Vectorial (SVM), y las Redes Neuronales en sus mas simples arquitecturas \cite{feng2019machine}. Otros optan por modelos menos comunes como lo son /Adaptative Neuro-Fuzzy Inference System/ (ANFIS), M5P /model tree/, /Group Method of Data Handling/ (GMDH) \cite{alizadeh2018fusion}.
+
+
+# \cite{rhee2017meteorological}\cite{alizadeh2018fusion}\cite{park2017drought}
+
+La mayor parte de los autores anteriormente mencionados son bastante consistentes, que dado que se trata de resolver un problema de regresión, las métricas utilizadas para entrenar y evaluar los modelos se centraron principalmente en Raíz del Error Medio Cuadratico (RMSE por sus siglas en íngles) y el Error Absoluto Medio (MAE por sus siglas en ingles).\\
+
+Sumado al uso de R², como indicador adicional de que tan ajustada es la predicción de los valores por parte de los modelos. Obteniendo diversos resultados, por ejemplo \cite{park2017drought} obtubo un R² 0.52 y un rmse DE 0.09. \\
+
+Por su parte \cite{PARK2016157} obtuvo un R² de 0.93 y un RMSE de 0.3, lo que implica que a pesar de un buen ajuste en de los valores los errores son altos, lo que podria indicar un posible sesgo por parte del modelo. De igu odo \cite{feng2019machine} obtiene un R² de 0.28 y un RMSE de 0.9. En el  ente estudio se obtuvo \\ obtiene un R² de 0.28 y un RMSE de 0.9. En el presente estudio se obtuvo \\ obtiene un R² de 0.28 y un RMSE de 0.9. En el presente estudio se obtuvo en promedio un R² de para Bosque Aleatorio y n R² para Aumento Extremo del Gradiente (XGBoost) con un RMSE asociado de para RF y de XGBoosts. \\
+
+Existe sin embargo una dificultad para la comporación directa entre estos modelos, y esta es precissamente la evaluación de los mismos, dadas las particularidades de los datos espacio-temporales, descritas en este documento, hacen que el evaluar un modelo que pretende capturar el comportamiento de un fenómeno espacio-temporal como la sequía es algo no trivial, existen dos posibles estrategías de evaluación, la primera es el uso de dos conjuntos independientes de datos que permita un testeo del modelo como en el caso de  \cite{feng2019machine}. Sin embargo, esto es dificil de realizar, sobre todo en países en vías de desarrollo; por lo que otro método popular para realizar la evaluación es la validación cruzada.\\
+
+
+En el presente trabajo se implemento  una rutina para aplicar el método de Validación Cruzada LLTO propuesto por \cite{meyer_improving_2018} (y descrito en [[secvalcruz]]) usando esta metodología la idea es realizar evaluación mas realista de los modelos espacio-temporales, los autores de esta estrategía aplicaron este método para tratar de estimar la Temperatura Superficial (LST ) en el continente Antartico \cite{meyer2016mapping}.\\
+
+Finalmente es de resaltar que la evaluación de los modelos espacio-temporales es un tópico aún en investigación, y en proceso de consolidación, por lo que el debate de aplicar o no estas estrategías aún esta abierto.\\
 
 
 * Conclusiones
@@ -1486,10 +1604,52 @@ Una observación importante sobre la metodología presentada y es que el sensor 
 <<secanex>>
 ** AED Estaciones Metereológicas
 
+A continuación hay unas muestas del comportamiento del SPI entre el 2000 y el 2014, aunque se ven claras diferencias entre las distintas estaciones podemos notar un inicio de decada más bien humedo, y con un periodo de sequía a inicios de la decada de 2010, en algunas estaciones sin embargo es posible detallar el fenomeno de la niña del año 2011.\\
+
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
 [[~/Dropbox/0_Tesis/imagenes/spi_1632.png]]
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_40.png]]
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_45.png]]
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_50.png]]
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_250.png]]
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_504.png]]
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_505.png]]
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_515.png]]
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/spi_517.png]]
 
 
 
@@ -1503,9 +1663,7 @@ Por tal motivo desde distintas diciplinas sean desarrollado métodos para resolv
 
 Dado que los productos satelitales opticos e infrarojos son altamente afectados por la presencia de nubes, en este trabajo nos servimos de un algoritmo llamado *DINEOF* desarrollado para el relleno de datos en series remotamente sensadas de datos oceanográficos para el relleno de los datos, de las variables predictoras afectadas por la nubosidad (LST, NDVI, EVI, LAI, ET).\\
 
-Dicho método se basa en las *EOF* o /Empirical Orthogonal Functions/ por como son conocidos estos métodos en la comunidad oceanografica, tambien conocida en otras comunidades como un tipo especial de los /Componentes Principales/.\\
-
-- Tecnica de reduccion de dimensiones y usar esta version de los datos con compresión para rellenar los datos.
+Dicho método se basa en las *EOF* o /Empirical Orthogonal Functions/ por como son conocidos estos métodos en la comunidad oceanografica, tambien conocida en otras comunidades como un tipo especial de los /Componentes Principales/ .\\
 
 
 
@@ -1539,6 +1697,9 @@ En este orden de ideas es posible consultar esta información a través de inter
   #+LATEX: \printbibliography[heading=none]
 
 * Footnotes
+[fn:14]  Para más información sobre XGBoosts consulte : \cite{chen2016xgboost}
+
+[fn:13] Otras estrategías de /machine learning/ son apredizaje no supervizado, apredizaje semi-supervizado y aprendizaje de refuerzo.
 # [fn:13] Este capitulo esta altamente inspirado en
 
 [fn:12] Ver sección [[seccr]]
