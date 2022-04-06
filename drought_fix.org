@@ -173,20 +173,33 @@
   :END:
 
  NDVI : Índice Normalizado de Vegetación.\\
+
  NDWI : Índice de Agua Normalizado.\\
+
  EVI : Índice de Vegetación Mejorado. \\
+
  LST : Temperatura Superficial. \\
- SPI: Índice de Sequía Estandarizado.\\
+
+SPI: Índice de Sequía Estandarizado.\\
+
  SPI No Paramétrico: Índice de Sequía Estandarizado No Paramétrico.\\
+
  RF : /Random Forest/ o Bosque Aleatorio.\\
+
  XG : /XGBoost/ o /Xtrem Gradient Boosting/ o Aumento Extremo del Gradiente.\\
+
  NN : /Neural Networks/ o Redes Neuronales Aritificiales\\.
- CART : /Classification And Regression Trees/ o Arboles de Classificación y Regresión.
- MOD11A2 : Producto MODIS Temperatura Supercial
- MOD16A2 : Producto MODIS Evapotranspiración
- MCD43B3 :
- MCD15A2 :
- MYD13A2 : Producto MODIS índices de vegetación
+
+ CART : /Classification And Regression Trees/ o Arboles de Classificación y Regresión. \\
+
+ MOD11A2 : Producto MODIS Temperatura Supercial \\
+
+ MOD16A2 : Producto MODIS Evapotranspiración \\
+
+ MCD43B3 : \\
+ MCD15A2 : \\
+ MYD13A2 : Producto MODIS índices de vegetación \\
+
 #+LATEX:  \newpage
 * Resumen
   :PROPERTIES:
@@ -1130,6 +1143,7 @@ Esto es tomar los datos /in situ/ con una ventana temporal entre 1982 - 2014, lo
 Una vez se completa lo anterior, se realiza la extracción de valores de las diferentes varaibles explicativas en la localización de las estaciones. Y se contruye lo que se conoce como una *Matriz de entrenamiento*; matriz que sera usada para ajustar los algoritmos seleccionados.\\
 
 *** Entrenamiento y ajuste de hiperparamétros
+<<sectrn>>
 
 Una vez constituida la matriz de entrenamiento se procede a realizar la selección de hiper-parametros para ajustar los algoritmos seleccionados, estos son:
 
@@ -1174,7 +1188,14 @@ Finalmente los modelos basados en arboles, en particular el Random Forest permit
 
 * Resultados
 <<secresult>>
+
+A continuación se expondran los resultados parciales y finales de la metodología expuesta en la sección [[secmm]].
+
 ** Pre-procesamiento de datos /in situ/
+
+Primeramente se revisara la salida de el preprocesamiento de los datos /in situ/, de las 162 estaciones de la zona de estudio seleccionada, solo 51 estaciones pasaron los dos filtros, el primero de una suficiente logitud de los registros, y de una incompletitud de los registros menor al 10%.\\
+
+A partir de estas 51 estaciones se aplico el método de imputación de datos /Seasonally Decomposed Missing Value Imputation/. En la figuta [[fig:distribucion_NA_tiempo]] se puede visualizar un ejemplo de imputación de datos sobre una estación de muestra, con los valores imputados en rojo.\\
 
 #+CAPTION: Imputación de datos faltantes en una estación de muestra
 #+ATTR_LATEX: width=0.9\textwidth
@@ -1184,15 +1205,27 @@ Finalmente los modelos basados en arboles, en particular el Random Forest permit
 
 *Gráfico de una Estación de muestra*
 
-#+CAPTION: Comportamiento del SPI en una estación de muestra entre el año 2000 y el año 2012.\\
+Seguidamente se acumula la precipitación en ventanas temporales de un mes y se estima el SPI no paramétrico, podemos visualizar un ejemplo de lo anterior en la [[fig:perfil_temporal_XG_trn_completa]], y [[fig:perfil_temporal_XG_trn_completa]].\\
+
+#+CAPTION: Comportamiento del SPI en una estación de muestra entre el año 2000 y el año 2014.\\
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa1
+[[~/Dropbox/0_Tesis/imagenes/SPI_1734_.png]]
+
+
+#+CAPTION: Comportamiento del SPI en una estación de muestra entre el año 2000 y el año 2014.\\
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_1632.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1738_.png]]
 
 
-** TODO Mensionar la climatología de la zona
+# ** TODO Mensionar la climatología de la zona
 
 ** Pre-procesamiento de datos raster
+
+A continuación se presentaran unos gráficos resumén de la fase de pre-procesamiento de los datos raster, estos graficos corresponden a los valores promedios mensuales a lo largo del periodo de observación de los datos raster, comprendido entre el año 2000 y 2014.\\
+
+Y en general podemos visualizar en las variables de estudio el impacto de la composición oreográfica del terreno, con una zona nororiental plana y  con condiciones semi-deserticas, una zona suroccidental montañosa conformada por la sierra nevada de Santa Marta y la serranía del perijá al sur-oriente; y finalmente las zonas de transición y la zona transición con alturas moderadas.\\
 
 *** Precipitacion
 
@@ -1202,8 +1235,7 @@ Finalmente los modelos basados en arboles, en particular el Random Forest permit
 #+LABEL: fig:level_plot_Prec
 [[~/Dropbox/0_Tesis/imagenes/level_plot_Prec.pdf]]
 
-
-Comportamiento relativamente diferenciado en tres regiones geográficas marcadas sobre la zona de estudio con unas precipitaciones mas altas sobre la zona de la sierra nevada de santa marta, seguida por una zona de transición y finalmente una zona semi desertica al norte con unas precipitaciones cercanas a cero a lo largo del periodo de datos de MODIS disponibles.\\
+Primeramente tenemos la precipitación, esta variable dada su resolución mas baja presenta un comportamiento mas suave entre las regiones descritas anteriormente, sin embargo es posible diferenciarlas marcadas por sus diferencias en las precipitaciones,  con unas precipitaciones mas altas sobre la zona de la sierra nevada de santa marta, seguida por una zona de transición y finalmente una zona semi desertica al norte con unas precipitaciones cercanas a cero a lo largo del periodo de datos de MODIS disponibles.\\
 
 
 
@@ -1219,14 +1251,14 @@ En el comportamiento en frecuencia se ve claramente la concentración de los val
 #+LABEL: fig:bwplot_Prec
 [[~/Dropbox/0_Tesis/imagenes/bwplot_Prec.pdf]]
 
-Se observa un comportamiento unimodal en la distribución de la precipitación a lo largo del año, en el promedio de la ventana temporal del año 2000 al 2014.\\
-
-Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes al año.\\
+Que se complementa con el gráfico de caja y bigotes donde se observa un comportamiento unimodal en la distribución de la precipitación a lo largo del año, en el promedio de la ventana temporal del año 2000 al 2014.
+# Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes al año.\\
 
 #+LATEX: \newpage
 
 *** Evapotranspiración
 
+Seguidamente la evapotranspiración tiene un comportamiento bastante homogeno en el espacio, con valores de evapotranspiración ahí donde se espera que haya presencia de vegetación y valores bajos donde esta es escasa.
 
 
 #+CAPTION: Comportamiento promedio mensual de la evapotranspitación
@@ -1234,12 +1266,14 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 #+LABEL: fig:level_plot_et
 [[~/Dropbox/0_Tesis/imagenes/level_plot_et.pdf]]
 
+Esto se corrobora en el gráfico de densidad donde el rango de valores es constante a lo largo del año y una alta varibilidad en sus valores inter-mensuales.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual de la evapotranspitación
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_et
 [[~/Dropbox/0_Tesis/imagenes/densityplot_et.pdf]]
 
+Sin embargo podemos ver como los valores de evapotranspiración son mas bajo a inicio del año, en especial en febrero, marzo y abril, siendo mas constante el resto del año, esto es esperable dada la disponibilidad de agua a lo largo del año, vista en el regimen de precipitaciones.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual de la evapotranspitación
 #+ATTR_LATEX: :width 10cm
@@ -1251,18 +1285,21 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 
 *** Temperatura Superficial
 
+Por su parte, la temperatura superficial representa un comportamiento relativamente homogeneo a lo largo del año, marcandose diferencia por oreografía. Es de resaltar las altas temperaturas promedio a las que se ve expuesta esta zona de estudio.\\
 
 #+CAPTION: Comportamiento promedio mensual de la temperatura Superficial
 #+ATTR_LATEX: :width 12cm
 #+LABEL: fig:level_plot_LST
 [[~/Dropbox/0_Tesis/imagenes/level_plot_LST.pdf]]
 
+Es posible visualizar en el gráfico de densidad como los valores extremos de temperatura se concentran en la epoca del año con valores de precipitación mas altos, y siendo cierto también lo contrario.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual de la temperatura Superficial
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_LST
 [[~/Dropbox/0_Tesis/imagenes/densityplot_LST.pdf]]
 
+En el gráfico de cajas y bigotes se observa como la temperatura mantiene valores muy altos a lo largo del año y estos bajan menos de unos pocos grados a final de año, epoca en la que se concentran las lluvías.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual de la temperatura Superficial
 #+ATTR_LATEX: :width 10cm
@@ -1275,19 +1312,22 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 
 *** NDWI
 
+El comportamiento de la humedad estimada por el NDWI es mas alta en las zonas montañosas y de transición, a excepción de las picos mas altos dentro de la sierra nevada, por el contrario los valores bajos de las zona semi-desertica, esta en particular aumenta sus valores, y por tanto su humedad hacia el final del año.\\
 
 
 #+CAPTION: Comportamiento promedio mensual del NDWI
 #+ATTR_LATEX: :width 12cm
 #+LABEL: fig:level_plot_ndwi
-[[~/Dropbox/0_Tesis/imagenes/level_plot_ndwi.pdf]]
+[[~/Dropbox/0_Tesis/imagenes/level_plot_ndwi_v2_.pdf]]
 
+En el gráfico de densidad podemos visualizar como los meses humedos concentran los valores mas altos del indicador y una ligera disminución al inicio del año en la temporada seca.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual del NDWI
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_ndwi
 [[~/Dropbox/0_Tesis/imagenes/densityplot_ndwi.pdf]]
 
+Esto se corrobora en el gráfico de cajas y bigotes. Donde se visualiza claramente valores bajos a inicio de año en los meses de febrero, marzo,  abril.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual del NDWI
 #+ATTR_LATEX: :width 10cm
@@ -1300,19 +1340,21 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 
 *** NDVI
 
-
+El comportamiento del NDVI nos permite realizar una estimación visual de la distribución de la vegetación. Donde podemos ver como la vegetación se concentra en la zona montañosa, a excepción de los grandes picos del centro de la sierra nevada. \\
 
 #+CAPTION: Comportamiento promedio mensual del NDVI
 #+ATTR_LATEX: :width 12cm
 #+LABEL: fig:level_plot_ndvi
-[[~/Dropbox/0_Tesis/imagenes/level_plot_ndvi.pdf]]
+[[~/Dropbox/0_Tesis/imagenes/level_plot_ndvi_v2_.pdf]]
 
+En cuanto a su comportamiento en el gráfico de densidad podemos ver la concentración de los valores altos del NDVI a final del año, y con valores un poco más bajos concentrados en los meses inciales del año.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual del NDVI
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_ndvi
 [[~/Dropbox/0_Tesis/imagenes/densityplot_ndvi.pdf]]
 
+Distribución que se corrobora con el gráfico de cajas y bigotes.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual del NDVI
 #+ATTR_LATEX: :width 10cm
@@ -1324,19 +1366,22 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 
 *** EVI
 
+Lo valores del EVI o índice de vegetación mejorada es muy similar al del NDVI, pero dada la correción atmosferica explicada anteriormente los distribución de los valores es menor. \\
 
 
 #+CAPTION: Comportamiento promedio mensual del EVI
 #+ATTR_LATEX: :width 12cm
 #+LABEL: fig:level_plot_evi
-[[~/Dropbox/0_Tesis/imagenes/level_plot_evi.pdf]]
+[[~/Dropbox/0_Tesis/imagenes/level_plot_evi_v2_.pdf]]
 
+En cuanto al comportamiento en densidad se ve claramente la distribución de los valores, y una distinción mas marcada a lo largo del año con los valores bajo concentrados en el inicio del año y los valores altos al final, en coincidencia con los patrones de preciítación.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual del EVI
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_evi
 [[~/Dropbox/0_Tesis/imagenes/densityplot_evi.pdf]]
 
+Patron que se repite en el gráfico de caja y bigotes.
 
 #+CAPTION: Gráfico de caja-violín promedio mensual del EVI
 #+ATTR_LATEX: :width 10cm
@@ -1349,6 +1394,7 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 
 *** LAI
 
+Por su parte la variable *LAI* o índice de área foliar, es posible identificar muy claramente las zonas oregráficas de la zona de estudio. En particular unos valores bajos del índice en la zona seca y en las partes más altas de la zona montañosa y con valores mucho mas altos en la estribaciones de la sierra nevada de Santa Marta.\\
 
 
 #+CAPTION: Comportamiento promedio mensual del LAI
@@ -1356,12 +1402,14 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 #+LABEL: fig:level_plot_lai
 [[~/Dropbox/0_Tesis/imagenes/level_plot_lai.pdf]]
 
+En el gráfico de densidad podemos ver como los valores bajos se concentran al incio del año y los valores altos en la parte final del año.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual del LAI
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_lai
 [[~/Dropbox/0_Tesis/imagenes/densityplot_lai.pdf]]
 
+Esta distribución se repite en el gráfico de caja-violín.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual del LAI
 #+ATTR_LATEX: :width 10cm
@@ -1374,19 +1422,21 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 
 *** NDDI
 
-
+Finalmente para el índice de sequía normalizado (NDDI) de nuevo tenemos una clara distinción entre las zonas oregráficas con valores altos del índice en las zonas montañosa humeda. Esto nos dice que la sequía impacta más severamente las zonas donde la humedad es más alta.
 
 #+CAPTION: Comportamiento promedio mensual del NDDI
 #+ATTR_LATEX: :width 12cm
 #+LABEL: fig:level_plot_nddi
 [[~/Dropbox/0_Tesis/imagenes/level_plot_nddi.pdf]]
 
+En el gráfico de frecuencia se comporta similar a los indicadores estudiados, donde al inicio de año se concentran los valores bajos y al final del año se concentran los valores altos.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual del NDDI
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_nddi
 [[~/Dropbox/0_Tesis/imagenes/densityplot_nddi.pdf]]
 
+Situación que se repite en el gráfico de caja-violín.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual del NDDI
 #+ATTR_LATEX: :width 10cm
@@ -1397,12 +1447,91 @@ Con unos niveles de precipitación en promedio por debajo de los 400 mm por mes 
 #+LATEX: \newpage
 
 ** SPI no paramétrico estimado
+*** Ajuste de los Valores
+**** Redes Neuronales
+
+El primero modelo evaluado gráficamente es el de las redes neuronales tipo MLP con la configuración especificada en la sección [[sectrn]].
+Un gráfico de dispersión para una estación de muestra es mostrada en la figura [[fig:ANNP.png]].\\
+
+#+CAPTION: Correlacion entre los valores reales y predichos Red Neuronal 3 Meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:ANNP.png
+[[/home/juanse/Dropbox/0_Tesis/imagenes/ANNP.png]]
 
 Dada la imposiblidad de la red neuronal tipo Perceptrón Multi-capa implementado de converger, este modelo es decartado de los analisis posteriores.\\
 
+#+LATEX: \afterpage{\FloatBarrier}
+**** Bosque Aleatorio (RF)
+
+Para el siguiente modelo, tomamos la información de las 51 estaciones, se realizo un grafico de dispersión y se ajusto una regresión líneal, para cada una de las ventanas temporales seleccionadas de 3, 6 y 9 meses.\\
+
+Es posible detallar a través de los tres gráficos como la dispersión de los datos mejora para ventanas temporales mayores, lo que implica que el modelo tiene mas problemas para capturar el comportamiento en periodos cortos de tiempo.\\
+
+#+CAPTION: Correlacion entre los valores reales y predichos Random Forest 3 meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_3_meses.png]]
+
+#+CAPTION: Correlacion entre los valores reales y predichos Random Forest 6 meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_6_meses.png]]
+
+
+#+CAPTION: Correlacion entre los valores reales y predichos Random Forest 9 meses
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_9_meses.png]]
+
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
+**** Aumento Extremo del Gradiente (XG)
+
+De forma similar para el siguiente modelo se el XGBoost se realizo un gráfico de dispersión para todas las ventanas temporales.
+En este podemos visualizar como de manera similar al modelo Random Forest, la dispersión de la predicción aumenta conforme la ventana temporal aumenta.
+Esto sumado a el hecho de tener unas correlaciones mas altas que el modelo random forest.\\
+
+#+CAPTION: Correlacion entre los valores reales y predichos XGBoost
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_xg_3_meses.png]]
+
+#+CAPTION: Correlacion entre los valores reales y predichos XGBoost
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_xg_6_meses.png]]
+
+
+#+CAPTION: Correlacion entre los valores reales y predichos XGBoost
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:correlacion_RF_trn_completa
+[[~/Dropbox/0_Tesis/imagenes/prediccion_xg_9_meses.png]]
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
+
 *** Métricas de Error
 
-# +tblname: tab:mae
+Una vez mas en detalle podemos visualizar el comportamiento de las metricas de error del entrenamiento de los modelos, en particular sobre los datos no vistos por el modelo, o los datos de validación.
+
+Como se mensiono antes, la estrategía escogida fue la de validación cruzada usando el criterio espacio-temporal LLTO, el resultado de dicha estrategía puede ser visualizado en la figura [[fig:all_metrics]] donde tenemos lo siguiente. La columna izquierda representa las rondas del modelo random forest durante el entrenamiento, a su vez la columna derecha representa las rondas del modelo XGBoost. Por otro lado las filas representan las ventanas temporales de los modelo entrenados, 3, 6 y 9 meses para la primera, segunda y tercera fila. Las 20 barras de cada gráfico representan individualmente las rondas de entrenamiento computadas, y el color de la barra representa la metrica monitoreada, azul para error medio absoluta (MAE) y naranja para el erroe medio cuadratico (MSE).\\
+
+Se puede visualizar un comportamiento bastante homogeno en la distribución de los errores para los modelos, con resultados ligeramente superiores para el modelo XGBoosts.Adicionalmente en los cuadros [[tab:mae]] y [[tab:mse]] tenemos los valores promedio de las metricas para cada ventana temporal.\\
+
+
+
+
+#+CAPTION: Metricas de Error Validación Cruzada el eje x representa 20 subconjuntos de datos y el eje y representa los errores en cada ronda de entrenamiento
+#+ATTR_LATEX: :width 10.5cm :options angle=90
+#+LABEL: fig:all_metrics
+[[/home/juanse/Dropbox/0_Tesis/imagenes/MetricasValidacionCruzada.png]]
+
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+
+
+#+tblname: tab:mae
 #+CAPTION: Tabla de errores MAE promedio.\\
 #+ATTR_LATEX: :align |l|l|l|
 |------------------+--------+--------|
@@ -1425,61 +1554,85 @@ Dada la imposiblidad de la red neuronal tipo Perceptrón Multi-capa implementado
 | 6 meses          |  0.883 |  0.927 |
 | 9 meses          |  0.901 |  0.934 |
 |------------------+--------+--------|
-#+LATEX: \newpage
-#+LATEX: \afterpage{\FloatBarrier}
-
-*** Ajuste de los Valores
-
-#+CAPTION: Correlacion entre los valores reales y predichos Random Forest
-#+ATTR_LATEX: :width 10cm
-#+LABEL: fig:correlacion_RF_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_3_meses.png]]
-
-#+CAPTION: Correlacion entre los valores reales y predichos Random Forest
-#+ATTR_LATEX: :width 10cm
-#+LABEL: fig:correlacion_RF_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_6_meses.png]]
+# +LATEX: \newpage
+# +LATEX: \afterpage{\FloatBarrier}
 
 
-#+CAPTION: Correlacion entre los valores reales y predichos Random Forest
-#+ATTR_LATEX: :width 10cm
-#+LABEL: fig:correlacion_RF_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/prediccion_rf_9_meses.png]]
-
-#+LATEX: \newpage
-#+LATEX: \afterpage{\FloatBarrier}
 
 *** Comportamiento Temporal
-#+CAPTION: Perfil temporal entre los valores reales y predichos Random Forest 3 Meses
+
+Por otro lado, tenemos visualizar el ajuste de los modelos al comportamiento temporal de una estación de muestra, es esta sección selecionamos una estación aleatoria y comparamos el comportamiento real del índicador SPI y los valores predichos por el modelo.\\
+
+**** Random Forest
+
+Para el modelo Random Forests tenemos podemos visualizar el comportimiento en las figuras [[fig:perfil_temporal_RF_trn_completa3]] [[fig:perfil_temporal_RF_trn_completa6]] [[fig:perfil_temporal_RF_trn_completa9]] en estos gráficos tenemos en negro el valor de SPI estimado y en verde la predicción del modelo. El ajuste temporal de los modelos es sigue el comportamiento general del fenomeno, con dificultades para la los valores mas altos y mas bajos del indicador. Parece existir una tendencia hacia los valores altos del indicador que indican condiciones humedas, mas que las condiciones secas .Además al incrementarse la ventana temporal el comportamiento tiene una tendencia mas clara y menos aleatorio por lo que el modelo puede describir más fidedignamente el comporteamiento.\\
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos Random Forest 3 Meses (En negro el SPI en verde la estimación del modelo)
 #+ATTR_LATEX: :width 10cm
-#+LABEL: fig:perfil_temporal_RF_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_RF_trn_completa.png]]
+#+LABEL: fig:perfil_temporal_RF_trn_completa3
+[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_RF_trn_completa_3m.png]]
 
 
-#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
+#+CAPTION: Perfil temporal entre los valores reales y predichos Random Forest 6 Meses (En negro el SPI en verde la estimación del modelo)
 #+ATTR_LATEX: :width 10cm
-#+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_XG_trn_completa.png]]
+#+LABEL: fig:perfil_temporal_RF_trn_completa6
+[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_RF_trn_completa_6m.png]]
 
 
+#+CAPTION: Perfil temporal entre los valores reales y predichos Random Forest 9 Meses  (En negro el SPI en verde la estimación del modelo)
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_RF_trn_completa9
+[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_RF_trn_completa_9m.png]]
+
+#+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
+**** XGBoosts
+
+De manera similar el modelo XGBoost que lo podemos visualizar el las figuras [[fig:perfil_temporal_XG_trn_completa3]] [[fig:perfil_temporal_XG_trn_completa6]] [[fig:perfil_temporal_XG_trn_completa9]] aquí se puede observar lo siguiente. El modelo reproduce el comportamiento temporal de una manera mas cercana en comparación con el modelo Random Forests con menos problemas para estimar los valores extremos aunque se observa cierto desplazamiento temporal en la curva descrita. Se observa igualmente una tendencia hacia valores de SPI positivos. Finalmente parece existir un menor impacto en el tamaño de la ventana temporal de estudio sobre la capacidad predictiva del modelo.\\
+
+
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses (En negro el SPI en verde la estimación del modelo)
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa3
+[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_XG_trn_completa_3m.png]]
+
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 6 Meses (En negro el SPI en verde la estimación del modelo)
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa6
+[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_XG_trn_completa_6m.png]]
+
+
+#+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 9 Meses (En negro el SPI en verde la estimación del modelo)
+#+ATTR_LATEX: :width 10cm
+#+LABEL: fig:perfil_temporal_XG_trn_completa9
+[[~/Dropbox/0_Tesis/imagenes/perfil_temporal_XG_trn_completa_9m.png]]
 #+LATEX: \newpage
 #+LATEX: \afterpage{\FloatBarrier}
 
 *** Comportamiento Espacial
 
-*RF*
+Para visualizar el comportamiento espacial, se selecciono el uso de la ventana temporal de 3 meses, y computar los valores promedios del indicador a nivel mensual, con el objetivo de tratar de visualizar tendencias regidas por el regimen de lluvias anual de la zona de estudio.\\
+
+**** Random Forests
+
+Para el modelo de Random Forest tenemos un comportamiento muy homogeneo a lo largo del tiempo, y con valores normales del índice, y con una zona en sequía alrededor de la cienaga grande de Santa Marta. Es posible que sea un efecto de borde.\\
+
 
 #+CAPTION: Comportamiento promedio mensual de la predicción SPI por RF
 #+ATTR_LATEX: :width 12cm
 #+LABEL: fig:level_plot_SPI_RF2
-[[~/Dropbox/0_Tesis/imagenes/level_plot_SPI_RF2.pdf]]
+[[~/Dropbox/0_Tesis/imagenes/level_plot_SPI_RF_v2_.pdf]]
 
+Para los valores en densidad podemos ver una diferencia más pronunciada en la distribución de lso valores a lo largo del año, con el periodo seco concentrado en los meses de enero, febrero, una periodo de transición en diciembre y mayo; y condiciones humedas al final de año.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual de la predicción SPI por RF
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_SPI_RF2
 [[~/Dropbox/0_Tesis/imagenes/densityplot_SPI_RF2.pdf]]
 
+Finalmente, en el gráfico de cajas-bigotes vemos que el algoritmo tiene dificultades que para capturar la varibilidad de los datos, lo que es consistente con lo visto, en los resultados anteriores.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual de la prediccion SPI por RF
 #+ATTR_LATEX: :width 10cm
@@ -1487,20 +1640,25 @@ Dada la imposiblidad de la red neuronal tipo Perceptrón Multi-capa implementado
 [[~/Dropbox/0_Tesis/imagenes/bwplot_SPI_RF2.pdf]]
 
 #+LATEX: \newpage
+#+LATEX: \afterpage{\FloatBarrier}
 
-*XG*
+**** XGBoosts
+
+Por su parte el algoritmo de XGBoost tenemos una demarcación más precisa de las zonas semi-aridas en los valores del indicador. Donde además vemos como los valores bajos del indicador se concentran al inicio del año en los meses de enero, febrero y marzo, con un mes de transición en diciembre. Y los valores altos del indicador se concentran en las zonas de transición de la zona montañosa.\\
 
 #+CAPTION: Comportamiento promedio mensual de la predicción SPI por XG
 #+ATTR_LATEX: :width 12cm
 #+LABEL: fig:level_plot_SPI_XG
-[[~/Dropbox/0_Tesis/imagenes/level_plot_SPI_XG.pdf]]
+[[~/Dropbox/0_Tesis/imagenes/level_plot_SPI_XG_v2_.pdf]]
 
+Este comportamiento se replica en lo valores en densidad, con los valores humedos altamente concentrados al final del año, a excepción de diciembre.\\
 
 #+CAPTION: Gráfico de densidad promedio mensual de la predicción SPI por XG
 #+ATTR_LATEX: :width 15cm
 #+LABEL: fig:densityplot_SPI_XG
 [[~/Dropbox/0_Tesis/imagenes/densityplot_SPI_XG.pdf]]
 
+Esto finalmente se corrobora en el gráfico de cajas y bigotes.\\
 
 #+CAPTION: Gráfico de caja-violín promedio mensual de la prediccion SPI por XG
 #+ATTR_LATEX: :width 10cm
@@ -1513,10 +1671,16 @@ Dada la imposiblidad de la red neuronal tipo Perceptrón Multi-capa implementado
 
 *** Importancia de los predictores
 
+Por ultimo, una aspecto positivo de los modelos basados en arboles es la posibilidad de pesar la importancia de las variables predictoras sobre la predicción final, a continuación podemor visualizar la importancia de las variables según el modelo Random Forest.\\
+
 #+CAPTION: Importancia de las variables predictoras Random Forest 3 Meses
-#+ATTR_LATEX: :width 12cm
+#+ATTR_LATEX: :width 10cm
 #+LABEL: fig:importanciaRF
 [[~/Dropbox/0_Tesis/imagenes/importanciaRF.png]]
+
+Es posible visualizar en este gráfico que la importancia de las variables en los modelos aunque cambia sus valores relativos su orden se conserva a través de las distintas ventanas temporales del estudio. con Un primer grupo de variables como la precipitación y la temperatura superficial relacionadas con la climatología de la zona y seguida de el NDDI que sería una especie de conglomerado entre las variables relacionadas con la vegetación y la humedad. A continuación las variables cercanas o directamente relacionadas con el comportamiento de la vegetación y finalmente la humedad detectada por el satelite a través del NDWI.\\
+
+La importancia de la precipitación, la temperatura superficial eran esperados, es relevante detectar la importancia del NDDI lo que puede inducirnos a interpretar que el uso de las variables vegetativas y del NDWI es muy redundate. Finalmente eS posible que dada la climatología seca de la zona se obtengan unos pesos tan bajos de NDWI en la predicción. \\
 
 #+LATEX: \newpage
 #+LATEX: \afterpage{\FloatBarrier}
@@ -1609,47 +1773,47 @@ A continuación hay unas muestas del comportamiento del SPI entre el 2000 y el 2
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_1632.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1632_.png]]
 
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_40.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1741_.png]]
 
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_45.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1737_.png]]
 
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_50.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1730_.png]]
 
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_250.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1726_.png]]
 
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_504.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1726_.png]]
 
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_505.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1632_.png]]
 
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_515.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1726_.png]]
 
 #+CAPTION: Perfil temporal entre los valores reales y predichos XGBoosts 3 Meses
 #+ATTR_LATEX: :width 10cm
 #+LABEL: fig:perfil_temporal_XG_trn_completa
-[[~/Dropbox/0_Tesis/imagenes/spi_517.png]]
+[[~/Dropbox/0_Tesis/imagenes/SPI_1724_.png]]
 
 
 
