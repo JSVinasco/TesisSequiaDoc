@@ -199,7 +199,8 @@ SPI: Índice de Sequía Estandarizado.\\
  MCD43B3 : \\
  MCD15A2 : \\
  MYD13A2 : Producto MODIS índices de vegetación \\
-
+ MOD16A2 : Producto MODIS índices de evapotranspiración \\
+ MCD15A2 : Producto MODIS índices de area foliar y fracción de la radiación fotosínteticamente activa. \\
 #+LATEX:  \newpage
 * Resumen
   :PROPERTIES:
