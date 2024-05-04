@@ -10,7 +10,7 @@ https://bibliotecadigital.univalle.edu.co/entities/publication/24968f98-8bab-478
 
 ## English version 
 
-This is my undergreade thesis document.
+This is my undergrade thesis document.
 
 The pdf is freely available in the following link :
 
